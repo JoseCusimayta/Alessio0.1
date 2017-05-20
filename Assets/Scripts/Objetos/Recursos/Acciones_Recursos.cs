@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Acciones_Recursos : MonoBehaviour {
+public interface Acciones_Recursos{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Usar();
+
+	void Arrojar();
+
+	void Almacenar();
+
+	void Destruir();
+
 }

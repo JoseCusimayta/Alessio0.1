@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemigoAI : MonoBehaviour {
+public class Recurso : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

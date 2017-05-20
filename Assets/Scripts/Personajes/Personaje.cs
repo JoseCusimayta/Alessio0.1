@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour {
+public class NewBehaviourScript:MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	public float vida;			//La vida actual
+	public string tipo_arma;	//Indica que arma se esta usando actualmente
+	public float alerta_vida;	//Avisa al jugador que Alessio tiene poca vida
+	public float velocidad;		//Velocidad normal de Alessio
+	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
+
+	void Start(){
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	void Update(){
+	}
+	void FixedUpdate(){
 	}
 }
