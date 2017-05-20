@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript:MonoBehaviour {
+public class NewBehaviourScript:MonoBehaviour, IPersonaje {
 
 	public float vida;			//La vida actual
 	public string tipo_arma;	//Indica que arma se esta usando actualmente
@@ -15,5 +15,32 @@ public class NewBehaviourScript:MonoBehaviour {
 	void Update(){
 	}
 	void FixedUpdate(){
+	}
+
+	public void Mover (){
+	}
+
+	public void Atacar(){
+	}
+
+	public void Morir(){
+	}
+
+	public void Coger(){
+	}
+
+	public void Saltar(){
+	}
+
+	public void Correr(){
+	}
+
+	public void Curar(){
+	}
+
+	public void Lanzar(){
+	}
+
+	public void Abrir(){
 	}
 }
