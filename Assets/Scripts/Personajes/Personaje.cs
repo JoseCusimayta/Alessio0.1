@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript:MonoBehaviour, IPersonaje {
+public class Personaje:MonoBehaviour, IPersonaje {
 
 	public float vida;			//La vida actual
 	public string tipo_arma;	//Indica que arma se esta usando actualmente
