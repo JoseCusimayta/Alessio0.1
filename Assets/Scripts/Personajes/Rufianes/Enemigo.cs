@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemigo : MonoBehaviour {
+public class Enemigo : MonoBehaviour,IPersonaje {
+
+	public float vida;			//La vida actual
+	public string tipo_arma;	//Indica que arma se esta usando actualmente
+	public float alerta_vida;	//Avisa al jugador que Alessio tiene poca vida
+	public float velocidad=5;		//Velocidad normal de Alessio
+	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
+	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
 
 	public bool reposo;		
 	//truo  --> Reposo (El enemigo está quieto, si detecta a Alessio dispara, pero no lo persigue)
@@ -24,4 +31,39 @@ public class Enemigo : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void Mover (){
+	}
+
+	public void Atacar(){
+	}
+
+	public void Morir(){
+	}
+
+	public void Coger(){
+	}
+
+	public void Saltar(){
+	}
+
+	public void Correr(){
+	}
+
+	public void Curar(){
+	}
+
+	public void Lanzar(){
+	}
+
+	public void Abrir(){
+	}
+	void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Se detecto algo");
+        if (other.CompareTag("Player"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
 }
