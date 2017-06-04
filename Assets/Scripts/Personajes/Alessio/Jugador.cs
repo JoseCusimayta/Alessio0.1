@@ -29,18 +29,25 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	//variable para el movimiento vertical
 	private float h2;
 
+    //GameObject para contener un arma
+    public Transform Arma_Player;
+    public Pistola pistola;
 
 
-	// Use this for initialization
-	void Start () {
-		_rbAlessio = GetComponent<Rigidbody> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Use this for initialization
+    void Start()
+    {
+        _rbAlessio = GetComponent<Rigidbody>();
+    }
+
+    // Update is called once per frame
+    void Update () {
 		Mover ();
 		Correr ();
-	}
+        
+
+    }
 
 	void FixedUpdate () {
 
@@ -54,7 +61,15 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 
 	}
 
-	public void Mover (){
+    public void Agarrar_Pistola() //Metodo para que Alessio pueda agarrar la pistola y cambiar de arma
+    {
+        pistola.transform.position = Arma_Player.position; //La pistola adopta la posición del objeto vacío
+        pistola.transform.parent = Arma_Player.parent;   //La pistola y el objeto vacio comparten el mismo objeto padre = ALessio
+        //Tipo_Arma = pistola.getPistola(); //Cambiamos el tipo de arma
+        //ataque_Alessio.setAtaque_Alessio(Prefab_Bala, Prefab_Golpe, Empty_Alessio, Tipo_Arma);  //Le damos los datos al ataque  de Alessio
+    }
+
+    public void Mover (){
 
 		h1=Input.GetAxis("Horizontal");
 		h2=Input.GetAxis("Vertical");
@@ -69,6 +84,10 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	}
 
 	public void Coger(){
+        if (pistola != null)
+        {
+            Agarrar_Pistola();
+        }
 	}
 
 	public void Saltar(){
@@ -91,6 +110,25 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 
 	public void Abrir(){
 	}
-	
-        
+
+    //en el metodo para las colisiones se usara el metodo coger
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Pistola")
+        {
+            Debug.Log("Tengo una pistola");
+            pistola = other.gameObject.GetComponent<Pistola>();
+            
+            //Agarrar_Pistola();
+        }
+        //uso del metodo coger
+        Coger();
+        //if (other.tag == "Suelo")
+        //{
+        //    rigiBody = GetComponent<Rigidbody>();
+        //    rigiBody.velocity = new Vector3(0, 0, 0);
+        //    rigiBody.useGravity = false;
+
+        //}
+    }
 }

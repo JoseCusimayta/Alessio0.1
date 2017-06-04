@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pistola : MonoBehaviour {
+    public static int Daño_Pistola = 3;
+    public static string tipoArma = "Pistola";
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -13,4 +15,9 @@ public class Pistola : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public string getPistola()
+    {
+        return tipoArma;
+    }
 }
