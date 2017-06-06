@@ -108,34 +108,11 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &349730525
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 349730526}
-  m_Layer: 0
-  m_Name: Arma_Player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &349730526
+--- !u!4 &349730526 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 349730525}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7781899, y: 0.21697505, z: 0}
-  m_LocalScale: {x: 1.0431496, y: 1.0431492, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1349814727}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_PrefabParentObject: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392,
+    type: 2}
+  m_PrefabInternal: {fileID: 1170356086}
 --- !u!1 &670199823
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +207,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2e328e5078b374c897c4174b859c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1170356086
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1349814727}
+    m_Modifications:
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.7781899
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.21697505
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921729683096094, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 11f6e98c56859f94fb30c38c62a44392, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1232551544
 Prefab:
   m_ObjectHideFlags: 0
@@ -416,6 +435,23 @@ Prefab:
       propertyPath: Arma_Player
       value: 
       objectReference: {fileID: 349730526}
+    - target: {fileID: 114789822943011060, guid: 934c4989d22bd744a8d72856cd73e158,
+        type: 2}
+      propertyPath: Prefab_Bala
+      value: 
+      objectReference: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+        type: 2}
+    - target: {fileID: 114789822943011060, guid: 934c4989d22bd744a8d72856cd73e158,
+        type: 2}
+      propertyPath: Prefab_Golpe
+      value: 
+      objectReference: {fileID: 1161956906494282, guid: 9ff3761d64c6d3340b3029b5c8604ddb,
+        type: 2}
+    - target: {fileID: 114789822943011060, guid: 934c4989d22bd744a8d72856cd73e158,
+        type: 2}
+      propertyPath: Prefab_Explosion
+      value: 
+      objectReference: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 934c4989d22bd744a8d72856cd73e158, type: 2}
   m_IsPrefabParent: 0
@@ -464,6 +500,48 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c3718b27df497548a0dec53f00da057, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1999933962
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -17.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2077537677
 GameObject:

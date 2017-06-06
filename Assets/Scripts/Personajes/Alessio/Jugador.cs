@@ -33,6 +33,10 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     public Transform Arma_Player;
     public Pistola pistola;
 
+    //gameobjects de la bala y su explosion al impactar
+    public GameObject Prefab_Bala, Prefab_Golpe, Prefab_Explosion;
+    private float Intervalo_Ataque = 0;
+
 
 
     // Use this for initialization
@@ -45,7 +49,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     void Update () {
 		Mover ();
 		Correr ();
-        
+        Atacar();
 
     }
 
@@ -78,7 +82,28 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 
 
 	public void Atacar(){
-	}
+        if (Input.GetMouseButtonDown(0)) //Al hacer clic derecho...
+        {
+            Intervalo_Ataque -= Time.deltaTime;
+            if (Intervalo_Ataque <= 0)
+            {
+                if (pistola != null)
+                {
+                    Instantiate(Prefab_Bala, Arma_Player.position, Arma_Player.rotation); //si la pistola no es nula, se crea sus balas
+                }
+                //if (pistola.tipoArma == "Pistola") //Se obtiene el tipo de Arma...
+                //{
+                //    Instantiate(Prefab_Bala, Empty_Alessio.position, Empty_Alessio.rotation); //y se crea el objeto dependiendo del arma, en este caso, una bala
+                //}
+                //else if (Tipo_Arma == "Golpear")
+                //{
+                //    Instantiate(Prefab_Golpe, Empty_Alessio.position, Empty_Alessio.rotation, Empty_Alessio.parent);
+                //}
+                Intervalo_Ataque = 0.02f;
+            }
+
+        }
+    }
 
 	public void Morir(){
 	}
