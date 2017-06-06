@@ -501,48 +501,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c3718b27df497548a0dec53f00da057, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &1999933962
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -17.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.73
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250158493588960, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 6afee2212e086f1428213c6cf7126f22, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &2077537677
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,3 +566,37 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &2117155152 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1264228535582790, guid: 622045d46935a96489cf368911e58f64,
+    type: 2}
+  m_PrefabInternal: {fileID: 1232551544}
+--- !u!114 &2117155153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2117155152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f085b401c800aa4d86ce51fd831b586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 100
+  tipo_arma: Pistola
+  alerta_vida: 0
+  velocidad: 5
+  velocidadAlterada: 5
+  danio_golpe: 0
+  Prefab_Bala: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+    type: 2}
+  Prefab_Rufian: {fileID: 1264228535582790, guid: 622045d46935a96489cf368911e58f64,
+    type: 2}
+  Prefab_Explosion: {fileID: 100012, guid: 384371afbb4354cc9a3fc68eab303756, type: 2}
+  frecDisparo: 1
+  Empty_Rufianes: {fileID: 4810562427396452, guid: 622045d46935a96489cf368911e58f64,
+    type: 2}
+  player: {fileID: 1498004060218414, guid: 934c4989d22bd744a8d72856cd73e158, type: 2}
+  reposo: 0
+  alerta: 0
+  radio_Alcance: 10
