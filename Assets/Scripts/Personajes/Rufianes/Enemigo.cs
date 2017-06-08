@@ -11,15 +11,10 @@ public class Enemigo : MonoBehaviour,IPersonaje {
 	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
 	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
 
-    public GameObject Prefab_Bala, Prefab_Rufian, Prefab_Explosion;
-    public float frecDisparo = 1f;
-    public Transform Empty_Rufianes;
+    public GameObject Prefab_Bala, Prefab_Rufian, Prefab_Explosion, Empty_Rufianes;
+    public Transform player;
+    public Pistola pistolaEnemigo;
     float x, y, z;
-    public GameObject player;
-    float  velocidad_rufian = 1;
-    bool Alessio_Detectado = false;
-    float Intervalo_Ataque = 0;
-    Pistola pistolaEnemigo;
 
     public bool reposo;		
 	//truo  --> Reposo (El enemigo está quieto, si detecta a Alessio dispara, pero no lo persigue)
@@ -34,24 +29,38 @@ public class Enemigo : MonoBehaviour,IPersonaje {
 
 	// Use this for initialization
 	void Start () {
+        reposo = true;
 		patronMovimiento = GetComponent<PatronMovimiento> ();
-        
+        Coger();
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        DetectarAlessio();
+        Mover();
+        Atacar();
 
     }
 
 	public void Mover (){
-	}
-
-	public void Atacar(){
-        if (pistolaEnemigo != null)
+        if (player != null && reposo==false)
         {
-            Instantiate(Prefab_Bala, Prefab_Rufian.transform.position, Prefab_Rufian.transform.rotation); //y se crea el objeto dependiendo del arma, en este caso, una bala
-            
+            //calculamos el vector entre la bala y el player
+            Vector3 direccion = player.position - transform.position;
+
+            //normalizamos el vector para que su longitud sea 1
+            direccion.Normalize();
+
+            //movemos el objeto usando el vector
+            transform.Translate(direccion * velocidad * Time.deltaTime);
+        }
+    }
+
+   public void Atacar(){
+        if (pistolaEnemigo != null && reposo==false)
+        {
+            Invoke("Disparo",2 * Time.deltaTime);
+           
         }
        
     }
@@ -62,7 +71,12 @@ public class Enemigo : MonoBehaviour,IPersonaje {
     }
 
 	public void Coger(){
-	}
+        if (pistolaEnemigo != null)
+        {
+            Agarrar_Pistola();
+        }
+
+    }
 
 	public void Saltar(){
 	}
@@ -81,24 +95,17 @@ public class Enemigo : MonoBehaviour,IPersonaje {
 
     void Disparo()
     {
-        Instantiate(Prefab_Bala, Empty_Rufianes.position, Empty_Rufianes.rotation); //Comienza a disparar desde el objeto vacio
+        Instantiate(Prefab_Bala, Empty_Rufianes.transform.position, Empty_Rufianes.transform.rotation); //Comienza a disparar desde el objeto vacio
     }
-    void DetectarAlessio()
+
+    public void Agarrar_Pistola() //Metodo para que Alessio pueda agarrar la pistola y cambiar de arma
     {
-        if (player != null)
-        {
-            if (Vector3.Distance(player.transform.position, transform.position) < 10)
-            {
-                transform.position = Vector2.Lerp(transform.position, player.transform.position, velocidad_rufian * Time.deltaTime);
-                Intervalo_Ataque -= Time.deltaTime;
-                if (Intervalo_Ataque <= 0)
-                {
-                    Atacar();
-                    Intervalo_Ataque = 0.2f;
-                }
-            }
-        }
+        pistolaEnemigo.transform.position = Empty_Rufianes.transform.position; //La pistola adopta la posición del objeto vacío
+        pistolaEnemigo.transform.parent = Empty_Rufianes.transform.parent;   //La pistola y el objeto vacio comparten el mismo objeto padre = ALessio
+        //Tipo_Arma = pistola.getPistola(); //Cambiamos el tipo de arma
+        //ataque_Alessio.setAtaque_Alessio(Prefab_Bala, Prefab_Golpe, Empty_Alessio, Tipo_Arma);  //Le damos los datos al ataque  de Alessio
     }
+
     public void Nuevo_Rufian()
     {
         x = Random.Range(10f, 20f); //Posición del eje Y al azar, entre 10 y 20
