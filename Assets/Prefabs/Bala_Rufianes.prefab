@@ -9,35 +9,35 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1587193686811718}
+  m_RootGameObject: {fileID: 1906787165979730}
   m_IsPrefabParent: 1
---- !u!1 &1587193686811718
+--- !u!1 &1906787165979730
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4233345917529616}
-  - component: {fileID: 33632639070006098}
-  - component: {fileID: 136980035190553824}
-  - component: {fileID: 23789574304237976}
-  - component: {fileID: 114179841040333344}
-  - component: {fileID: 54983721802822534}
-  - component: {fileID: 82498822437405818}
+  - component: {fileID: 4661468057664588}
+  - component: {fileID: 33032918630341688}
+  - component: {fileID: 136522723681292820}
+  - component: {fileID: 23757110365410310}
+  - component: {fileID: 54946939681193244}
+  - component: {fileID: 82504511261028064}
+  - component: {fileID: 114003635568655402}
   m_Layer: 0
   m_Name: Bala_Rufianes
-  m_TagString: Untagged
+  m_TagString: BalaEnemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4233345917529616
+--- !u!4 &4661468057664588
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587193686811718}
+  m_GameObject: {fileID: 1906787165979730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.366543, y: -1.3506505, z: 0}
   m_LocalScale: {x: 0.5, y: 0.05, z: 1}
@@ -45,12 +45,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23789574304237976
+--- !u!23 &23757110365410310
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587193686811718}
+  m_GameObject: {fileID: 1906787165979730}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d2c0c6863efc9fd4f85132a090e2a0bd, type: 2}
+  - {fileID: 2100000, guid: 9edcd56e632656747ade5ab323a2c10d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,19 +77,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33632639070006098
+--- !u!33 &33032918630341688
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587193686811718}
+  m_GameObject: {fileID: 1906787165979730}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54983721802822534
+--- !u!54 &54946939681193244
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587193686811718}
+  m_GameObject: {fileID: 1906787165979730}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -99,12 +99,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!82 &82498822437405818
+--- !u!82 &82504511261028064
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587193686811718}
+  m_GameObject: {fileID: 1906787165979730}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -179,26 +179,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &114179841040333344
+--- !u!114 &114003635568655402
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587193686811718}
+  m_GameObject: {fileID: 1906787165979730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1adeaacd26712d44f870369376a98524, type: 3}
+  m_Script: {fileID: 11500000, guid: d316ae76c1efa5b4d975d41b22be8678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocidad_EjeX: 15
-  Target_Tag: Player
-  Prefab_Explosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
---- !u!136 &136980035190553824
+  danio_bala: 20
+  velocidad_bala: 15
+  Target_Tag: Enemigo
+  Prefab_Explosion: {fileID: 100012, guid: 384371afbb4354cc9a3fc68eab303756, type: 2}
+--- !u!136 &136522723681292820
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587193686811718}
+  m_GameObject: {fileID: 1906787165979730}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

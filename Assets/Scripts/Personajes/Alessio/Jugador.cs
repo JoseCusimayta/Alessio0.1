@@ -5,7 +5,9 @@ using UnityEngine;
 public class Jugador : MonoBehaviour, IPersonaje  {
 
 	public float vida;			//La vida actual
-	public string tipo_arma;	//Indica que arma se esta usando actualmente
+    private Health salud;
+    private float previousHealth;
+    public string tipo_arma;	//Indica que arma se esta usando actualmente
 	public float alerta_vida;	//Avisa al jugador que Alessio tiene poca vida
 	public float velocidad=5;		//Velocidad normal de Alessio
 	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
@@ -35,6 +37,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 
     //gameobjects de la bala y su explosion al impactar
     public GameObject Prefab_Bala, Prefab_Golpe, Prefab_Explosion;
+    //para controlar la cadencia del disparo
     private float Intervalo_Ataque = 0;
 
 
@@ -43,11 +46,19 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     void Start()
     {
         _rbAlessio = GetComponent<Rigidbody>();
+        salud = GetComponent<Health>();
     }
 
     // Update is called once per frame
     void Update () {
-		Mover ();
+        //destruir al enemigo
+        float saludActual = salud.healht;
+        Debug.Log("saludActual:" + saludActual);
+        if (saludActual <= 0)
+        {
+            Morir();
+        }
+        Mover ();
 		Correr ();
         Atacar();
 
@@ -84,6 +95,10 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	public void Atacar(){
         if (Input.GetMouseButtonDown(0)) //Al hacer clic derecho...
         {
+            //if (pistola != null)
+            //{
+            //    Instantiate(Prefab_Bala, Arma_Player.position, Arma_Player.rotation); //si la pistola no es nula, se crea sus balas
+            //}
             Intervalo_Ataque -= Time.deltaTime;
             if (Intervalo_Ataque <= 0)
             {
@@ -106,6 +121,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     }
 
 	public void Morir(){
+        Destroy(gameObject);
 	}
 
 	public void Coger(){
@@ -136,6 +152,30 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	public void Abrir(){
 	}
 
+    ////esto se encarga de cuando te hacen daño
+    //void Hurt()
+    //{
+    //    //si la vida actual es menor a la vidaque teniamos antes significa que hemos recibido daño
+    //    if (salud.healht < previousHealth)
+    //    {
+
+    //        salud.healht -= 10;
+    //        //Layer para ser invulnerable
+    //        //gameObject.layer = 10;
+    //        //canControl = false;
+    //        //knockback = 2;
+    //        //verticalSpeed = -1;
+    //        //if (transform.position.x < salud.lastAttacker.transform.position.x)
+    //        //{
+    //        //    knockbackToRight = false;
+    //        //}
+    //        //else knockbackToRight = true;
+
+    //        //Invoke("restaurarCapa", 2);
+    //    }
+    //    previousHealth = salud.healht;
+    //}
+
     //en el metodo para las colisiones se usara el metodo coger
     void OnTriggerEnter(Collider other)
     {
@@ -143,11 +183,12 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         {
             Debug.Log("Tengo una pistola");
             pistola = other.gameObject.GetComponent<Pistola>();
-            
+
             //Agarrar_Pistola();
+            Coger();
         }
         //uso del metodo coger
-        Coger();
+        
         //if (other.tag == "Suelo")
         //{
         //    rigiBody = GetComponent<Rigidbody>();
@@ -155,5 +196,16 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         //    rigiBody.useGravity = false;
 
         //}
+        if (other.CompareTag("BalaEnemigo"))
+        {
+            salud.ChangeHealth(other.GetComponent<Bala>().danio_bala,other.gameObject);
+            
+        }
+
+        if (other.CompareTag("Enemigo"))
+        {
+            salud.ChangeHealth(20, other.gameObject);
+
+        }
     }
 }

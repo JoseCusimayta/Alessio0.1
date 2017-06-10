@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bala : MonoBehaviour {
-	public float daño_bala;				//La cantidad de vida que reducira al enemigo
+	public float danio_bala;				//La cantidad de vida que reducira al enemigo
 	public float velocidad_bala=15f;        //La velocidad con la que se moverá la bala
     public string Target_Tag="Enemigo";
     public GameObject Prefab_Explosion;

@@ -5,14 +5,16 @@ using UnityEngine;
 public class Enemigo : MonoBehaviour,IPersonaje {
 
 	public float vida=100;			//La vida actual
-	public string tipo_arma;	//Indica que arma se esta usando actualmente
+    private Health health;
+    private float vidaPrevia;
+    public string tipo_arma;	//Indica que arma se esta usando actualmente
 	public float alerta_vida;	//Avisa al jugador que Alessio tiene poca vida
 	public float velocidad=5;		//Velocidad normal de enemigo
 	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
 	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
 
     public GameObject Prefab_Bala, Prefab_Rufian, Prefab_Explosion, Empty_Rufianes;
-    public Transform player;
+    public GameObject player;
     public Pistola pistolaEnemigo;
     float x, y, z;
 
@@ -25,20 +27,32 @@ public class Enemigo : MonoBehaviour,IPersonaje {
 	public float radio_Alcance;		//Perimetro de Vision: Si detecta a Alessio, dispara y/o persigue - Depende del reposo y Alerta
 
 	private PatronMovimiento patronMovimiento;
+    //para controlar la cadencia del disparo
+    private float Intervalo_Ataque = 0;
 
-
-	// Use this for initialization
-	void Start () {
+    
+    // Use this for initialization
+    void Start () {
         reposo = true;
 		patronMovimiento = GetComponent<PatronMovimiento> ();
         Coger();
-
+        health = GetComponent<Health>();
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
         Mover();
-        Atacar();
+        if(reposo == false)
+        {
+            Atacar();
+        }
+        //destruir al enemigo
+        float saludEnemigo = health.healht;
+        if (saludEnemigo <= 0)
+        {
+            Morir();
+        }
 
     }
 
@@ -46,7 +60,7 @@ public class Enemigo : MonoBehaviour,IPersonaje {
         if (player != null && reposo==false)
         {
             //calculamos el vector entre la bala y el player
-            Vector3 direccion = player.position - transform.position;
+            Vector3 direccion = player.transform.position - transform.position;
 
             //normalizamos el vector para que su longitud sea 1
             direccion.Normalize();
@@ -57,17 +71,23 @@ public class Enemigo : MonoBehaviour,IPersonaje {
     }
 
    public void Atacar(){
-        if (pistolaEnemigo != null && reposo==false)
+        Intervalo_Ataque -= Time.deltaTime;
+        //Debug.Log("Intervalo_Ataque=" + Intervalo_Ataque);
+        if (Intervalo_Ataque <= 0)
         {
-            Invoke("Disparo",2 * Time.deltaTime);
-           
+            if (pistolaEnemigo != null)
+            {
+                Instantiate(Prefab_Bala, Empty_Rufianes.transform.position, Empty_Rufianes.transform.rotation); //Comienza a disparar desde el objeto vacio
+            }
         }
-       
+        Intervalo_Ataque = 0.04f;
+
     }
 
 	public void Morir(){
         Instantiate(Prefab_Explosion, transform.position, transform.rotation);
         Destroy(gameObject); //Destruir el objeto Rufian
+        
     }
 
 	public void Coger(){
@@ -93,11 +113,7 @@ public class Enemigo : MonoBehaviour,IPersonaje {
 	public void Abrir(){
 	}
 
-    void Disparo()
-    {
-        Instantiate(Prefab_Bala, Empty_Rufianes.transform.position, Empty_Rufianes.transform.rotation); //Comienza a disparar desde el objeto vacio
-    }
-
+    
     public void Agarrar_Pistola() //Metodo para que Alessio pueda agarrar la pistola y cambiar de arma
     {
         pistolaEnemigo.transform.position = Empty_Rufianes.transform.position; //La pistola adopta la posición del objeto vacío
@@ -116,12 +132,21 @@ public class Enemigo : MonoBehaviour,IPersonaje {
         Instantiate(Prefab_Rufian, vector3, transform.rotation); //Crear un nuevo rufian con los anteriores valores 
     }
 
+   
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Se detecto algo");
+        Debug.Log("Se detecto algo: "+other.tag);
         if (other.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
+            other.GetComponent<Health>().ChangeHealth(20, gameObject);
+            
+        }
+        if (other.CompareTag("BalaPlayer"))
+        {
+           
+            health.ChangeHealth(other.GetComponent<Bala>().danio_bala, other.gameObject);
+            
+
         }
     }
 }
