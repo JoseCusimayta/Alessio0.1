@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Jugador : MonoBehaviour, IPersonaje  {
 
-	public float vida;			//La vida actual
+	
     private Health salud;
     private float previousHealth;
     public string tipo_arma;	//Indica que arma se esta usando actualmente
