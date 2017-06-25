@@ -44,6 +44,8 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     public Animator _animator;
     public SpriteRenderer _spriteBrazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
     public SpriteRenderer _spritePlayer;            //Sprite del Jugador
+    public Sprite _spriteWeapon;        //Variable para guardar el sprite de la mano derecha con arma
+    private bool tieneArma; //variable para determinar si tiene arma el jugador
 
     // Use this for initialization
     void Start()
@@ -109,7 +111,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         }
         
        
-        Debug.Log("h1="+h1);
+       
         if (isAttack)
         {
             //Si está atacando, activamos el Trigger del ataque y apagamos el isAttack
@@ -222,10 +224,14 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         if (other.tag == "Pistola")
         {
             Debug.Log("Tengo una pistola");
+            //hay que mantener esta linea, ya que puede servir para guardar nuestra pistola y atacar con golpes
             pistola = other.gameObject.GetComponent<Pistola>();
+            //hay que mantener esta linea, ya que puede servir para guardar nuestra pistola y atacar con golpes
+            _spriteBrazoDerecho.sprite = _spriteWeapon;         //Signamos _spriteWeapon como sprite para el brazo derecho
+            Destroy(other.gameObject);
 
             //Agarrar_Pistola();
-            Coger();
+            //Coger();
         }
         //uso del metodo coger
         
