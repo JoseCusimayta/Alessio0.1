@@ -1,9 +1,12 @@
 fileFormatVersion: 2
-guid: ead0f43aee2dafa45866fcc0b6a1bf1d
-timeCreated: 1498399953
+guid: 17a15e6c569b95645b0e9051b98c5e0c
+timeCreated: 1498400282
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Alessio-SPRITE-PISTOLA_0
+    21300002: Alessio-SPRITE-PISTOLA_1
+    21300004: Alessio-SPRITE-PISTOLA_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,11 +37,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.51107407, y: 0.5151745}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaUsage: 1
@@ -76,7 +79,46 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Alessio-SPRITE-PISTOLA_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 113
+        width: 199
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Alessio-SPRITE-PISTOLA_1
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 13
+        width: 142
+        height: 282
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Alessio-SPRITE-PISTOLA_2
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 70
+        width: 56
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

@@ -10,6 +10,7 @@ TagManager:
   - BalaPlayer
   - Rufianes
   - BalaEnemigo
+  - Sprite
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,252 @@
+fileFormatVersion: 2
+guid: c9e6ef53049591f4399c63506ca69cd1
+timeCreated: 1498404499
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Cabeza
+    21300002: BrazoI
+    21300004: AnteBrazoI
+    21300006: Cuerpo
+    21300008: AnteBrazoD
+    21300010: BrazoD
+    21300012: MusloD
+    21300014: PiernaI
+    21300016: PieD
+    21300018: MusloI
+    21300020: PiernaD
+    21300022: PieI
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cabeza
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 167
+        width: 291
+        height: 301
+      alignment: 9
+      pivot: {x: 0.5919683, y: 0.04196395}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BrazoI
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 279
+        width: 96
+        height: 158
+      alignment: 9
+      pivot: {x: 0.398626, y: 0.9260279}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AnteBrazoI
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 368
+        width: 156
+        height: 82
+      alignment: 9
+      pivot: {x: 0.8899008, y: 0.54945076}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Cuerpo
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 199
+        width: 153
+        height: 239
+      alignment: 9
+      pivot: {x: 0.7915334, y: 0.81557477}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AnteBrazoD
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 186
+        width: 152
+        height: 77
+      alignment: 9
+      pivot: {x: 0.15319362, y: 0.7211797}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BrazoD
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 194
+        width: 101
+        height: 160
+      alignment: 9
+      pivot: {x: 0.47591165, y: 0.13505296}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MusloD
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 14
+        width: 103
+        height: 141
+      alignment: 9
+      pivot: {x: 0.4527577, y: 0.89111716}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PiernaI
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 22
+        width: 111
+        height: 125
+      alignment: 9
+      pivot: {x: 0.44155005, y: 0.7919574}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PieD
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 51
+        width: 132
+        height: 67
+      alignment: 9
+      pivot: {x: 0.27882016, y: 0.766296}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MusloI
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 14
+        width: 104
+        height: 141
+      alignment: 9
+      pivot: {x: 0.4298181, y: 0.8796137}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PiernaD
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 21
+        width: 116
+        height: 127
+      alignment: 9
+      pivot: {x: 0.43707803, y: 0.76181656}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PieI
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 51
+        width: 141
+        height: 67
+      alignment: 9
+      pivot: {x: 0.19515882, y: 0.766296}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

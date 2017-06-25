@@ -22,9 +22,10 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	private bool isTecho;
 	private bool isDer;
 	private bool isIzq;
+    private bool isAttack;          //Variable para saber si está atacando
 
-	//rigid body para gestionar movimiento
-	Rigidbody _rbAlessio;
+    //rigid body para gestionar movimiento
+    Rigidbody _rbAlessio;
 
 	//variable para el movimiento horizontal
 	private float h1;
@@ -40,20 +41,23 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     //para controlar la cadencia del disparo
     private float Intervalo_Ataque = 0;
 
-
+    public Animator _animator;
+    public SpriteRenderer _spriteBrazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
+    public SpriteRenderer _spritePlayer;            //Sprite del Jugador
 
     // Use this for initialization
     void Start()
     {
         _rbAlessio = GetComponent<Rigidbody>();
         salud = GetComponent<Health>();
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update () {
         //destruir al enemigo
         float saludActual = salud.healht;
-        Debug.Log("saludActual:" + saludActual);
+        //Debug.Log("saludActual:" + saludActual);
         if (saludActual <= 0)
         {
             Morir();
@@ -61,6 +65,8 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         Mover ();
 		Correr ();
         Atacar();
+        //ManageAnimation();
+        ManejarGiros();
 
     }
 
@@ -90,9 +96,33 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 		h2=Input.GetAxis("Vertical");
 	}
 
+    //gestionar las animaciones del player
+    void ManageAnimation()
+    {
+        _animator.SetFloat("MoveX", Mathf.Abs(h1));        //asignamos el valor absoluto de h1 a la variable MoveX del animator    
+        if (isAttack)
+        {
+            //Si está atacando, activamos el Trigger del ataque y apagamos el isAttack
+            _animator.SetTrigger("Attack");
+            isAttack = false;
+        }
 
+    }
 
-	public void Atacar(){
+    //Para manejar la ida de izq a der del personaje
+    void ManejarGiros()
+    {
+        if (h1 > 0)
+        {
+            transform.rotation = Quaternion.identity;
+        }
+        if (h1 < 0)
+        {
+            transform.rotation = new Quaternion(0, 180, 0, 0);
+        }
+    }
+
+    public void Atacar(){
         if (Input.GetMouseButtonDown(0)) //Al hacer clic derecho...
         {
             //if (pistola != null)
