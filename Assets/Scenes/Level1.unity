@@ -173,9 +173,9 @@ GameObject:
   m_Component:
   - component: {fileID: 124380875}
   - component: {fileID: 124380876}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AnteBrazoD
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,14 +186,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 124380874}
-  m_LocalRotation: {x: -0, y: -0, z: -0.32349122, w: 0.9462312}
+  m_LocalRotation: {x: -0, y: -0, z: -0.101323225, w: 0.99485356}
   m_LocalPosition: {x: 3.25, y: -1.09, z: 0}
   m_LocalScale: {x: 1.0431496, y: 1.0431492, z: 1}
   m_Children:
   - {fileID: 1077992896}
   m_Father: {fileID: 1349814727}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -37.748}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11.6310005}
 --- !u!212 &124380876
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -300,9 +300,9 @@ GameObject:
   m_Component:
   - component: {fileID: 331595916}
   - component: {fileID: 331595917}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PiernaD
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,7 +352,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300020, guid: c9e6ef53049591f4399c63506ca69cd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -479,9 +479,9 @@ GameObject:
   m_Component:
   - component: {fileID: 524183462}
   - component: {fileID: 524183463}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cabeza
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -548,9 +548,9 @@ GameObject:
   m_Component:
   - component: {fileID: 528502819}
   - component: {fileID: 528502820}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PieD
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -561,13 +561,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 528502818}
-  m_LocalRotation: {x: -0, y: -0, z: 0.14656764, w: 0.98920065}
-  m_LocalPosition: {x: -0.06, y: -0.81, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.11833466, w: 0.9929738}
+  m_LocalPosition: {x: -0.03, y: -0.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 331595916}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.856}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 13.592001}
 --- !u!212 &528502820
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -599,7 +599,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300016, guid: c9e6ef53049591f4399c63506ca69cd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -619,6 +619,23 @@ GameObject:
   m_PrefabParentObject: {fileID: 1498004060218414, guid: 934c4989d22bd744a8d72856cd73e158,
     type: 2}
   m_PrefabInternal: {fileID: 1870367609}
+--- !u!95 &1053988970
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053988969}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 517ba31b2ca88f64ba3db10348bb7039, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &1053988975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,9 +659,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1077992896}
   - component: {fileID: 1077992897}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BrazoD
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -655,13 +672,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1077992895}
-  m_LocalRotation: {x: 0.00040043856, y: -0.00077097624, z: -0.1678672, w: 0.9858092}
+  m_LocalRotation: {x: 0.00030962442, y: -0.0008117193, z: -0.2795246, w: 0.9601382}
   m_LocalPosition: {x: 1.02, y: -0.15, z: 0}
   m_LocalScale: {x: 1.0000002, y: 0.9999999, z: 1}
   m_Children: []
   m_Father: {fileID: 124380875}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.030000001, y: -0.095000006, z: -19.328001}
+  m_LocalEulerAnglesHint: {x: 0.008, y: -0.09900001, z: -32.464}
 --- !u!212 &1077992897
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -693,7 +710,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300010, guid: c9e6ef53049591f4399c63506ca69cd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -904,9 +921,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1292540686}
   - component: {fileID: 1292540687}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AnteBrazoI
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -918,7 +935,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1292540685}
   m_LocalRotation: {x: -0.0000052295313, y: -0.000011368597, z: 0.86908686, w: 0.49465948}
-  m_LocalPosition: {x: 2.4, y: -1.23, z: -0}
+  m_LocalPosition: {x: 2.29, y: -1.36, z: 0}
   m_LocalScale: {x: 1.0431496, y: 1.0431492, z: 1}
   m_Children:
   - {fileID: 1352061054}
@@ -956,7 +973,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300004, guid: c9e6ef53049591f4399c63506ca69cd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1012,9 +1029,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1352061054}
   - component: {fileID: 1352061055}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BrazoI
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1025,13 +1042,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1352061053}
-  m_LocalRotation: {x: 0.00000354984, y: 0.000011999655, z: -0.2836759, w: 0.9589203}
+  m_LocalRotation: {x: 0.0000067989963, y: 0.000009473788, z: 0.07933447, w: 0.9968481}
   m_LocalPosition: {x: -1.05, y: 0.03, z: -0}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1292540686}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.001, y: 0.001, z: 9.101001}
 --- !u!212 &1352061055
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1063,7 +1080,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300002, guid: c9e6ef53049591f4399c63506ca69cd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1134,9 +1151,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1418441464}
   - component: {fileID: 1418441465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MusloI
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1294,9 +1311,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1466655894}
   - component: {fileID: 1466655895}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PieI
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1363,9 +1380,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1493425569}
   - component: {fileID: 1493425570}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MusloD
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1376,14 +1393,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1493425568}
-  m_LocalRotation: {x: -0, y: -0, z: -0.05538315, w: 0.9984652}
+  m_LocalRotation: {x: 0.008714379, y: 0.0004833716, z: -0.05538104, w: 0.99842715}
   m_LocalPosition: {x: 2.49, y: -2.89, z: 0}
   m_LocalScale: {x: 1.0431496, y: 1.0431492, z: 1}
   m_Children:
   - {fileID: 331595916}
   m_Father: {fileID: 1349814727}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -6.3500004}
+  m_LocalEulerAnglesHint: {x: 1, y: 0, z: -6.3500004}
 --- !u!212 &1493425570
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1415,7 +1432,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300012, guid: c9e6ef53049591f4399c63506ca69cd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1502,9 +1519,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1637538659}
   - component: {fileID: 1637538660}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cuerpo
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1729,9 +1746,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1797535191}
   - component: {fileID: 1797535192}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PiernaI
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

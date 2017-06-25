@@ -65,7 +65,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         Mover ();
 		Correr ();
         Atacar();
-        //ManageAnimation();
+        ManageAnimation();
         ManejarGiros();
 
     }
@@ -99,7 +99,17 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     //gestionar las animaciones del player
     void ManageAnimation()
     {
-        _animator.SetFloat("MoveX", Mathf.Abs(h1));        //asignamos el valor absoluto de h1 a la variable MoveX del animator    
+        if (h1 == 0)
+        {
+            _animator.SetFloat("MoveX", Mathf.Abs(h2));
+        }
+        if (h2 == 0)
+        {
+            _animator.SetFloat("MoveX", Mathf.Abs(h1));        //asignamos el valor absoluto de h1 a la variable MoveX del animator    
+        }
+        
+       
+        Debug.Log("h1="+h1);
         if (isAttack)
         {
             //Si está atacando, activamos el Trigger del ataque y apagamos el isAttack
