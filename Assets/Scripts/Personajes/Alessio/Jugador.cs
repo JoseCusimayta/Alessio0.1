@@ -86,8 +86,11 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 
     public void Agarrar_Pistola() //Metodo para que Alessio pueda agarrar la pistola y cambiar de arma
     {
-        pistola.transform.position = Arma_Player.position; //La pistola adopta la posición del objeto vacío
-        pistola.transform.parent = Arma_Player.parent;   //La pistola y el objeto vacio comparten el mismo objeto padre = ALessio
+        //cargamos la pistola por defecto del jugador
+        Debug.Log("Se guardo pistola en inventario pistola:"+pistola.ToString());
+        pistola.transform.position = Arma_Player.transform.position; //La pistola adopta la posición del objeto vacío
+        pistola.transform.parent = Arma_Player.transform.parent;   //La pistola y el objeto vacio comparten el mismo objeto padre = ALessio
+        Debug.Log("Se guardo pistola en inventario pistola:" + pistola.ToString());
         //Tipo_Arma = pistola.getPistola(); //Cambiamos el tipo de arma
         //ataque_Alessio.setAtaque_Alessio(Prefab_Bala, Prefab_Golpe, Empty_Alessio, Tipo_Arma);  //Le damos los datos al ataque  de Alessio
     }
@@ -144,9 +147,12 @@ public class Jugador : MonoBehaviour, IPersonaje  {
             Intervalo_Ataque -= Time.deltaTime;
             if (Intervalo_Ataque <= 0)
             {
-                if (pistola != null)
+                Debug.Log("Evaluando si tengo pistola="+ tieneArma);
+                if (tieneArma)
                 {
-                    Instantiate(Prefab_Bala, Arma_Player.position, Arma_Player.rotation); //si la pistola no es nula, se crea sus balas
+                    Debug.Log("Tengo pistola y ataco");
+                    isAttack = true;
+                    Instantiate(Prefab_Bala, _spriteBrazoDerecho.transform.position, _spriteBrazoDerecho.transform.rotation); //si la pistola no es nula, se crea sus balas
                 }
                 //if (pistola.tipoArma == "Pistola") //Se obtiene el tipo de Arma...
                 //{
@@ -167,10 +173,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	}
 
 	public void Coger(){
-        if (pistola != null)
-        {
-            Agarrar_Pistola();
-        }
+       
 	}
 
 	public void Saltar(){
@@ -224,24 +227,15 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         if (other.tag == "Pistola")
         {
             Debug.Log("Tengo una pistola");
-            //hay que mantener esta linea, ya que puede servir para guardar nuestra pistola y atacar con golpes
-            pistola = other.gameObject.GetComponent<Pistola>();
-            //hay que mantener esta linea, ya que puede servir para guardar nuestra pistola y atacar con golpes
+            tieneArma = true;
             _spriteBrazoDerecho.sprite = _spriteWeapon;         //Signamos _spriteWeapon como sprite para el brazo derecho
             Destroy(other.gameObject);
-
+           
             //Agarrar_Pistola();
             //Coger();
         }
         //uso del metodo coger
-        
-        //if (other.tag == "Suelo")
-        //{
-        //    rigiBody = GetComponent<Rigidbody>();
-        //    rigiBody.velocity = new Vector3(0, 0, 0);
-        //    rigiBody.useGravity = false;
-
-        //}
+      
         if (other.CompareTag("BalaEnemigo"))
         {
             salud.ChangeHealth(other.GetComponent<Bala>().danio_bala,other.gameObject);
