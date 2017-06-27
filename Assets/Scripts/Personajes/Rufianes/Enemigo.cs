@@ -37,7 +37,7 @@ public class Enemigo : MonoBehaviour,IPersonaje {
 		patronMovimiento = GetComponent<PatronMovimiento> ();
         Coger();
         health = GetComponent<Health>();
-        
+        //Prefab_Bala.transform.Rotate(0, 0, -180);
     }
 	
 	// Update is called once per frame
@@ -78,6 +78,7 @@ public class Enemigo : MonoBehaviour,IPersonaje {
             if (pistolaEnemigo != null)
             {
                 Instantiate(Prefab_Bala, Empty_Rufianes.transform.position, Empty_Rufianes.transform.rotation); //Comienza a disparar desde el objeto vacio
+               
             }
         }
         Intervalo_Ataque = 0.04f;

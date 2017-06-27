@@ -7,17 +7,22 @@ public class Bala : MonoBehaviour {
 	public float velocidad_bala=15f;        //La velocidad con la que se moverá la bala
     public string Target_Tag="Enemigo";
     public GameObject Prefab_Explosion;
-    
+    private Rigidbody _rigidBody;
 
     #region Start & Update
     void Start()
     {
+        transform.Rotate(0, 180, 0);
+        _rigidBody = GetComponent<Rigidbody>();
+        _rigidBody.velocity = transform.right * velocidad_bala; ;
+        //Debug.Log("_rigidBody.velocity ="+ _rigidBody.velocity);
         Invoke("morir", 10);
     }
 
     void Update()
     {
-        transform.Translate(velocidad_bala * Time.deltaTime, 0, 0);
+        //_rigidBody.velocity = new Vector3(velocidad_bala * Time.deltaTime, 0, 0);
+        //transform.Translate(velocidad_bala * Time.deltaTime, 0, 0);
     }
     #endregion
 
@@ -25,32 +30,7 @@ public class Bala : MonoBehaviour {
     {
         if (other.CompareTag(Target_Tag))
         {
-            //if (Target_Tag == "Rufianes")
-            //{
-                
-            //    RufianesAI rufianesAI = other.gameObject.GetComponent<RufianesAI>();        //Instanciamos la clase RufianesAI            
-            //    rufianesAI.Vida_Rufianes = rufianesAI.Vida_Rufianes - Pistola.Daño_Pistola;  //Se resta la vida del rufian - el daño de la pistola
-            //    if (rufianesAI.Vida_Rufianes <= 0)
-            //    {
-            //        rufianesAI.morir();
-            //        Record.Score++; //Aumentamos en 1 el record
-            //    }
-
-               
-            //}
-            //if (Target_Tag == "Player")
-            //{
-                
-            //    Alessio player = other.GetComponent<Alessio>();
-            //    Record.Lives = Record.Lives - Pistola.Daño_Pistola; //Restamos la vida del jugador - el daño de la pistola
-            //    if (Record.Lives <= 0)
-            //    {
-            //        Record.Lives = 0;
-            //        player.morir(); //llamamos al metodo morir que instancia la destruccion del objeto y una explosion                    
-            //    }
-                
-            //}
-            Destroy(gameObject); //Destruir bala
+            morir(); //Destruir bala
         }
 
     }

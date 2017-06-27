@@ -12,7 +12,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	public float velocidad=5;		//Velocidad normal de Alessio
 	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
 	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
-    public GameObject cuerpo_total; //variable que permite obtener las medidas del cuerpo del player
+   
 
 	public int contadorApoyo;		//Es una barra que al llegar a 100 da la posibilidad de llamar apoyo del gobierno y aparecen rodeando a Alessio
 	public float vidaMaxima;		//Cantidad de vida máxima posible que puede tener el personaje
@@ -60,16 +60,43 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     public Sprite _spriteWeapon;        //Variable para guardar el sprite de la mano derecha con arma
     private bool tieneArma; //variable para determinar si tiene arma el jugador
 
+    //sprite de las partes del player
+    private GameObject cabeza;
+    private GameObject cuerpo;
+    private GameObject AnteBrazoD;
+    private GameObject BrazoD;
+    private GameObject AnteBrazoI;
+    private GameObject BrazoI;
+    private GameObject MusloD;
+    private GameObject PiernaD;
+    private GameObject PieD;
+    private GameObject MusloI;
+    private GameObject PiernaI;
+    private GameObject PieI;
+    //variable para gestionar el color del sprite cuando es herido
+    private float targetAlpha;
+
     // Use this for initialization
     void Start()
     {
         
         puedeControlar = true;
         _rbAlessio = GetComponent<Rigidbody>();
-        salud = GetComponent<Health>();
+        salud = GetComponent<Health>(); 
         _animator = GetComponent<Animator>();
         Prefab_Bala.transform.Rotate(0, 180, 0);
-       
+        cabeza = GameObject.Find("Cabeza");
+        cuerpo = GameObject.Find("Cuerpo");
+        AnteBrazoD = GameObject.Find("AnteBrazoD");
+        BrazoD = GameObject.Find("BrazoD");
+        AnteBrazoI = GameObject.Find("AnteBrazoI");
+        BrazoI = GameObject.Find("BrazoI");
+        MusloD = GameObject.Find("MusloD");
+        PiernaD = GameObject.Find("PiernaD");
+        PieD = GameObject.Find("PieD");
+        MusloI = GameObject.Find("MusloI");
+        PiernaI = GameObject.Find("PiernaI");
+        PieI = GameObject.Find("PieI");
     }
 
     // Update is called once per frame
@@ -85,6 +112,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 		Correr ();
         Atacar();
         Hurt();
+        ManageBlinking();
         HandleKnockBack();
         ManageAnimation();
         ManejarGiros();
@@ -114,14 +142,15 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         }
 
         //se cargan elementos para gestionar raycast
-        Vector3 boxSize = new Vector3(cuerpo_total.transform.localScale.x, cuerpo_total.transform.localScale.y, cuerpo_total.transform.localScale.z);
+        Vector3 boxSize = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         boxSize *= 0.99f;
         RaycastHit raycastInfo;
 
         //raycast para controlar si hay colision desde la izquierda
-        isIzq = Physics.BoxCast(transform.position, boxSize / 2, Vector3.down, out raycastInfo, Quaternion.identity, rayLength, _mask.value);
+        isIzq = Physics.BoxCast(transform.position, boxSize / 2, Vector3.left, out raycastInfo, Quaternion.identity, rayLength, _mask.value);
         if (isIzq)
         {
+            Debug.Log("Colision conizq");
             //si al player le impacta una bala enemiga
             if (raycastInfo.collider.gameObject.CompareTag("BalaEnemigo"))
             {
@@ -187,6 +216,15 @@ public class Jugador : MonoBehaviour, IPersonaje  {
             //Si está atacando, activamos el Trigger del ataque y apagamos el isAttack
             _animator.SetTrigger("Attack");
             isAttack = false;
+        }
+
+        if (knockback > 0)
+        {
+            _animator.SetBool("hurt", true);
+        }
+        if (knockback < 0)
+        {
+            _animator.SetBool("hurt", false);
         }
 
     }
@@ -291,7 +329,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     }
 
     //se restaura al layer player
-    void restaurarCapa()
+    void RestaurarCapa()
     {
         gameObject.layer = 8;
     }
@@ -307,6 +345,57 @@ public class Jugador : MonoBehaviour, IPersonaje  {
                 puedeControlar = true;
             }
         }
+    }
+
+    void ManageBlinking()
+    {
+
+        //si esta en estado invulnerable
+        if (gameObject.layer == 12)
+        {
+            Color newColor = cabeza.GetComponent<SpriteRenderer>().color;
+            newColor.a = Mathf.Lerp(newColor.a, targetAlpha, Time.deltaTime * 20);
+            Debug.Log("newColor.a=" + newColor.a);
+            if (newColor.a > 0.9f)
+            {
+                targetAlpha = 0;
+            }
+            else if (newColor.a < 0.1f)
+            {
+                targetAlpha = 1;
+            }
+            cabeza.GetComponent<SpriteRenderer>().color = newColor;
+            cuerpo.GetComponent<SpriteRenderer>().color = newColor;
+            AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;
+            BrazoD.GetComponent<SpriteRenderer>().color = newColor;
+            AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;
+            BrazoI.GetComponent<SpriteRenderer>().color = newColor;
+            MusloD.GetComponent<SpriteRenderer>().color = newColor;
+            PiernaD.GetComponent<SpriteRenderer>().color = newColor;
+            PieD.GetComponent<SpriteRenderer>().color = newColor;
+            MusloI.GetComponent<SpriteRenderer>().color = newColor;
+            PiernaI.GetComponent<SpriteRenderer>().color = newColor;
+            PieI.GetComponent<SpriteRenderer>().color = newColor;
+
+        }
+        if (gameObject.layer != 12)
+        {
+            Color newColor = cabeza.GetComponent<SpriteRenderer>().color;
+            newColor.a = 1;
+            cabeza.GetComponent<SpriteRenderer>().color = newColor;
+            cuerpo.GetComponent<SpriteRenderer>().color = newColor;
+            AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;
+            BrazoD.GetComponent<SpriteRenderer>().color = newColor;
+            AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;
+            BrazoI.GetComponent<SpriteRenderer>().color = newColor;
+            MusloD.GetComponent<SpriteRenderer>().color = newColor;
+            PiernaD.GetComponent<SpriteRenderer>().color = newColor;
+            PieD.GetComponent<SpriteRenderer>().color = newColor;
+            MusloI.GetComponent<SpriteRenderer>().color = newColor;
+            PiernaI.GetComponent<SpriteRenderer>().color = newColor;
+            PieI.GetComponent<SpriteRenderer>().color = newColor;
+        }
+
     }
 
     //en el metodo para las colisiones se usara el metodo coger
