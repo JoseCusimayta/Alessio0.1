@@ -12,23 +12,36 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	public float velocidad=5;		//Velocidad normal de Alessio
 	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
 	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
+    public GameObject cuerpo_total; //variable que permite obtener las medidas del cuerpo del player
 
 	public int contadorApoyo;		//Es una barra que al llegar a 100 da la posibilidad de llamar apoyo del gobierno y aparecen rodeando a Alessio
 	public float vidaMaxima;		//Cantidad de vida máxima posible que puede tener el personaje
-	public Recurso[] inventario;	//Arreglo que almacena los recursos de Alessio
+	public Recurso[] inventario;    //Arreglo que almacena los recursos de Alessio
 
-	//variables para detectar colision en el suelo, en el lado derecho, izquiero y arriba
-	private bool isSuelo;
-	private bool isTecho;
-	private bool isDer;
-	private bool isIzq;
-    private bool isAttack;          //Variable para saber si está atacando
+    ////Variable para saber si está atacando
+    private bool isAttack;          
 
     //rigid body para gestionar movimiento
     Rigidbody _rbAlessio;
+    //variables para gestionar los raycast contra otro elementos del juego
+    private bool isGrounded;
+    private bool isTecho;
+    private bool isIzq;
+    private bool isDer;
+    public float rayLength = 0.6f;
+    //se carga el componente box collider del player
+    
+    //variable que permite gestionar sobre que layer del player no le afectara las colisiones
+    public LayerMask _mask;
 
-	//variable para el movimiento horizontal
-	private float h1;
+    //variable para determinar si el jugador puede controlar al personaje o no
+    private bool puedeControlar;
+    //variables para controlar el retroceso
+    public float knockback;
+    private bool knockbackToRight;
+
+    //variable para el movimiento horizontal
+    private float h1;
 	//variable para el movimiento vertical
 	private float h2;
 
@@ -50,10 +63,13 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     // Use this for initialization
     void Start()
     {
+        
+        puedeControlar = true;
         _rbAlessio = GetComponent<Rigidbody>();
         salud = GetComponent<Health>();
         _animator = GetComponent<Animator>();
         Prefab_Bala.transform.Rotate(0, 180, 0);
+       
     }
 
     // Update is called once per frame
@@ -68,19 +84,54 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         Mover ();
 		Correr ();
         Atacar();
+        Hurt();
+        HandleKnockBack();
         ManageAnimation();
         ManejarGiros();
 
     }
 
+    //aqui se gestiona la fisica del player
 	void FixedUpdate () {
 
 		//se crea vector 
 		Vector3 moveVector=new Vector3(0,0,0);
-		//se carga la informacion para saber cuanto avanzara alessio
-		moveVector.x = h1 * velocidadAlterada;
-		moveVector.y = h2 * velocidadAlterada;
-		_rbAlessio.velocity = moveVector;
+        //el knock back es el empuje que se le hace al player cuando recibe daño
+        if (knockback > 0)
+        {
+            if (knockbackToRight)
+            {
+                moveVector.x = knockback;
+            }
+            else moveVector.x = -knockback;
+
+        }
+        else
+        {
+            //se carga la informacion para saber cuanto avanzara alessio
+            moveVector.x = h1 * velocidadAlterada;
+            moveVector.y = h2 * velocidadAlterada;
+        }
+
+        //se cargan elementos para gestionar raycast
+        Vector3 boxSize = new Vector3(cuerpo_total.transform.localScale.x, cuerpo_total.transform.localScale.y, cuerpo_total.transform.localScale.z);
+        boxSize *= 0.99f;
+        RaycastHit raycastInfo;
+
+        //raycast para controlar si hay colision desde la izquierda
+        isIzq = Physics.BoxCast(transform.position, boxSize / 2, Vector3.down, out raycastInfo, Quaternion.identity, rayLength, _mask.value);
+        if (isIzq)
+        {
+            //si al player le impacta una bala enemiga
+            if (raycastInfo.collider.gameObject.CompareTag("BalaEnemigo"))
+            {
+                Debug.Log("Colision con bala enemiga");
+            }
+            
+        }
+
+        //permite que el player se muev
+        _rbAlessio.velocity = moveVector;
 
 
 	}
@@ -97,9 +148,17 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     }
 
     public void Mover (){
-
-		h1=Input.GetAxis("Horizontal");
-		h2=Input.GetAxis("Vertical");
+        if (puedeControlar)
+        {
+            h1 = Input.GetAxis("Horizontal");
+            h2 = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            h1 = 0;
+            h2 = 0;
+        }
+		
 	}
 
     //gestionar las animaciones del player
@@ -207,28 +266,48 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 	}
 
     ////esto se encarga de cuando te hacen daño
-    //void Hurt()
-    //{
-    //    //si la vida actual es menor a la vidaque teniamos antes significa que hemos recibido daño
-    //    if (salud.healht < previousHealth)
-    //    {
+    void Hurt()
+    {
+        //si la vida actual es menor a la vida que teniamos antes significa que hemos recibido daño
+        if (salud.healht < previousHealth)
+        {
+            //Layer para ser invulnerable
+            gameObject.layer = 12;
+            puedeControlar = false;
+            knockback = 2;
+            //verticalSpeed = -1;
+            if (salud.lastAttacker != null)
+            {
+                if (transform.position.x < salud.lastAttacker.transform.position.x)
+                {
+                    knockbackToRight = false;
+                }
+                else knockbackToRight = true;
+            }
+            //el player se vuelve invulnerable
+            Invoke("RestaurarCapa", 2);
+        }
+        previousHealth = salud.healht;
+    }
 
-    //        salud.healht -= 10;
-    //        //Layer para ser invulnerable
-    //        //gameObject.layer = 10;
-    //        //canControl = false;
-    //        //knockback = 2;
-    //        //verticalSpeed = -1;
-    //        //if (transform.position.x < salud.lastAttacker.transform.position.x)
-    //        //{
-    //        //    knockbackToRight = false;
-    //        //}
-    //        //else knockbackToRight = true;
+    //se restaura al layer player
+    void restaurarCapa()
+    {
+        gameObject.layer = 8;
+    }
 
-    //        //Invoke("restaurarCapa", 2);
-    //    }
-    //    previousHealth = salud.healht;
-    //}
+    void HandleKnockBack()
+    {
+        if (knockback > 0)
+        {
+
+            knockback -= Time.deltaTime * 5.5f;
+            if (knockback <= 0)
+            {
+                puedeControlar = true;
+            }
+        }
+    }
 
     //en el metodo para las colisiones se usara el metodo coger
     void OnTriggerEnter(Collider other)
@@ -247,7 +326,9 @@ public class Jugador : MonoBehaviour, IPersonaje  {
       
         if (other.CompareTag("BalaEnemigo"))
         {
+            //al impactarnos la bala
             salud.ChangeHealth(other.GetComponent<Bala>().danio_bala,other.gameObject);
+            Hurt();
             
         }
 
@@ -256,5 +337,19 @@ public class Jugador : MonoBehaviour, IPersonaje  {
             salud.ChangeHealth(20, other.gameObject);
 
         }
+    }
+
+    void OnDrawGizmos()
+    {
+       
+            Gizmos.color = Color.green;
+
+
+        Vector3 boxSize = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        Gizmos.DrawWireCube(transform.position, boxSize);
+
+        Vector3 down = new Vector3(0, -1, 0);
+        Vector3 pos = transform.position + (down * rayLength);
+        Gizmos.DrawWireCube(pos, boxSize);
     }
 }

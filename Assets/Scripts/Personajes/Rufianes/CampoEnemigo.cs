@@ -19,7 +19,7 @@ public class CampoEnemigo : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entro al campo de fuerza");
+        //Debug.Log("Entro al campo de fuerza");
         if (other.CompareTag("Player"))
         {
             padre.velocidad = speedCampo;
@@ -29,7 +29,7 @@ public class CampoEnemigo : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Salio de campo de fuerza");
+        //Debug.Log("Salio de campo de fuerza");
         if (other.CompareTag("Player"))
         {
             padre.velocidad = 0;
