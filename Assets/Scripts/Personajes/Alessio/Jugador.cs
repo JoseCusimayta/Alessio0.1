@@ -53,6 +53,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         _rbAlessio = GetComponent<Rigidbody>();
         salud = GetComponent<Health>();
         _animator = GetComponent<Animator>();
+        Prefab_Bala.transform.Rotate(0, 180, 0);
     }
 
     // Update is called once per frame
@@ -112,9 +113,16 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         {
             _animator.SetFloat("MoveX", Mathf.Abs(h1));        //asignamos el valor absoluto de h1 a la variable MoveX del animator    
         }
-        
-       
-       
+
+        if (tieneArma)
+        {
+            _animator.SetBool("tieneArma",true);
+        }
+        if (!tieneArma)
+        {
+            _animator.SetBool("tieneArma", false);
+        }
+
         if (isAttack)
         {
             //Si está atacando, activamos el Trigger del ataque y apagamos el isAttack
@@ -150,9 +158,10 @@ public class Jugador : MonoBehaviour, IPersonaje  {
                 Debug.Log("Evaluando si tengo pistola="+ tieneArma);
                 if (tieneArma)
                 {
-                    Debug.Log("Tengo pistola y ataco");
+                    Debug.Log("Tengo pistola y disparo la bala");
                     isAttack = true;
-                    Instantiate(Prefab_Bala, _spriteBrazoDerecho.transform.position, _spriteBrazoDerecho.transform.rotation); //si la pistola no es nula, se crea sus balas
+                    Instantiate(Prefab_Bala, Arma_Player.transform.position, Arma_Player.transform.rotation); //si la pistola no es nula, se crea sus balas
+                    
                 }
                 //if (pistola.tipoArma == "Pistola") //Se obtiene el tipo de Arma...
                 //{
