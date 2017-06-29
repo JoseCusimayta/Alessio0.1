@@ -48,7 +48,7 @@ public class Enemigo : MonoBehaviour,IPersonaje {
             Atacar();
         }
         //destruir al enemigo
-        float saludEnemigo = health.healht;
+        float saludEnemigo = health._vidaActual;
         if (saludEnemigo <= 0)
         {
             Morir();
@@ -139,13 +139,13 @@ public class Enemigo : MonoBehaviour,IPersonaje {
         Debug.Log("Se detecto algo: "+other.tag);
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Health>().ChangeHealth(20, gameObject);
+            other.GetComponent<Health>().ModificarVida(20, gameObject);
             
         }
         if (other.CompareTag("BalaPlayer"))
         {
-           
-            health.ChangeHealth(other.GetComponent<Bala>().danio_bala, other.gameObject);
+
+            health.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);
             
 
         }

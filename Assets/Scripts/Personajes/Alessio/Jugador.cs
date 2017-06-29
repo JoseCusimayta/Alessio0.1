@@ -2,27 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jugador : MonoBehaviour, IPersonaje  {
+public class Jugador : MonoBehaviour, IPersonaje
+{
 
-	
-    private Health salud;
-    private float previousHealth;
-    public string tipo_arma;	//Indica que arma se esta usando actualmente
-	public float alerta_vida;	//Avisa al jugador que Alessio tiene poca vida
-	public float velocidad=5;		//Velocidad normal de Alessio
-	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
-	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
-   
+    #region Variables
 
-	public int contadorApoyo;		//Es una barra que al llegar a 100 da la posibilidad de llamar apoyo del gobierno y aparecen rodeando a Alessio
-	public float vidaMaxima;		//Cantidad de vida máxima posible que puede tener el personaje
-	public Recurso[] inventario;    //Arreglo que almacena los recursos de Alessio
+    #region Variables de Salud
+    public Health salud;                            //Variable para obtener la clase Health
+    public float vida_actual;                       //Variable para guardar la cantidad de vida actual    
+    public float vida_maxima;                       //Variable para determinar la cantidad de vida máxima posible que puede tener el personaje
+    public float vida_anterior;                     //Variable para guardar la cantidad de vida que tenía antes de ser golpeado
+    public float alerta_vida;	                    //Variable para determinar cuando se activará la animación para alertar al jugador que su vida corre peligro
+    #endregion
 
-    ////Variable para saber si está atacando
-    private bool isAttack;          
+    #region armas
+    public bool esta_atacando;                      //Variable para saber si el personaje está atacando
+    public bool tiene_arma;                         //Variable para saber si el personaje tiene algún tipo de arma
+    public bool tiene_pistola;                      //Variable para saber si el personaje tiene una pistola
+    public string tipo_arma;                        //Variable para guardar el tipo de arma que esta usando actualmente
+    public float danio_golpe;                       //Variable para determinar la cantidad de daño que tendrán los golpes del personaje
+    public int contador_apoyo;                      //Variable para guardar la cantidad de poder acumulado para llamar a la habilidad especial
+    public bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola
+    public float intervalo_ataque = 0.5f;           //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar    
+    public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
+    public Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
+    public Pistola pistola;                         //Variable para guardar la clase Pistola
+    #endregion
 
-    //rigid body para gestionar movimiento
-    Rigidbody _rbAlessio;
+    #region movimiento
+    public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el personaje
+    public float veloidad_correr = 10;              //Variable para determinar la velocidad con la que corerrá el personaje
+    public float velocidad_con_arma = 2;            //Variable para determinar la velocidad con la que se moverá el personaje cuando sostenga un arma
+    public float axis_horizontal;                   //Variable para guardar la cantidad del Axis en horizontal (-1,1)
+    public float axis_vertical;                     //Variable para guardar la cantidad del Axis en vertical (-1,1)
+    public bool correr;                             //Variable para saber si el personaje está corriendo
+    public bool caminar;                            //Variable para saber si el personaje está caminando
+    #endregion
+
+    #region colisiones
+    public bool colision_suelo;                     //Variable para saber si el personaje aun se puede hacia abajo
+    public bool colision_arriba;                    //Variable para saber si el personaje aun se puede hacia arriba
+    public bool colision_derecha;                   //Variable para saber si el personaje aun se puede hacia derecha
+    public bool colision_izquierda;                 //Variable para saber si el personaje aun se puede hacia izquierda
+    #endregion
+
+    #region Animacion
+    public Animator _animator;                      //Variable
+    public Sprite sprite_mano_arma;                 //Variable para guardar el sprite de la mano derecha con arma
+    public SpriteRenderer sprite_brazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
+    #endregion
+
+    #region Personaje
+    public Recurso[] inventario;	                //Variable de tipo "Arreglo" para almacenar los recursos del personaje
+    public Rigidbody rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
+    public GameObject Prefab_Bala;                  //Variable para guardar el prefab de la Bala
+    public GameObject Prefab_Golpe;                 //Variable para guardar el prefab del golpe
+    public GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
+    #endregion
+
+    #region Falta Ordenar
+
     //variables para gestionar los raycast contra otro elementos del juego
     private bool isGrounded;
     private bool isTecho;
@@ -30,7 +69,7 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     private bool isDer;
     public float rayLength = 0.6f;
     //se carga el componente box collider del player
-    
+
     //variable que permite gestionar sobre que layer del player no le afectara las colisiones
     public LayerMask _mask;
 
@@ -40,25 +79,6 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     public float knockback;
     private bool knockbackToRight;
 
-    //variable para el movimiento horizontal
-    private float h1;
-	//variable para el movimiento vertical
-	private float h2;
-
-    //GameObject para contener un arma
-    public Transform Arma_Player;
-    public Pistola pistola;
-
-    //gameobjects de la bala y su explosion al impactar
-    public GameObject Prefab_Bala, Prefab_Golpe, Prefab_Explosion;
-    //para controlar la cadencia del disparo
-    private float Intervalo_Ataque = 0;
-
-    public Animator _animator;
-    public SpriteRenderer _spriteBrazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
-    public SpriteRenderer _spritePlayer;            //Sprite del Jugador
-    public Sprite _spriteWeapon;        //Variable para guardar el sprite de la mano derecha con arma
-    private bool tieneArma; //variable para determinar si tiene arma el jugador
 
     //sprite de las partes del player
     private GameObject cabeza;
@@ -75,16 +95,15 @@ public class Jugador : MonoBehaviour, IPersonaje  {
     private GameObject PieI;
     //variable para gestionar el color del sprite cuando es herido
     private float targetAlpha;
+    #endregion
+    #endregion
 
-    // Use this for initialization
+
+
+    #region Funciones de Unity
     void Start()
     {
-        
         puedeControlar = true;
-        _rbAlessio = GetComponent<Rigidbody>();
-        salud = GetComponent<Health>(); 
-        _animator = GetComponent<Animator>();
-        Prefab_Bala.transform.Rotate(0, 180, 0);
         cabeza = GameObject.Find("Cabeza");
         cuerpo = GameObject.Find("Cuerpo");
         AnteBrazoD = GameObject.Find("AnteBrazoD");
@@ -99,31 +118,175 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         PieI = GameObject.Find("PieI");
     }
 
-    // Update is called once per frame
-    void Update () {
-        //destruir al enemigo
-        float saludActual = salud.healht;
-        //Debug.Log("saludActual:" + saludActual);
-        if (saludActual <= 0)
-        {
-            Morir();
-        }
-        Mover ();
-		Correr ();
-        Atacar();
+    void Update()
+    {
+
         Hurt();
         ManageBlinking();
         HandleKnockBack();
-        ManageAnimation();
-        ManejarGiros();
+
+
+        GestorVida();                               //Función para gestionar la vida del objeto y sus respectivas acciones
+        GestorTeclado();                            //Función para recibir los Inputs del teclado
+        GestorMouse();                              //Función para recibir los Inputs del mouse
+        GestorAtaques();                            //Función para gestionar los Ataques y tipos de Ataques
+        GestorAnimaciones();                        //Función para gestionar las animaciones del objeto
 
     }
 
-    //aqui se gestiona la fisica del player
-	void FixedUpdate () {
+    void FixedUpdate()
+    {
+        GestorMovimiento();                         //Función para manejar el movimiendo con fisica
+    }
 
-		//se crea vector 
-		Vector3 moveVector=new Vector3(0,0,0);
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Arma"))
+        {                                           //Verificamos que el objeto colisionado sea un arma (Tag: Arma)
+            DetectarObjetoArma(other);              //Función para detectar el arma con el que ha colisionado
+        }
+        DetectarObjetoHiriente(other);              //Función para detectar el objeto que le disminuirá vida
+        DetectarObjetoCura(other);                  //Función para detectar el objeto que le aumentará vida
+        ColissionParedes();
+    }
+
+    #endregion
+
+    #region Funciones Update
+    void GestorVida()
+    {
+        vida_actual = salud._vidaActual;                    //Guardamos la vida actual del objeto
+        if (vida_actual <= alerta_vida)                     //Verificamos si la vida del objeto está en riesgo
+        {
+            if (vida_actual > 0)                            //Verificamos si el objeto aun tiene vida
+            {
+                Debug.Log("Alerta de vida baja");           //Disparamos la animación de alerta de vida baja
+            }
+            else
+            {
+                Debug.Log("Dead End");                      //Disparamos la animación de la muerte del personaje
+                Destroy(gameObject);
+            }
+        }
+    }
+    public void GestorTeclado()
+    {
+        axis_horizontal = Input.GetAxis("Horizontal");  //Guardamos la variable Horizontal del Axis
+        axis_vertical = Input.GetAxis("Vertical");      //Guardamos la variable Vertical del Axis
+
+        if ((Input.GetKey(KeyCode.W) ||
+            Input.GetKey(KeyCode.A) ||
+            Input.GetKey(KeyCode.S) ||
+            Input.GetKey(KeyCode.D)) &&
+            !Input.GetKey(KeyCode.LeftShift))           //Verificamos si el personaje está en movimiento
+        {
+            caminar = true;                             //Activamos la variable "caminar" para decirle a la animación que ejecute el "caminar"
+        }
+        else if (caminar)                               //Verificamos si el personaje ya no está caminando, pero la variable sigue activada
+        {
+            caminar = false;                            //Desactivamos la variable "caminar" para decirle a la animación que está detenido
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))            //Verificamos si el personaje esta corriendo
+        {
+            correr = true;                              //Activamos la variable "correr" para decirle a la animación que ejecute el "correr"
+        }
+        else if (correr)                                //Verificamos si el personaje ya no está corriendo, pero la variable sigue activada
+        {
+            correr = false;                             //Desactivamos la variable "correr" para decirle a la animación que deje de ejecutar el "correr"
+        }
+    }
+    public void GestorMouse()
+    {
+        if (esta_atacando)                              //Verificamos si el personaje está atacando
+        {
+            reactivacion_ataque = intervalo_ataque;     //Reiniciamos el tiempo de reactivación para atacar
+            esta_atacando = false;                      //Desactivamos la variable "esta_atacando", si no, se reiniciaría el tiempo en cada frame
+        }
+        if (reactivacion_ataque >= 0)                   //Verificamos si el tiempo de reactivación es mayor o igual a 0
+        {
+            reactivacion_ataque -= Time.deltaTime;      //Disinuimos el valor del tiempo de reactivación hasta que sea menor a 0
+        }
+
+        if (reactivacion_ataque <= 0)                   //Verificamos si es menor o igual a 0 para reactivar los ataques
+        {
+            if (Input.GetMouseButton(0))
+            {
+                esta_atacando = true;                   //Activamos la variable de que está atacando con el clic izquierdo
+                Debug.Log("Se ha presionado el botón 0: Clic Izquierdo");
+            }
+            if (Input.GetMouseButton(1))
+            {
+                Debug.Log("Se ha presionado el botón 1: Clic Derecho");
+            }
+            if (Input.GetMouseButton(2))
+            {
+                Debug.Log("Se ha presionado el botón 2: Clic del medio");
+            }
+        }
+    }
+    public void GestorAtaques()
+    {
+        if (atacando_pistola)                       //Verificamos si el personaje está atacando con una pistola
+        {
+            atacando_pistola = false;               //Desactivamos la variable "atacando_pistola"
+        }
+        if (esta_atacando && tipo_arma == "Pistola")//Verificamos si el personaje está atacando y si el tipo de arma que sostiene es una Pistola
+        {
+            atacando_pistola = true;                //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+        }
+    }
+    public void GestorAnimaciones()
+    {
+        _animator.SetBool("Caminar", caminar);      //Asignamos el valor del estado "caminar" a la animación
+        _animator.SetBool("Correr", correr);        //Asignamos el valor del estado "caminar" a la animación
+        _animator.SetBool("AtacandoPistola", atacando_pistola); //Asignamos el valor de "atacando_pistola" a la animación
+        _animator.SetBool("TienePistola", tiene_pistola);       //Asignamos el valor de "tiene_pistola" a la animación
+        _animator.SetBool("TieneArma", tiene_arma);             //Asignamos el valor de "tiene_arma" a la animación
+
+
+        if (knockback > 0)
+        {
+            _animator.SetBool("hurt", true);
+        }
+        if (knockback < 0)
+        {
+            _animator.SetBool("hurt", false);
+        }
+
+    }
+    #endregion
+
+    #region FixedUpdate
+    public void GestorMovimiento()
+    {
+
+        Vector3 moveVector = new Vector3(0, 0, 0);                  //Creamos un Vector 3, el cual nos serirá para definir el movimiento
+        if (axis_horizontal > 0)                                    //Verificamos si el personaje se mueve hacia la derecha
+        {
+            transform.rotation = Quaternion.identity;               //Giramos el cuerpo del personaje hacia la derecha
+        }
+        if (axis_horizontal < 0)                                    //Verificamos si el personaje se mueve hacia la izquierda
+        {
+            transform.rotation = new Quaternion(0, 180, 0, 0);      //Giramos el cuerpo del personaje hacia la izquierda
+        }
+        if (correr)                                                 //Verificamos si el personaje está corriendo
+        {
+            moveVector.x = axis_horizontal * veloidad_correr;       //Asignamos la velocidad de movimiento al correr en el eje x
+            moveVector.y = axis_vertical * veloidad_correr;         //Asignamos la velocidad de movimiento al correr en el eje y
+        }
+        else
+        {
+            moveVector.x = axis_horizontal * velocidad_normal;      //Asignamos la velocidad de movimiento al caminar en el eje x
+            moveVector.y = axis_vertical * velocidad_normal;        //Asignamos la velocidad de movimiento al caminar en el eje y
+        }
+
+        rigidbody_Jugador.velocity = moveVector;                    //Le damos la velocidad al personaje con el moveVector
+
+
+
+
+
         //el knock back es el empuje que se le hace al player cuando recibe daño
         if (knockback > 0)
         {
@@ -137,9 +300,23 @@ public class Jugador : MonoBehaviour, IPersonaje  {
         else
         {
             //se carga la informacion para saber cuanto avanzara alessio
-            moveVector.x = h1 * velocidadAlterada;
-            moveVector.y = h2 * velocidadAlterada;
+            moveVector.x = axis_horizontal * velocidad_normal;
+            moveVector.y = axis_vertical * velocidad_normal;
         }
+
+
+        //permite que el player se muev
+        rigidbody_Jugador.velocity = moveVector;
+
+    }
+    #endregion
+
+    #region Colisiones
+
+    public void ColissionParedes()
+    {
+        //Area movida a esta sección para saber las colisiones
+        
 
         //se cargan elementos para gestionar raycast
         Vector3 boxSize = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -156,197 +333,45 @@ public class Jugador : MonoBehaviour, IPersonaje  {
             {
                 Debug.Log("Colision con bala enemiga");
             }
+
+        }
+    }
+
+    public void DetectarObjetoArma(Collider objeto_arma)
+    {
+        if (objeto_arma.name == "Pistola")              //Verificamos que tipo de arma encontramos
+        {
+            tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
+            sprite_brazoDerecho.sprite =
+                sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
+            tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
+            tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+            Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
             
         }
-
-        //permite que el player se muev
-        _rbAlessio.velocity = moveVector;
-
-
-	}
-
-    public void Agarrar_Pistola() //Metodo para que Alessio pueda agarrar la pistola y cambiar de arma
+    }
+    public void DetectarObjetoHiriente(Collider objeto_hiriente)
     {
-        //cargamos la pistola por defecto del jugador
-        Debug.Log("Se guardo pistola en inventario pistola:"+pistola.ToString());
-        pistola.transform.position = Arma_Player.transform.position; //La pistola adopta la posición del objeto vacío
-        pistola.transform.parent = Arma_Player.transform.parent;   //La pistola y el objeto vacio comparten el mismo objeto padre = ALessio
-        Debug.Log("Se guardo pistola en inventario pistola:" + pistola.ToString());
-        //Tipo_Arma = pistola.getPistola(); //Cambiamos el tipo de arma
-        //ataque_Alessio.setAtaque_Alessio(Prefab_Bala, Prefab_Golpe, Empty_Alessio, Tipo_Arma);  //Le damos los datos al ataque  de Alessio
+        if (objeto_hiriente.CompareTag("BalaEnemigo"))
+        {
+            salud.ModificarVida(objeto_hiriente.GetComponent<Bala>().danio_bala, objeto_hiriente.gameObject);
+        }
+        if (objeto_hiriente.CompareTag("Enemigo"))
+        {
+            salud.ModificarVida(20, objeto_hiriente.gameObject);
+
+        }
     }
-
-    public void Mover (){
-        if (puedeControlar)
-        {
-            h1 = Input.GetAxis("Horizontal");
-            h2 = Input.GetAxis("Vertical");
-        }
-        else
-        {
-            h1 = 0;
-            h2 = 0;
-        }
-		
-	}
-
-    //gestionar las animaciones del player
-    void ManageAnimation()
+    public void DetectarObjetoCura(Collider objeto_cura)
     {
-        if (h1 == 0)
-        {
-            _animator.SetFloat("MoveX", Mathf.Abs(h2));
-        }
-        if (h2 == 0)
-        {
-            _animator.SetFloat("MoveX", Mathf.Abs(h1));        //asignamos el valor absoluto de h1 a la variable MoveX del animator    
-        }
-
-        if (tieneArma)
-        {
-            _animator.SetBool("tieneArma",true);
-        }
-        if (!tieneArma)
-        {
-            _animator.SetBool("tieneArma", false);
-        }
-
-        if (isAttack)
-        {
-            //Si está atacando, activamos el Trigger del ataque y apagamos el isAttack
-            _animator.SetTrigger("Attack");
-            isAttack = false;
-        }
-
-        if (knockback > 0)
-        {
-            _animator.SetBool("hurt", true);
-        }
-        if (knockback < 0)
-        {
-            _animator.SetBool("hurt", false);
-        }
 
     }
+    #endregion
 
-    //Para manejar la ida de izq a der del personaje
-    void ManejarGiros()
-    {
-        if (h1 > 0)
-        {
-            transform.rotation = Quaternion.identity;
-        }
-        if (h1 < 0)
-        {
-            transform.rotation = new Quaternion(0, 180, 0, 0);
-        }
-    }
+    
 
-    public void Atacar(){
-        if (Input.GetMouseButtonDown(0)) //Al hacer clic derecho...
-        {
-            //if (pistola != null)
-            //{
-            //    Instantiate(Prefab_Bala, Arma_Player.position, Arma_Player.rotation); //si la pistola no es nula, se crea sus balas
-            //}
-            Intervalo_Ataque -= Time.deltaTime;
-            if (Intervalo_Ataque <= 0)
-            {
-                Debug.Log("Evaluando si tengo pistola="+ tieneArma);
-                if (tieneArma)
-                {
-                    Debug.Log("Tengo pistola y disparo la bala");
-                    isAttack = true;
-                    Instantiate(Prefab_Bala, Arma_Player.transform.position, Arma_Player.transform.rotation); //si la pistola no es nula, se crea sus balas
-                    
-                }
-                //if (pistola.tipoArma == "Pistola") //Se obtiene el tipo de Arma...
-                //{
-                //    Instantiate(Prefab_Bala, Empty_Alessio.position, Empty_Alessio.rotation); //y se crea el objeto dependiendo del arma, en este caso, una bala
-                //}
-                //else if (Tipo_Arma == "Golpear")
-                //{
-                //    Instantiate(Prefab_Golpe, Empty_Alessio.position, Empty_Alessio.rotation, Empty_Alessio.parent);
-                //}
-                Intervalo_Ataque = 0.02f;
-            }
 
-        }
-    }
-
-	public void Morir(){
-        Destroy(gameObject);
-	}
-
-	public void Coger(){
-       
-	}
-
-	public void Saltar(){
-	}
-
-	public void Correr(){
-		if(Input.GetKey(KeyCode.LeftShift)){
-			velocidadAlterada = velocidad * 2;
-		}
-		else{
-			velocidadAlterada = velocidad;
-		}
-	}
-
-	public void Curar(){
-	}
-
-	public void Lanzar(){
-	}
-
-	public void Abrir(){
-	}
-
-    ////esto se encarga de cuando te hacen daño
-    void Hurt()
-    {
-        //si la vida actual es menor a la vida que teniamos antes significa que hemos recibido daño
-        if (salud.healht < previousHealth)
-        {
-            //Layer para ser invulnerable
-            gameObject.layer = 12;
-            puedeControlar = false;
-            knockback = 2;
-            //verticalSpeed = -1;
-            if (salud.lastAttacker != null)
-            {
-                if (transform.position.x < salud.lastAttacker.transform.position.x)
-                {
-                    knockbackToRight = false;
-                }
-                else knockbackToRight = true;
-            }
-            //el player se vuelve invulnerable
-            Invoke("RestaurarCapa", 2);
-        }
-        previousHealth = salud.healht;
-    }
-
-    //se restaura al layer player
-    void RestaurarCapa()
-    {
-        gameObject.layer = 8;
-    }
-
-    void HandleKnockBack()
-    {
-        if (knockback > 0)
-        {
-
-            knockback -= Time.deltaTime * 5.5f;
-            if (knockback <= 0)
-            {
-                puedeControlar = true;
-            }
-        }
-    }
-
+    #region Funciones nuevas
     void ManageBlinking()
     {
 
@@ -398,47 +423,128 @@ public class Jugador : MonoBehaviour, IPersonaje  {
 
     }
 
-    //en el metodo para las colisiones se usara el metodo coger
-    void OnTriggerEnter(Collider other)
+    ////esto se encarga de cuando te hacen daño
+    void Hurt()
     {
-        if (other.tag == "Pistola")
+        //si la vida actual es menor a la vida que teniamos antes significa que hemos recibido daño
+        if (salud._vidaActual < vida_anterior)
         {
-            Debug.Log("Tengo una pistola");
-            tieneArma = true;
-            _spriteBrazoDerecho.sprite = _spriteWeapon;         //Signamos _spriteWeapon como sprite para el brazo derecho
-            Destroy(other.gameObject);
-           
-            //Agarrar_Pistola();
-            //Coger();
+            //Layer para ser invulnerable
+            gameObject.layer = 12;
+            puedeControlar = false;
+            knockback = 2;
+            //verticalSpeed = -1;
+            if (salud._ultimoAtacante != null)
+            {
+                if (transform.position.x < salud._ultimoAtacante.transform.position.x)
+                {
+                    knockbackToRight = false;
+                }
+                else knockbackToRight = true;
+            }
+            //el player se vuelve invulnerable
+            Invoke("RestaurarCapa", 2);
         }
-        //uso del metodo coger
-      
-        if (other.CompareTag("BalaEnemigo"))
-        {
-            //al impactarnos la bala
-            salud.ChangeHealth(other.GetComponent<Bala>().danio_bala,other.gameObject);
-            Hurt();
-            
-        }
+        vida_anterior = salud._vidaActual;
+    }
 
-        if (other.CompareTag("Enemigo"))
-        {
-            salud.ChangeHealth(20, other.gameObject);
+    //se restaura al layer player
+    void RestaurarCapa()
+    {
+        gameObject.layer = 8;
+    }
 
+    void HandleKnockBack()
+    {
+        if (knockback > 0)
+        {
+
+            knockback -= Time.deltaTime * 5.5f;
+            if (knockback <= 0)
+            {
+                puedeControlar = true;
+            }
         }
     }
 
+
+
+    //en el metodo para las colisiones se usara el metodo coger
+
+
     void OnDrawGizmos()
     {
-       
-            Gizmos.color = Color.green;
-
-
+        Gizmos.color = Color.green;
         Vector3 boxSize = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         Gizmos.DrawWireCube(transform.position, boxSize);
-
         Vector3 down = new Vector3(0, -1, 0);
         Vector3 pos = transform.position + (down * rayLength);
         Gizmos.DrawWireCube(pos, boxSize);
     }
+    #endregion
+
+
+    #region Funciones Alessio Interface
+    //He dejado esto a un lado por cuestión de nombres, más adelante tocará cambiar el nombre a las interfaces
+    public void Atacar()
+    {
+    }
+
+    public void Saltar()
+    {
+    }
+
+
+    public void Curar()
+    {
+    }
+
+    public void Lanzar()
+    {
+    }
+
+    public void Abrir()
+    {
+    }
+    public void Correr()
+    {
+    }
+    ////esto se encarga de cuando te hacen daño
+    //void Hurt()
+    //{
+    //    //si la vida actual es menor a la vidaque teniamos antes significa que hemos recibido daño
+    //    if (salud.healht < vida_anterior)
+    //    {
+
+    //        salud.healht -= 10;
+    //        //Layer para ser invulnerable
+    //        //gameObject.layer = 10;
+    //        //canControl = false;
+    //        //knockback = 2;
+    //        //verticalSpeed = -1;
+    //        //if (transform.position.x < salud.lastAttacker.transform.position.x)
+    //        //{
+    //        //    knockbackToRight = false;
+    //        //}
+    //        //else knockbackToRight = true;
+
+    //        //Invoke("restaurarCapa", 2);
+    //    }
+    //    vida_anterior = salud.healht;
+    //}
+
+    //en el metodo para las colisiones se usara el metodo coger
+
+
+    public void Morir()
+    {
+        Destroy(gameObject);
+    }
+    public void Mover()
+    {
+    }
+    public void Coger()
+    {
+    }
+    #endregion
 }

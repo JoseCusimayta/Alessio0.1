@@ -11,6 +11,7 @@ TagManager:
   - Rufianes
   - BalaEnemigo
   - Sprite
+  - Arma
   layers:
   - Default
   - TransparentFX

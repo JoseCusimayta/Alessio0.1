@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour {
-    public float healht = 100;
-    public float maxHealht = 100;
-    public GameObject lastAttacker;
+public class Health : MonoBehaviour
+{
+    #region Variables
+    public float _vidaActual = 100;             //Variable para calcular la vida actual del objeto
+    public float _vidaMaxima = 100;             //Varable para establecer una cantidad máxima a la vida
+    public GameObject _ultimoAtacante;          //Variable para guardar el último objeto que lo golpeó
+    #endregion
+
+    #region Funciones de Unity
     // Use this for initialization
     void Start()
     {
@@ -17,18 +22,21 @@ public class Health : MonoBehaviour {
     {
 
     }
+    #endregion
 
-    public void ChangeHealth(float damage, GameObject attacker)
+    #region Funcione de Alessio
+    public void ModificarVida(float golpe, GameObject atacante)
     {
-        healht -= damage;
-        if (healht > maxHealht)
+        _vidaActual -= golpe;
+        if (_vidaActual > _vidaMaxima)
         {
-            healht = maxHealht;
+            _vidaActual = _vidaMaxima;
         }
-        if (healht < 0)
+        if (_vidaActual < 0)
         {
-            healht = 0;
+            _vidaActual = 0;
         }
-        lastAttacker = attacker;
+        _ultimoAtacante = atacante;
     }
+    #endregion
 }
