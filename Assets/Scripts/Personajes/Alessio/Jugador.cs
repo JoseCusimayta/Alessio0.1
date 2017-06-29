@@ -120,7 +120,6 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     void Update()
     {
-
         Hurt();
         ManageBlinking();
         HandleKnockBack();
@@ -374,21 +373,11 @@ public class Jugador : MonoBehaviour, IPersonaje
     #region Funciones nuevas
     void ManageBlinking()
     {
-
         //si esta en estado invulnerable
         if (gameObject.layer == 12)
         {
             Color newColor = cabeza.GetComponent<SpriteRenderer>().color;
             newColor.a = Mathf.Lerp(newColor.a, targetAlpha, Time.deltaTime * 20);
-            Debug.Log("newColor.a=" + newColor.a);
-            if (newColor.a > 0.9f)
-            {
-                targetAlpha = 0;
-            }
-            else if (newColor.a < 0.1f)
-            {
-                targetAlpha = 1;
-            }
             cabeza.GetComponent<SpriteRenderer>().color = newColor;
             cuerpo.GetComponent<SpriteRenderer>().color = newColor;
             AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;
@@ -401,6 +390,15 @@ public class Jugador : MonoBehaviour, IPersonaje
             MusloI.GetComponent<SpriteRenderer>().color = newColor;
             PiernaI.GetComponent<SpriteRenderer>().color = newColor;
             PieI.GetComponent<SpriteRenderer>().color = newColor;
+
+            if (newColor.a > 0.9f)
+            {
+                targetAlpha = 0;
+            }
+            else if (newColor.a < 0.1f)
+            {
+                targetAlpha = 1;
+            }
 
         }
         if (gameObject.layer != 12)
