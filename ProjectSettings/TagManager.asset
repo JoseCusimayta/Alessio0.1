@@ -12,6 +12,13 @@ TagManager:
   - BalaEnemigo
   - Sprite
   - Arma
+  - Pantalla
+  - BarraVida
+  - Puntuacion
+  - PostNivel
+  - FinalNivel
+  - PanelPausa
+  - Boton
   layers:
   - Default
   - TransparentFX
@@ -26,7 +33,7 @@ TagManager:
   - Enemigo
   - Arma
   - Invulnerable
-  - 
+  - FinalNivel
   - 
   - 
   - 

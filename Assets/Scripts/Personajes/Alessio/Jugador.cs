@@ -27,6 +27,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
     public Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
     public Pistola pistola;                         //Variable para guardar la clase Pistola
+
     #endregion
 
     #region movimiento
@@ -74,7 +75,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public LayerMask _mask;
 
     //variable para determinar si el jugador puede controlar al personaje o no
-    private bool puedeControlar;
+    public bool puedeControlar;
     //variables para controlar el retroceso
     public float knockback;
     private bool knockbackToRight;
@@ -123,7 +124,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         Hurt();
         ManageBlinking();
         HandleKnockBack();
-
+        Atacar();
 
         GestorVida();                               //Función para gestionar la vida del objeto y sus respectivas acciones
         GestorTeclado();                            //Función para recibir los Inputs del teclado
@@ -141,12 +142,15 @@ public class Jugador : MonoBehaviour, IPersonaje
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Arma"))
-        {                                           //Verificamos que el objeto colisionado sea un arma (Tag: Arma)
+        {                                         //Verificamos que el objeto colisionado sea un arma (Tag: Arma)
+            Debug.Log("Tengo un arma");
             DetectarObjetoArma(other);              //Función para detectar el arma con el que ha colisionado
         }
         DetectarObjetoHiriente(other);              //Función para detectar el objeto que le disminuirá vida
         DetectarObjetoCura(other);                  //Función para detectar el objeto que le aumentará vida
         ColissionParedes();
+
+
     }
 
     #endregion
@@ -212,7 +216,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             if (Input.GetMouseButton(0))
             {
                 esta_atacando = true;                   //Activamos la variable de que está atacando con el clic izquierdo
-                Debug.Log("Se ha presionado el botón 0: Clic Izquierdo");
+                Debug.Log("Se ha presionado el botón 0: Clic Izquierdo, esta_atacando = true");
             }
             if (Input.GetMouseButton(1))
             {
@@ -484,8 +488,23 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     #region Funciones Alessio Interface
     //He dejado esto a un lado por cuestión de nombres, más adelante tocará cambiar el nombre a las interfaces
+    //paolo: vas a cambiar los nombres de estas funciones? recuerda que son funciones comunes,la interfaz va a ser usada por todos los personajes
     public void Atacar()
     {
+        // el player tiene dos tipos de ataques:
+        //1. con golpes (a mano limpia o armas blancas) 
+        //2. con armas de fuego (pistola, metraca, etc.)
+        //por ahora solo esta la opcion de arma de fuego
+        if (esta_atacando)
+        {
+            if (tiene_pistola)
+            {
+                Debug.Log("Disparando...");
+                Instantiate(Prefab_Bala, arma_jugador.transform.position, arma_jugador.transform.rotation);
+            }
+        }
+        
+       
     }
 
     public void Saltar()
@@ -507,32 +526,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public void Correr()
     {
     }
-    ////esto se encarga de cuando te hacen daño
-    //void Hurt()
-    //{
-    //    //si la vida actual es menor a la vidaque teniamos antes significa que hemos recibido daño
-    //    if (salud.healht < vida_anterior)
-    //    {
-
-    //        salud.healht -= 10;
-    //        //Layer para ser invulnerable
-    //        //gameObject.layer = 10;
-    //        //canControl = false;
-    //        //knockback = 2;
-    //        //verticalSpeed = -1;
-    //        //if (transform.position.x < salud.lastAttacker.transform.position.x)
-    //        //{
-    //        //    knockbackToRight = false;
-    //        //}
-    //        //else knockbackToRight = true;
-
-    //        //Invoke("restaurarCapa", 2);
-    //    }
-    //    vida_anterior = salud.healht;
-    //}
-
-    //en el metodo para las colisiones se usara el metodo coger
-
+   
 
     public void Morir()
     {
