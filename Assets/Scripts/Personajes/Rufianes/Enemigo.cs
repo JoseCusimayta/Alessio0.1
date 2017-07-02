@@ -136,7 +136,6 @@ public class Enemigo : MonoBehaviour,IPersonaje {
    
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Se detecto algo: "+other.tag);
         if (other.CompareTag("Player"))
         {
             other.GetComponent<Health>().ModificarVida(20, gameObject);

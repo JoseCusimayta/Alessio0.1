@@ -37,7 +37,7 @@ public class SalirDeNivel : MonoBehaviour {
         if (other.gameObject.CompareTag("Player"))
         {
             indicadorSalida = true;
-            player.GetComponent<Jugador>().puedeControlar = false;
+            player.GetComponent<Jugador>().puede_controlar = false;
             Debug.Log("Colisiono con player, proxima accion se ira del nivel");
 
 
