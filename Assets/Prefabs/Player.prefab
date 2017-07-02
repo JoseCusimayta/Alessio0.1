@@ -519,7 +519,7 @@ MonoBehaviour:
   arma_jugador: {fileID: 4783467381151784}
   pistola: {fileID: 0}
   velocidad_normal: 5
-  veloidad_correr: 10
+  veloidad_correr: 15
   velocidad_con_arma: 2
   axis_horizontal: 0
   axis_vertical: 0
@@ -530,12 +530,14 @@ MonoBehaviour:
   colision_derecha: 0
   colision_izquierda: 0
   distancia_colision: 0.6
+  caja_colision: {x: 0, y: 0, z: 0}
   retroceso: 2
   retroceder_derecha: 0
+  retrocediendo: 0
   _animator: {fileID: 95036161759302372}
   sprite_mano_arma: {fileID: 21300002, guid: 17a15e6c569b95645b0e9051b98c5e0c, type: 3}
   sprite_brazoDerecho: {fileID: 212469631928651968}
-  targetAlpha: 0
+  transparencia_objetivo: 0
   inventario: []
   rigidbody_Jugador: {fileID: 54605245508816216}
   Prefab_Bala: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
@@ -547,18 +549,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967039
   puede_controlar: 1
-  cabeza: {fileID: 0}
-  cuerpo: {fileID: 0}
-  AnteBrazoD: {fileID: 0}
-  BrazoD: {fileID: 0}
-  AnteBrazoI: {fileID: 0}
-  BrazoI: {fileID: 0}
-  MusloD: {fileID: 0}
-  PiernaD: {fileID: 0}
-  PieD: {fileID: 0}
-  MusloI: {fileID: 0}
-  PiernaI: {fileID: 0}
-  PieI: {fileID: 0}
+  cabeza: {fileID: 1292514452659014}
+  cuerpo: {fileID: 1117414148017850}
+  AnteBrazoD: {fileID: 1390051029683544}
+  BrazoD: {fileID: 1914842261561854}
+  AnteBrazoI: {fileID: 1094222353841900}
+  BrazoI: {fileID: 1229801049654914}
+  MusloD: {fileID: 1821833222633094}
+  PiernaD: {fileID: 1293691985182276}
+  PieD: {fileID: 1950140415331200}
+  MusloI: {fileID: 1797125568050380}
+  PiernaI: {fileID: 1680133437124774}
+  PieI: {fileID: 1459417903895808}
 --- !u!212 &212014505769368362
 SpriteRenderer:
   m_ObjectHideFlags: 1

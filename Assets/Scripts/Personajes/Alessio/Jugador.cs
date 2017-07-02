@@ -177,8 +177,11 @@ public class Jugador : MonoBehaviour, IPersonaje
             {
                 caminar = false;                                //Desactivamos la variable "caminar" para decirle a la animación que está detenido
             }
-
-            if (Input.GetKey(KeyCode.LeftShift))                //Verificamos si el personaje esta corriendo
+            if((Input.GetKey(KeyCode.W) ||
+                Input.GetKey(KeyCode.A) ||
+                Input.GetKey(KeyCode.S) ||
+                Input.GetKey(KeyCode.D)) &&
+                Input.GetKey(KeyCode.LeftShift))                //Verificamos si el personaje esta corriendo            
             {
                 correr = true;                                  //Activamos la variable "correr" para decirle a la animación que ejecute el "correr"
             }
@@ -190,16 +193,16 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void GestorMouse()
     {
-        if (esta_atacando)                                  //Verificamos si el personaje está atacando
+        if (esta_atacando)                                      //Verificamos si el personaje está atacando
         {
-            reactivacion_ataque = intervalo_ataque;         //Reiniciamos el tiempo de reactivación para atacar
-            esta_atacando = false;                          //Desactivamos la variable "esta_atacando", si no, se reiniciaría el tiempo en cada frame
+            reactivacion_ataque = intervalo_ataque;             //Reiniciamos el tiempo de reactivación para atacar
+            esta_atacando = false;                              //Desactivamos la variable "esta_atacando", si no, se reiniciaría el tiempo en cada frame
         }
         if (puede_controlar)
         {
             if (reactivacion_ataque >= 0)                       //Verificamos si el tiempo de reactivación es mayor o igual a 0
             {
-                reactivacion_ataque -= Time.deltaTime;          //Disinuimos el valor del tiempo de reactivación hasta que sea menor a 0
+                reactivacion_ataque -= Time.deltaTime;          //Disinuimos el valor del tiempo de reactivación hasta que sea menor a 0               
             }
 
             if (reactivacion_ataque <= 0)                       //Verificamos si es menor o igual a 0 para reactivar los ataques
@@ -222,16 +225,16 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void GestorAtaques()
     {
-        if (atacando_pistola)                               //Verificamos si el personaje está atacando con una pistola
+        if (atacando_pistola)                                   //Verificamos si el personaje está atacando con una pistola
         {
-            atacando_pistola = false;                       //Desactivamos la variable "atacando_pistola"
+            atacando_pistola = false;                           //Desactivamos la variable "atacando_pistola"
         }
-        if (esta_atacando && tiene_pistola)                 //Verificamos si el personaje está atacando y si el tipo de arma que sostiene es una Pistola
+        if (esta_atacando && tiene_pistola)                     //Verificamos si el personaje está atacando y si el tipo de arma que sostiene es una Pistola
         {
-            atacando_pistola = true;                        //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+            atacando_pistola = true;                            //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
             Instantiate(Prefab_Bala,
                 arma_jugador.transform.position,
-                arma_jugador.transform.rotation);           //Creamos la bala con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+                arma_jugador.transform.rotation);               //Creamos la bala con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
         }
 
     }
