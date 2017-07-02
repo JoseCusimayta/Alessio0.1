@@ -50,15 +50,16 @@ public class Jugador : MonoBehaviour, IPersonaje
     #endregion
 
     #region Retroceso (KnockBack)
-    public float retroceso=2;                       //Variable para guardar la velocidad con la que retrocederá el personaje (KnockBack)
+    public float retroceso;                         //Variable para guardar la velocidad con la que retrocederá el personaje (KnockBack)
     public bool retroceder_derecha;                 //Variable para saber si el personaje va a retroceder a la derecha
+    public bool retrocediendo;                      //Variable para saber si el personaje está retrocediendo, usado para la animación
     #endregion
 
     #region Animacion
     public Animator _animator;                      //Variable para guardar el Animator del personaje
     public Sprite sprite_mano_arma;                 //Variable para guardar el sprite de la mano derecha con arma
     public SpriteRenderer sprite_brazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
-    public float targetAlpha;
+    public float transparencia_objetivo;            //Variable para determinar el nivel de transparencia (Alpha)
     #endregion
 
     #region Personaje
@@ -68,7 +69,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public GameObject Prefab_Golpe;                 //Variable para guardar el prefab del golpe
     public GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
     public LayerMask _mask;                         //Variable para guardar y modificar la máscara del Personaje
-    public bool puede_controlar=true;               //Variable para determinar si el jugador puede controlar al personaje
+    public bool puede_controlar = true;               //Variable para determinar si el jugador puede controlar al personaje
     #region Partes del Cuerpo
     public GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
     public GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
@@ -87,11 +88,10 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     #endregion
 
-
-
     #region Funciones de Unity
     void Start()
     {
+        retroceso = 0;                                  //Iniciamos la variable "retroceso con 0", porque al inicio tiene un número positivo y eso genera errores en la animación del inicio        
         #region Asignando el cuerpo del Personaje
         cabeza = GameObject.Find("Cabeza");
         cuerpo = GameObject.Find("Cuerpo");
@@ -161,29 +161,32 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void GestorTeclado()
     {
-        axis_horizontal = Input.GetAxis("Horizontal");      //Guardamos la variable Horizontal del Axis
-        axis_vertical = Input.GetAxis("Vertical");          //Guardamos la variable Vertical del Axis
+        if (puede_controlar)
+        {
+            axis_horizontal = Input.GetAxis("Horizontal");      //Guardamos la variable Horizontal del Axis
+            axis_vertical = Input.GetAxis("Vertical");          //Guardamos la variable Vertical del Axis
 
-        if ((Input.GetKey(KeyCode.W) ||
-            Input.GetKey(KeyCode.A) ||
-            Input.GetKey(KeyCode.S) ||
-            Input.GetKey(KeyCode.D)) &&
-            !Input.GetKey(KeyCode.LeftShift))               //Verificamos si el personaje está en movimiento
-        {
-            caminar = true;                                 //Activamos la variable "caminar" para decirle a la animación que ejecute el "caminar"
-        }
-        else if (caminar)                                   //Verificamos si el personaje ya no está caminando, pero la variable sigue activada
-        {
-            caminar = false;                                //Desactivamos la variable "caminar" para decirle a la animación que está detenido
-        }
+            if ((Input.GetKey(KeyCode.W) ||
+                Input.GetKey(KeyCode.A) ||
+                Input.GetKey(KeyCode.S) ||
+                Input.GetKey(KeyCode.D)) &&
+                !Input.GetKey(KeyCode.LeftShift))               //Verificamos si el personaje está en movimiento
+            {
+                caminar = true;                                 //Activamos la variable "caminar" para decirle a la animación que ejecute el "caminar"
+            }
+            else if (caminar)                                   //Verificamos si el personaje ya no está caminando, pero la variable sigue activada
+            {
+                caminar = false;                                //Desactivamos la variable "caminar" para decirle a la animación que está detenido
+            }
 
-        if (Input.GetKey(KeyCode.LeftShift))                //Verificamos si el personaje esta corriendo
-        {
-            correr = true;                                  //Activamos la variable "correr" para decirle a la animación que ejecute el "correr"
-        }
-        else if (correr)                                    //Verificamos si el personaje ya no está corriendo, pero la variable sigue activada
-        {
-            correr = false;                                 //Desactivamos la variable "correr" para decirle a la animación que deje de ejecutar el "correr"
+            if (Input.GetKey(KeyCode.LeftShift))                //Verificamos si el personaje esta corriendo
+            {
+                correr = true;                                  //Activamos la variable "correr" para decirle a la animación que ejecute el "correr"
+            }
+            else if (correr)                                    //Verificamos si el personaje ya no está corriendo, pero la variable sigue activada
+            {
+                correr = false;                                 //Desactivamos la variable "correr" para decirle a la animación que deje de ejecutar el "correr"
+            }
         }
     }
     public void GestorMouse()
@@ -193,25 +196,28 @@ public class Jugador : MonoBehaviour, IPersonaje
             reactivacion_ataque = intervalo_ataque;         //Reiniciamos el tiempo de reactivación para atacar
             esta_atacando = false;                          //Desactivamos la variable "esta_atacando", si no, se reiniciaría el tiempo en cada frame
         }
-        if (reactivacion_ataque >= 0)                       //Verificamos si el tiempo de reactivación es mayor o igual a 0
+        if (puede_controlar)
         {
-            reactivacion_ataque -= Time.deltaTime;          //Disinuimos el valor del tiempo de reactivación hasta que sea menor a 0
-        }
+            if (reactivacion_ataque >= 0)                       //Verificamos si el tiempo de reactivación es mayor o igual a 0
+            {
+                reactivacion_ataque -= Time.deltaTime;          //Disinuimos el valor del tiempo de reactivación hasta que sea menor a 0
+            }
 
-        if (reactivacion_ataque <= 0)                       //Verificamos si es menor o igual a 0 para reactivar los ataques
-        {
-            if (Input.GetMouseButton(0))
+            if (reactivacion_ataque <= 0)                       //Verificamos si es menor o igual a 0 para reactivar los ataques
             {
-                esta_atacando = true;                       //Activamos la variable de que está atacando con el clic izquierdo
-                Debug.Log("Se ha presionado el botón 0: Clic Izquierdo, esta_atacando = true");
-            }
-            if (Input.GetMouseButton(1))
-            {
-                Debug.Log("Se ha presionado el botón 1: Clic Derecho");
-            }
-            if (Input.GetMouseButton(2))
-            {
-                Debug.Log("Se ha presionado el botón 2: Clic del medio");
+                if (Input.GetMouseButton(0))
+                {
+                    esta_atacando = true;                       //Activamos la variable de que está atacando con el clic izquierdo
+                    Debug.Log("Se ha presionado el botón 0: Clic Izquierdo, esta_atacando = true");
+                }
+                if (Input.GetMouseButton(1))
+                {
+                    Debug.Log("Se ha presionado el botón 1: Clic Derecho");
+                }
+                if (Input.GetMouseButton(2))
+                {
+                    Debug.Log("Se ha presionado el botón 2: Clic del medio");
+                }
             }
         }
     }
@@ -224,9 +230,11 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (esta_atacando && tiene_pistola)                 //Verificamos si el personaje está atacando y si el tipo de arma que sostiene es una Pistola
         {
             atacando_pistola = true;                        //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
-            Instantiate(Prefab_Bala, arma_jugador.transform.position, arma_jugador.transform.rotation);
+            Instantiate(Prefab_Bala,
+                arma_jugador.transform.position,
+                arma_jugador.transform.rotation);           //Creamos la bala con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
         }
-        
+
     }
     public void GestorAnimaciones()
     {
@@ -234,19 +242,8 @@ public class Jugador : MonoBehaviour, IPersonaje
         _animator.SetBool("Correr", correr);                    //Asignamos el valor del estado "caminar" a la animación
         _animator.SetBool("AtacandoPistola", atacando_pistola); //Asignamos el valor de "atacando_pistola" a la animación
         _animator.SetBool("TienePistola", tiene_pistola);       //Asignamos el valor de "tiene_pistola" a la animación
-        _animator.SetBool("TieneArma", tiene_arma);             //Asignamos el valor de "tiene_arma" a la animación
-
-
-        if (retroceso > 0)
-        {
-            Debug.Log("ssss");
-            _animator.SetBool("hurt", true);
-        }
-        if (retroceso < 0)
-        {
-            _animator.SetBool("hurt", false);
-        }
-
+        _animator.SetBool("TieneArma", tiene_arma);             //Asignamos el valor de "tiene_arma" a la animación                          
+        _animator.SetBool("hurt", retrocediendo);
     }
     #endregion
 
@@ -263,44 +260,33 @@ public class Jugador : MonoBehaviour, IPersonaje
         {
             transform.rotation = new Quaternion(0, 180, 0, 0);      //Giramos el cuerpo del personaje hacia la izquierda
         }
-        if (correr)                                                 //Verificamos si el personaje está corriendo
-        {
-            moveVector.x = axis_horizontal * veloidad_correr;       //Asignamos la velocidad de movimiento al correr en el eje x
-            moveVector.y = axis_vertical * veloidad_correr;         //Asignamos la velocidad de movimiento al correr en el eje y
+        if (retroceso > 0)
+        {                                                           //Verificamos que exista un retroceso mayor a 0            
+            retrocediendo = true;
+            if (retroceder_derecha)
+            {                                                       //Verificamos si el personaje retrocerá hacia la derecha
+                moveVector.x = retroceso;                           //Hacemos retroceder al personaje hacia la derecha
+            }
+            else
+            {
+                moveVector.x = -retroceso;                          //Hacemos retroceder al personaje hacia la derecha
+            }
         }
         else
         {
-            moveVector.x = axis_horizontal * velocidad_normal;      //Asignamos la velocidad de movimiento al caminar en el eje x
-            moveVector.y = axis_vertical * velocidad_normal;        //Asignamos la velocidad de movimiento al caminar en el eje y
+            if (correr)                                                 //Verificamos si el personaje está corriendo
+            {
+                moveVector.x = axis_horizontal * veloidad_correr;       //Asignamos la velocidad de movimiento al correr en el eje x
+                moveVector.y = axis_vertical * veloidad_correr;         //Asignamos la velocidad de movimiento al correr en el eje y
+            }
+            else
+            {
+                moveVector.x = axis_horizontal * velocidad_normal;      //Asignamos la velocidad de movimiento al caminar en el eje x
+                moveVector.y = axis_vertical * velocidad_normal;        //Asignamos la velocidad de movimiento al caminar en el eje y
+            }
         }
 
         rigidbody_Jugador.velocity = moveVector;                    //Le damos la velocidad al personaje con el moveVector
-
-
-
-
-
-        //el knock back es el empuje que se le hace al player cuando recibe daño
-        if (retroceso > 0)
-        {
-            if (retroceder_derecha)
-            {
-                moveVector.x = retroceso;
-            }
-            else moveVector.x = -retroceso;
-
-        }
-        else
-        {
-            //se carga la informacion para saber cuanto avanzara alessio
-            moveVector.x = axis_horizontal * velocidad_normal;
-            moveVector.y = axis_vertical * velocidad_normal;
-        }
-
-
-        //permite que el player se muev
-        rigidbody_Jugador.velocity = moveVector;
-
     }
     #endregion
 
@@ -309,7 +295,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public void ColissionParedes()
     {
         //Area movida a esta sección para saber las colisiones
-        
+
 
         //se cargan elementos para gestionar raycast
         Vector3 boxSize = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -340,7 +326,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
             Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
-            
+
         }
     }
     public void DetectarObjetoHiriente(Collider objeto_hiriente)
@@ -361,7 +347,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     #endregion
 
-    
+
 
 
     #region Funciones nuevas
@@ -371,7 +357,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (gameObject.layer == 12)
         {
             Color newColor = cabeza.GetComponent<SpriteRenderer>().color;
-            newColor.a = Mathf.Lerp(newColor.a, targetAlpha, Time.deltaTime * 20);
+            newColor.a = Mathf.Lerp(newColor.a, transparencia_objetivo, Time.deltaTime * 20);
             cabeza.GetComponent<SpriteRenderer>().color = newColor;
             cuerpo.GetComponent<SpriteRenderer>().color = newColor;
             AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;
@@ -387,11 +373,11 @@ public class Jugador : MonoBehaviour, IPersonaje
 
             if (newColor.a > 0.9f)
             {
-                targetAlpha = 0;
+                transparencia_objetivo = 0;
             }
             else if (newColor.a < 0.1f)
             {
-                targetAlpha = 1;
+                transparencia_objetivo = 1;
             }
 
         }
@@ -421,6 +407,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         //si la vida actual es menor a la vida que teniamos antes significa que hemos recibido daño
         if (salud._vidaActual < vida_anterior)
         {
+            Debug.Log("sd");
             //Layer para ser invulnerable
             gameObject.layer = 12;
             puede_controlar = false;
@@ -450,11 +437,12 @@ public class Jugador : MonoBehaviour, IPersonaje
     {
         if (retroceso > 0)
         {
-
             retroceso -= Time.deltaTime * 5.5f;
             if (retroceso <= 0)
             {
+                reactivacion_ataque = intervalo_ataque;
                 puede_controlar = true;
+                retrocediendo = false;
             }
         }
     }
@@ -481,9 +469,9 @@ public class Jugador : MonoBehaviour, IPersonaje
     //paolo: vas a cambiar los nombres de estas funciones? recuerda que son funciones comunes,la interfaz va a ser usada por todos los personajes
     public void Atacar()
     {
-       
-        
-       
+
+
+
     }
 
     public void Saltar()
@@ -505,7 +493,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public void Correr()
     {
     }
-   
+
 
     public void Morir()
     {
