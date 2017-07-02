@@ -30,7 +30,7 @@ public class GeneradorEnemigos : MonoBehaviour {
         z = 0.0f; //Posición del eje Z en 0
         Vector3 vector3 = new Vector3(x, y, z); //Se crea un vector para guardar la posición en los ejes        
         Enemigo rufianesAI = Prefab_Rufian.GetComponent<Enemigo>();
-        rufianesAI.player = Alessio;
+        rufianesAI.jugador = Alessio;
         Instantiate(Prefab_Rufian, vector3, transform.rotation); //Crear un nuevo rufian con los anteriores valores 
 
         Tiempo_Respawn = Random.Range(1, 5);

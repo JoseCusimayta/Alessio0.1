@@ -2,151 +2,224 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemigo : MonoBehaviour,IPersonaje {
+public class Enemigo : MonoBehaviour, IPersonaje
+{
 
-	public float vida=100;			//La vida actual
-    private Health health;
-    private float vidaPrevia;
-    public string tipo_arma;	//Indica que arma se esta usando actualmente
-	public float alerta_vida;	//Avisa al jugador que Alessio tiene poca vida
-	public float velocidad=5;		//Velocidad normal de enemigo
-	public float velocidadAlterada=5;		//Velocidad alterada por algun otro tipo de Alessio
-	public float danio_golpe;	//Cantidad de daño que realizan los golpes de Alessio a los enemigos
+    #region Variables
 
-    public GameObject Prefab_Bala, Prefab_Rufian, Prefab_Explosion, Empty_Rufianes;
-    public GameObject player;
-    public Pistola pistolaEnemigo;
-    float x, y, z;
+    #region Variables de Salud
+    public Health salud;                            //Variable para obtener la clase Health
+    public float vida_actual;                       //Variable para guardar la cantidad de vida actual    
+    public float vida_maxima;                       //Variable para determinar la cantidad de vida máxima posible que puede tener el Objeto
+    public float vida_anterior;                     //Variable para guardar la cantidad de vida que tenía antes de ser golpeado    
+    #endregion
 
-    public bool reposo;		
-	//truo  --> Reposo (El enemigo está quieto, si detecta a Alessio dispara, pero no lo persigue)
-	//false --> Patrullaje (El enemigo patrulla, si detecta a Alessio dispara y pesigue hasta que salga de su rango)
-	public bool alerta;
-	//true  --> Persigue a Alessio y dispara hasta matarlo o morir
-	//false --> Solo dispara y deja de disparar cuando Alessio sale del rango
-	public float radio_Alcance;		//Perimetro de Vision: Si detecta a Alessio, dispara y/o persigue - Depende del reposo y Alerta
+    #region Variables de Ataques
+    public GameObject punto_disparo;                //Variable para determinar cual será el puntode disparo del Rufian
+    public float radio_Alcance;		                //Variable para determinar el radio de visión del objeto para activar sus funciones de Ataque    
+    public bool persecucion;                        //Variable para determinarsi el Rufín tendrá la acción de perseguir al jugador cuando lo detecte
+    public PatronMovimiento patronMovimiento;       //Variable para guardar el patrón de movimiento del objeto    
+    public float intervalo_ataque;                  //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar
+    public float reactivacion_ataque = 2;           //Variable para manejar la velocidad de ataque
+    public bool jugador_detectado;                  //Variable para determinar si se ha detectado un jugador
+    public CampoEnemigo rango_vision;               //Variable para guardar los datos que tenga el Campo de Visión
+    public bool esta_atacando;                      //Variable para saber si el personaje está atacando
+    #endregion
 
-	private PatronMovimiento patronMovimiento;
-    //para controlar la cadencia del disparo
-    private float Intervalo_Ataque = 0;
+    #region Variables de Movimiento
+    public bool patrullaje;                         //Variable para determinar si el objeto estará en reposo o en patrullaje constante
+    public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el objeto
+    Vector3 direccion_movimiento;                   //Variable para determinar hacia dónde se moverá
+    float x, y, z;                                  //Variable para determinar dónde aparecerán los objetos
+    #endregion
 
-    
-    // Use this for initialization
-    void Start () {
-        reposo = true;
-		patronMovimiento = GetComponent<PatronMovimiento> ();
-        Coger();
-        health = GetComponent<Health>();
-        //Prefab_Bala.transform.Rotate(0, 0, -180);
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        Mover();
-        if(reposo == false)
-        {
-            Atacar();
-        }
-        //destruir al enemigo
-        float saludEnemigo = health._vidaActual;
-        if (saludEnemigo <= 0)
-        {
-            Morir();
-        }
+    #region Variables de Personaje
+    public GameObject jugador;                       //Variable para guardar al objeto "Player/Jugador"
+    #endregion
 
-    }
+    #region Variables de Rufian
+    public GameObject Prefab_Bala, Prefab_Rufian, Prefab_Explosion;
 
-	public void Mover (){
-        if (player != null && reposo==false)
-        {
-            //calculamos el vector entre la bala y el player
-            Vector3 direccion = player.transform.position - transform.position;
+    #endregion
 
-            //normalizamos el vector para que su longitud sea 1
-            direccion.Normalize();
+    #endregion
 
-            //movemos el objeto usando el vector
-            transform.Translate(direccion * velocidad * Time.deltaTime);
-        }
-    }
-
-   public void Atacar(){
-        Intervalo_Ataque -= Time.deltaTime;
-        //Debug.Log("Intervalo_Ataque=" + Intervalo_Ataque);
-        if (Intervalo_Ataque <= 0)
-        {
-            if (pistolaEnemigo != null)
-            {
-                Instantiate(Prefab_Bala, Empty_Rufianes.transform.position, Empty_Rufianes.transform.rotation); //Comienza a disparar desde el objeto vacio
-               
-            }
-        }
-        Intervalo_Ataque = 0.04f;
-
-    }
-
-	public void Morir(){
-        Instantiate(Prefab_Explosion, transform.position, transform.rotation);
-        Destroy(gameObject); //Destruir el objeto Rufian
-        
-    }
-
-	public void Coger(){
-        if (pistolaEnemigo != null)
-        {
-            Agarrar_Pistola();
-        }
-
-    }
-
-	public void Saltar(){
-	}
-
-	public void Correr(){
-	}
-
-	public void Curar(){
-	}
-
-	public void Lanzar(){
-	}
-
-	public void Abrir(){
-	}
-
-    
-    public void Agarrar_Pistola() //Metodo para que Alessio pueda agarrar la pistola y cambiar de arma
+    #region Funciones de Unity
+    void Start()
     {
-        pistolaEnemigo.transform.position = Empty_Rufianes.transform.position; //La pistola adopta la posición del objeto vacío
-        pistolaEnemigo.transform.parent = Empty_Rufianes.transform.parent;   //La pistola y el objeto vacio comparten el mismo objeto padre = ALessio
-        //Tipo_Arma = pistola.getPistola(); //Cambiamos el tipo de arma
-        //ataque_Alessio.setAtaque_Alessio(Prefab_Bala, Prefab_Golpe, Empty_Alessio, Tipo_Arma);  //Le damos los datos al ataque  de Alessio
+        jugador= GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void Nuevo_Rufian()
+    // Update is called once per frame
+    void Update()
     {
-        x = Random.Range(10f, 20f); //Posición del eje Y al azar, entre 10 y 20
-        y = Random.Range(-4f, 5f); //Posición del eje X al azar, entre -4 y 5
-        z = 0.0f; //Posición del eje Z en 0
-        Vector3 vector3 = new Vector3(x, y, z); //Se crea un vector para guardar la posición en los ejes
-        vida = 10; //Establecer cantidad de vida del rufian
-        Instantiate(Prefab_Rufian, vector3, transform.rotation); //Crear un nuevo rufian con los anteriores valores 
+        Hurt();
+        GestorVida();                               //Función para gestionar la vida del objeto y sus respectivas acciones        
+        GestorAtaques();                            //Función para gestionar los Ataques y tipos de Ataques
+        GestorAnimaciones();                        //Función para gestionar las animaciones del objeto
+        GestorRetroceso();                          //Función para gestionar el retroceso del jugador
+        GestorParpadeo();                           //Función para gestionar el parpadeo del personaje
+    }
+    void FixedUpdate()
+    {
+        GestorMovimiento();                         //Función para manejar el movimiendo con fisica
     }
 
-   
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             other.GetComponent<Health>().ModificarVida(20, gameObject);
-            
+
         }
         if (other.CompareTag("BalaPlayer"))
         {
 
-            health.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);
-            
+            salud.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);
+
 
         }
     }
+    #endregion
+
+    #region Funciones del Update
+    public void Hurt()
+    {
+    }
+    public void GestorVida()
+    {
+        vida_actual = salud._vidaActual;                        //Actualizamos la vida del objeto
+        if (vida_actual <= 0)
+        {                                                       //Verificamos si el personaje está sin vida
+            Nuevo_Rufian();                                     //Creamos un nuevo Rufian
+        }
+    }
+    public void GestorAtaques()
+    {
+        if (esta_atacando)                                      //Verificamos si el personaje está atacando
+        {
+            intervalo_ataque = reactivacion_ataque;             //Reiniciamos el tiempo de reactivación para atacar
+            esta_atacando = false;                              //Desactivamos la variable "esta_atacando", si no, se reiniciaría el tiempo en cada frame
+        }
+
+        if (intervalo_ataque > 0)                               //Verificamos el intervalo de ataques
+        {
+            intervalo_ataque -= Time.deltaTime;                 //Reducimos el tiempo del intervalo en cada segundo hasta llegar a 0
+        }
+        else
+        {
+            if (rango_vision.personaje_detectado)               //Verificamos si el personaje está cerca
+            {
+                Instantiate(Prefab_Bala,
+                    punto_disparo.transform.position,
+                    punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
+                esta_atacando = true;                           //Activamos esta variable para decirle a la animación que hacer
+            }
+        }
+    }
+    public void GestorAnimaciones()
+    {
+    }
+    public void GestorRetroceso()
+    {
+    }
+    public void GestorParpadeo()
+    {
+    }
+    public void Nuevo_Rufian()
+    {
+        x = Random.Range(10f, 20f);                                         //Posición del eje Y al azar, entre 10 y 20
+        y = Random.Range(-4f, 5f);                                          //Posición del eje X al azar, entre -4 y 5
+        z = 0.0f;                                                           //Posición del eje Z en 0
+        Vector3 vector3 = new Vector3(x, y, z);                             //Se crea un vector para guardar la posición en los ejes
+        vida_actual = 10;                                                   //Establecer cantidad de vida del rufian
+        Instantiate(Prefab_Rufian, vector3, transform.rotation);            //Crear un nuevo rufian con los anteriores valores 
+    }
+    #endregion
+
+    #region Funciones del FixedUpdate
+    public void GestorMovimiento()
+    {
+        if (rango_vision.personaje_detectado)                               //Verificamos si ha detectado al jugador
+        {
+            if (persecucion)                                                //Verificamos que tipo de movimiento fue asignado para cuando detecta al jugador
+            {
+                GestorAtaquePersecucion();                                  //Iniciamos la persecución
+            }
+            else
+            {
+                GestorAtaqueReposo();                                       //Iniciamos el disparo normal sin perseguir
+            }
+        }
+        else
+        {
+            if (patrullaje)                                                 //Verificamos que tipo de movimiento fue asignado para cuando NO detecta al jugador
+            {                                                               
+                GestorPatronPatrullaje();                                   //Iniciamos el patrullaje
+            }
+            else
+            {
+                GestorPatronReposo();                                       //Nos quedamos en espera
+            }
+        }
+    }
+    public void GestorPatronPatrullaje()
+    {
+    }
+    public void GestorPatronReposo()
+    {
+
+    }
+    public void GestorAtaquePersecucion()
+    {
+        direccion_movimiento = 
+            jugador.transform.position - transform.position;                //Calculamos la distancia entre ambos y lo guardamos en el Vector
+        direccion_movimiento.Normalize();                                   //Obtenemos la dirección del Vector
+        transform.Translate(direccion_movimiento 
+            * velocidad_normal * Time.deltaTime);                           //Movemos al objeto hacia al jugador  
+    }
+    public void GestorAtaqueReposo()
+    {
+    }
+    #endregion
+
+    #region Funciones del onTrigger
+    #endregion
+
+    #region Funciones Interface
+
+    public void Atacar()
+    {
+    }
+
+    public void Morir()
+    {
+    }
+    public void Mover()
+    {
+    }
+    public void Coger()
+    {
+    }
+
+    public void Saltar()
+    {
+    }
+
+    public void Correr()
+    {
+    }
+
+    public void Curar()
+    {
+    }
+
+    public void Lanzar()
+    {
+    }
+
+    public void Abrir()
+    {
+    }
+    #endregion
 }

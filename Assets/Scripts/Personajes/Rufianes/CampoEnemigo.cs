@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CampoEnemigo : MonoBehaviour {
-    private Enemigo padre;
-    public float speedCampo = 0.1f;
-    // Use this for initialization
+public class CampoEnemigo : MonoBehaviour
+{
+
+    #region Variables
+    public Enemigo Script_Enemigo;                             //Variable para manejar el script del Enemigo
+    public bool personaje_detectado;                            //Variable para saber si se ha detectado al jugador
+    #endregion
+
+    #region Funciones de Unity
     void Start()
     {
-        padre = GetComponentInParent<Enemigo>();
+
     }
 
     // Update is called once per frame
@@ -19,21 +24,18 @@ public class CampoEnemigo : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Entro al campo de fuerza");
         if (other.CompareTag("Player"))
         {
-            padre.velocidad = speedCampo;
-            padre.reposo = false;
+            personaje_detectado = true;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        //Debug.Log("Salio de campo de fuerza");
         if (other.CompareTag("Player"))
         {
-            padre.velocidad = 0;
-            padre.reposo = true;
+            personaje_detectado = false;
         }
     }
+    #endregion
 }
