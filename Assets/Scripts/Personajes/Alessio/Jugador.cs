@@ -15,7 +15,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public float alerta_vida;	                    //Variable para determinar cuando se activará la animación para alertar al jugador que su vida corre peligro
     #endregion
 
-    #region Ataques
+    #region Variables de Ataques
     public bool esta_atacando;                      //Variable para saber si el personaje está atacando
     public bool tiene_arma;                         //Variable para saber si el personaje tiene algún tipo de arma
     public string tipo_arma;                        //Variable para guardar el tipo de arma que esta usando actualmente
@@ -31,7 +31,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     #endregion
     #endregion
 
-    #region Movimiento
+    #region Variables de Movimiento
     public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el personaje
     public float veloidad_correr = 10;              //Variable para determinar la velocidad con la que corerrá el personaje
     public float velocidad_con_arma = 2;            //Variable para determinar la velocidad con la que se moverá el personaje cuando sostenga un arma
@@ -41,35 +41,36 @@ public class Jugador : MonoBehaviour, IPersonaje
     public bool caminar;                            //Variable para saber si el personaje está caminando
     #endregion
 
-    #region Colisiones
+    #region Variables de Colisiones
     public bool colision_abajo;                     //Variable para saber si el personaje aun se puede hacia abajo
     public bool colision_arriba;                    //Variable para saber si el personaje aun se puede hacia arriba
     public bool colision_derecha;                   //Variable para saber si el personaje aun se puede hacia derecha
     public bool colision_izquierda;                 //Variable para saber si el personaje aun se puede hacia izquierda
     public float distancia_colision = 0.6f;         //Variable para detectar la distancia entre el personaje y el objeto solido a colisionar
+    public Vector3 caja_colision;                   //Variable para determinar la caja de colisión del personaje
     #endregion
 
-    #region Retroceso (KnockBack)
+    #region Variables de Retroceso (KnockBack)
     public float retroceso;                         //Variable para guardar la velocidad con la que retrocederá el personaje (KnockBack)
     public bool retroceder_derecha;                 //Variable para saber si el personaje va a retroceder a la derecha
     public bool retrocediendo;                      //Variable para saber si el personaje está retrocediendo, usado para la animación
     #endregion
 
-    #region Animacion
+    #region Variables de Animacion
     public Animator _animator;                      //Variable para guardar el Animator del personaje
     public Sprite sprite_mano_arma;                 //Variable para guardar el sprite de la mano derecha con arma
     public SpriteRenderer sprite_brazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
     public float transparencia_objetivo;            //Variable para determinar el nivel de transparencia (Alpha)
     #endregion
 
-    #region Personaje
+    #region Variables de Personaje
     public Recurso[] inventario;	                //Variable de tipo "Arreglo" para almacenar los recursos del personaje
     public Rigidbody rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
     public GameObject Prefab_Bala;                  //Variable para guardar el prefab de la Bala
     public GameObject Prefab_Golpe;                 //Variable para guardar el prefab del golpe
     public GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
     public LayerMask _mask;                         //Variable para guardar y modificar la máscara del Personaje
-    public bool puede_controlar = true;               //Variable para determinar si el jugador puede controlar al personaje
+    public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje    
     #region Partes del Cuerpo
     public GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
     public GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
@@ -111,15 +112,13 @@ public class Jugador : MonoBehaviour, IPersonaje
     void Update()
     {
         Hurt();
-        ManageBlinking();
-        Handleretroceso();
-
         GestorVida();                               //Función para gestionar la vida del objeto y sus respectivas acciones
         GestorTeclado();                            //Función para recibir los Inputs del teclado
         GestorMouse();                              //Función para recibir los Inputs del mouse
         GestorAtaques();                            //Función para gestionar los Ataques y tipos de Ataques
         GestorAnimaciones();                        //Función para gestionar las animaciones del objeto
-
+        GestorRetroceso();                          //Función para gestionar el retroceso del jugador
+        GestorParpadeo();                           //Función para gestionar el parpadeo del personaje
     }
 
     void FixedUpdate()
@@ -142,7 +141,7 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     #endregion
 
-    #region Funciones Update
+    #region Funciones del Update
     void GestorVida()
     {
         vida_actual = salud._vidaActual;                    //Guardamos la vida actual del objeto
@@ -247,7 +246,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     #endregion
 
-    #region FixedUpdate
+    #region Funciones del FixedUpdate
     public void GestorMovimiento()
     {
 
@@ -261,8 +260,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             transform.rotation = new Quaternion(0, 180, 0, 0);      //Giramos el cuerpo del personaje hacia la izquierda
         }
         if (retroceso > 0)
-        {                                                           //Verificamos que exista un retroceso mayor a 0            
-            retrocediendo = true;
+        {                                                           //Verificamos que exista un retroceso mayor a 0                        
             if (retroceder_derecha)
             {                                                       //Verificamos si el personaje retrocerá hacia la derecha
                 moveVector.x = retroceso;                           //Hacemos retroceder al personaje hacia la derecha
@@ -288,22 +286,111 @@ public class Jugador : MonoBehaviour, IPersonaje
 
         rigidbody_Jugador.velocity = moveVector;                    //Le damos la velocidad al personaje con el moveVector
     }
+
+    void GestorParpadeo()
+    {
+        if (gameObject.layer == 12)                                         //Verificamos en que capa está (Layer 12: Capa de invulnerabilidad)
+        {
+            Color newColor = cabeza.GetComponent<SpriteRenderer>().color;   //Creamos una variable newColor para manejar la transparencia (alpha)
+            newColor.a = Mathf.Lerp(newColor.a, 
+                transparencia_objetivo, Time.deltaTime * 20);               //Cambiamos el valor de la transparencia con el tiempo
+            cabeza.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            cuerpo.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+            BrazoD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+            BrazoI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            MusloD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            PiernaD.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+            PieD.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+            MusloI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            PiernaI.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+            PieI.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+
+            if (newColor.a > 0.9f)                                          //Revisamos el valor de la transparencia
+            {
+                transparencia_objetivo = 0;                                 //Le decimos que se haga invisible
+            }
+            else if (newColor.a < 0.1f)                                     //Revisamos el valor de la transparencia
+            {
+                transparencia_objetivo = 1;                                 //Le decimos que se haga visible
+            }
+
+        }
+        if (gameObject.layer != 12)                                         //Verificamos en que capa está (Si no está  invulnerable)
+        {
+            Color newColor = cabeza.GetComponent<SpriteRenderer>().color;   //Creamos una variable newColor para manejar la transparencia (alpha)
+            newColor.a = 1;                                                 //Le decimos que se haga visible
+            cabeza.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            cuerpo.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+            BrazoD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+            BrazoI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            MusloD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            PiernaD.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+            PieD.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+            MusloI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+            PiernaI.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+            PieI.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+        }
+
+    }
+
+
+    void Hurt()
+    {
+        if (vida_actual < vida_anterior)                                    //Verificamos que haya un cambio en la vida
+        {
+            gameObject.layer = 12;                                          //Activamos la capa de invulnerabilidad
+            puede_controlar = false;                                        //Desactivmos el control del jugador
+            retrocediendo = true;                                           //Activamos la variable "retrocediendo" para la animación
+            retroceso = 2;                                                  //Le damos una velocidad al retroceso
+            if (salud._ultimoAtacante != null)                              //Verificamos que haya un atacante
+            {
+                if (transform.position.x < 
+                    salud._ultimoAtacante.transform.position.x)             //Verificamos la posición del atacante y del personaje
+                {
+                    retroceder_derecha = false;                             //Le decimos de dónde nos está atacando para saber de donde retroceder
+                }
+                else retroceder_derecha = true;                             //Le decimos de dónde nos está atacando para saber de donde retroceder
+            }
+            Invoke("RestaurarCapa", 0.5f);                                  //Reactivamos la capa del jugador en 0.5 segundos
+        }
+        vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
+    }
+
+    void RestaurarCapa()
+    {
+        gameObject.layer = 8;                                               //Activamos la capa "Jugador" al personaje
+    }
+
+    void GestorRetroceso()
+    {
+        if (retroceso > 0)                                                  //Verificamos que exista una velocidad de retroceso
+        {
+            retroceso -= Time.deltaTime * 5.5f;                             //Reducimos la velocidad con el tiempo
+            if (retroceso <= 0)                                             //Verificamos que la velocidad sea 0 o negativa
+            {
+                reactivacion_ataque = intervalo_ataque;                     //Reactivamos el ataque en un intervalo dado
+                puede_controlar = true;                                     //Reactivamos el control al personaje
+                retrocediendo = false;                                      //Le decimos a la animación que ya no está retrocediendo
+            }
+        }
+    }
+
     #endregion
 
-    #region Colisiones
+    #region Funciones del onTrigger (Colisiones)
 
     public void ColissionParedes()
     {
-        //Area movida a esta sección para saber las colisiones
-
-
-        //se cargan elementos para gestionar raycast
-        Vector3 boxSize = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        boxSize *= 0.99f;
+        caja_colision = transform.localScale;                           //Asignamos el valor del tramaño del objeto a la caja de colisión
+        caja_colision *= 0.99f;                                         //y le multiplicamos por un número pequeño para que la caja sea más grande que el objeto
         RaycastHit raycastInfo;
 
         //raycast para controlar si hay colision desde la izquierda
-        colision_izquierda = Physics.BoxCast(transform.position, boxSize / 2, Vector3.left, out raycastInfo, Quaternion.identity, distancia_colision, _mask.value);
+        colision_izquierda = Physics.BoxCast(transform.position, caja_colision / 2, Vector3.left, out raycastInfo, Quaternion.identity, distancia_colision, _mask.value);
         if (colision_izquierda)
         {
             Debug.Log("Colision conizq");
@@ -332,12 +419,15 @@ public class Jugador : MonoBehaviour, IPersonaje
     public void DetectarObjetoHiriente(Collider objeto_hiriente)
     {
         if (objeto_hiriente.CompareTag("BalaEnemigo"))
-        {
-            salud.ModificarVida(objeto_hiriente.GetComponent<Bala>().danio_bala, objeto_hiriente.gameObject);
+        {                                               //Verificamos que el objeto sea una Bala del enemigo
+            salud.ModificarVida(                        //Activamos la acción de modificar la vida del personaje
+                objeto_hiriente.GetComponent<Bala>().danio_bala, 
+                objeto_hiriente.gameObject);
         }
         if (objeto_hiriente.CompareTag("Enemigo"))
-        {
-            salud.ModificarVida(20, objeto_hiriente.gameObject);
+        {                                               //Verificamos que el objeto sea un enemigo
+            salud.ModificarVida(20, 
+                objeto_hiriente.gameObject);            //Activamos la acción de modificar la vida del personaje
 
         }
     }
@@ -347,122 +437,17 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     #endregion
 
-
-
-
-    #region Funciones nuevas
-    void ManageBlinking()
-    {
-        //si esta en estado invulnerable
-        if (gameObject.layer == 12)
-        {
-            Color newColor = cabeza.GetComponent<SpriteRenderer>().color;
-            newColor.a = Mathf.Lerp(newColor.a, transparencia_objetivo, Time.deltaTime * 20);
-            cabeza.GetComponent<SpriteRenderer>().color = newColor;
-            cuerpo.GetComponent<SpriteRenderer>().color = newColor;
-            AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;
-            BrazoD.GetComponent<SpriteRenderer>().color = newColor;
-            AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;
-            BrazoI.GetComponent<SpriteRenderer>().color = newColor;
-            MusloD.GetComponent<SpriteRenderer>().color = newColor;
-            PiernaD.GetComponent<SpriteRenderer>().color = newColor;
-            PieD.GetComponent<SpriteRenderer>().color = newColor;
-            MusloI.GetComponent<SpriteRenderer>().color = newColor;
-            PiernaI.GetComponent<SpriteRenderer>().color = newColor;
-            PieI.GetComponent<SpriteRenderer>().color = newColor;
-
-            if (newColor.a > 0.9f)
-            {
-                transparencia_objetivo = 0;
-            }
-            else if (newColor.a < 0.1f)
-            {
-                transparencia_objetivo = 1;
-            }
-
-        }
-        if (gameObject.layer != 12)
-        {
-            Color newColor = cabeza.GetComponent<SpriteRenderer>().color;
-            newColor.a = 1;
-            cabeza.GetComponent<SpriteRenderer>().color = newColor;
-            cuerpo.GetComponent<SpriteRenderer>().color = newColor;
-            AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;
-            BrazoD.GetComponent<SpriteRenderer>().color = newColor;
-            AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;
-            BrazoI.GetComponent<SpriteRenderer>().color = newColor;
-            MusloD.GetComponent<SpriteRenderer>().color = newColor;
-            PiernaD.GetComponent<SpriteRenderer>().color = newColor;
-            PieD.GetComponent<SpriteRenderer>().color = newColor;
-            MusloI.GetComponent<SpriteRenderer>().color = newColor;
-            PiernaI.GetComponent<SpriteRenderer>().color = newColor;
-            PieI.GetComponent<SpriteRenderer>().color = newColor;
-        }
-
-    }
-
-    ////esto se encarga de cuando te hacen daño
-    void Hurt()
-    {
-        //si la vida actual es menor a la vida que teniamos antes significa que hemos recibido daño
-        if (salud._vidaActual < vida_anterior)
-        {
-            Debug.Log("sd");
-            //Layer para ser invulnerable
-            gameObject.layer = 12;
-            puede_controlar = false;
-            retroceso = 2;
-            //verticalSpeed = -1;
-            if (salud._ultimoAtacante != null)
-            {
-                if (transform.position.x < salud._ultimoAtacante.transform.position.x)
-                {
-                    retroceder_derecha = false;
-                }
-                else retroceder_derecha = true;
-            }
-            //el player se vuelve invulnerable
-            Invoke("RestaurarCapa", 2);
-        }
-        vida_anterior = salud._vidaActual;
-    }
-
-    //se restaura al layer player
-    void RestaurarCapa()
-    {
-        gameObject.layer = 8;
-    }
-
-    void Handleretroceso()
-    {
-        if (retroceso > 0)
-        {
-            retroceso -= Time.deltaTime * 5.5f;
-            if (retroceso <= 0)
-            {
-                reactivacion_ataque = intervalo_ataque;
-                puede_controlar = true;
-                retrocediendo = false;
-            }
-        }
-    }
-
-
-
-    //en el metodo para las colisiones se usara el metodo coger
-
-
+    #region Funcion Gizmos
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Vector3 boxSize = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        Gizmos.DrawWireCube(transform.position, boxSize);
+        Vector3 caja_colision = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        Gizmos.DrawWireCube(transform.position, caja_colision);
         Vector3 down = new Vector3(0, -1, 0);
         Vector3 pos = transform.position + (down * distancia_colision);
-        Gizmos.DrawWireCube(pos, boxSize);
+        Gizmos.DrawWireCube(pos, caja_colision);
     }
     #endregion
-
 
     #region Funciones Alessio Interface
     //He dejado esto a un lado por cuestión de nombres, más adelante tocará cambiar el nombre a las interfaces
