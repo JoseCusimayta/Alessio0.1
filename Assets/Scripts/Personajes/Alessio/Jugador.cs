@@ -23,6 +23,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public int contador_apoyo;                      //Variable para guardar la cantidad de poder acumulado para llamar a la habilidad especial
     public float intervalo_ataque = 0.5f;           //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar    
     public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
+    public Transform punto_disparo;                 //Variable para guardar la posición y rotación de punto del disparo
     #region Pistola
     public bool tiene_pistola;                      //Variable para saber si el personaje tiene una pistola
     public bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola
@@ -235,7 +236,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         {
             atacando_pistola = true;                            //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
             Instantiate(Prefab_Bala,
-                arma_jugador.transform.position,
+                punto_disparo.transform.position,
                 arma_jugador.transform.rotation);               //Creamos la bala con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
         }
 
@@ -418,7 +419,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (objeto_arma.name == "Pistola")              //Verificamos que tipo de arma encontramos
         {
             BrazoD.SetActive(false);
-            BrazoDerechoGirable.SetActive(true);
+            BrazoDerechoGirable.SetActive(true);;
             tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
             sprite_brazoDerecho.sprite =
                 sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
