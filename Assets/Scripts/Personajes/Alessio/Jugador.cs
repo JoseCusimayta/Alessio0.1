@@ -76,6 +76,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
     public GameObject AnteBrazoD;                   //Variable para guardar el GameObject del Ante Brazo Derecho del jugador
     public GameObject BrazoD;                       //Variable para guardar el GameObject del Brazo Derecho del jugador
+    public GameObject BrazoDerechoGirable;          //Variable para guardar el GameObject del Brazo Derecho Variable del jugador
     public GameObject AnteBrazoI;                   //Variable para guardar el GameObject del Ante Brazo Izquierdo del jugador
     public GameObject BrazoI;                       //Variable para guardar el GameObject del Brazo Izquierdo del jugador
     public GameObject MusloD;                       //Variable para guardar el GameObject del Muslo Derecho del jugador
@@ -192,7 +193,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
     }
     public void GestorMouse()
-    {
+    {        
         if (esta_atacando)                                      //Verificamos si el personaje está atacando
         {
             reactivacion_ataque = intervalo_ataque;             //Reiniciamos el tiempo de reactivación para atacar
@@ -410,6 +411,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     {
         if (objeto_arma.name == "Pistola")              //Verificamos que tipo de arma encontramos
         {
+            BrazoD.SetActive(false);
+            BrazoDerechoGirable.SetActive(true);
             tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
             sprite_brazoDerecho.sprite =
                 sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
