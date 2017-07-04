@@ -88,6 +88,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     #endregion
     #endregion
 
+  
     #endregion
 
     #region Funciones de Unity
@@ -407,6 +408,11 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
     }
 
+    //permite el ingreso de items al inventario rapido que se encuentra en la pantalla
+    private void ActualizarInventarioRapido(GameObject ga)
+    {
+        GetComponent<GestionInventario>().asignarItemACasilla(ga);
+    }
     public void DetectarObjetoArma(Collider objeto_arma)
     {
         if (objeto_arma.name == "Pistola")              //Verificamos que tipo de arma encontramos
@@ -418,6 +424,21 @@ public class Jugador : MonoBehaviour, IPersonaje
                 sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
             tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+            ActualizarInventarioRapido(objeto_arma.gameObject);
+            Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
+
+        }
+
+        if (objeto_arma.name == "Ametralladora")              //Verificamos que tipo de arma encontramos
+        {
+            BrazoD.SetActive(false);
+            BrazoDerechoGirable.SetActive(true);
+            tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
+            sprite_brazoDerecho.sprite =
+                sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
+            tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
+            tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+            ActualizarInventarioRapido(objeto_arma.gameObject);
             Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
 
         }

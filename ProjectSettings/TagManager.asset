@@ -19,6 +19,9 @@ TagManager:
   - FinalNivel
   - PanelPausa
   - Boton
+  - Inventario
+  - Item
+  - ItemRapido
   layers:
   - Default
   - TransparentFX
