@@ -18,6 +18,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
     public GameObject punto_disparo;                //Variable para determinar cual será el puntode disparo del Rufian
     public float radio_Alcance;		                //Variable para determinar el radio de visión del objeto para activar sus funciones de Ataque    
     public bool persecucion;                        //Variable para determinarsi el Rufín tendrá la acción de perseguir al jugador cuando lo detecte
+    public bool persiguiendo;                       //Variable para saber si el objeto está persiguiendo a Alessio
     public PatronMovimiento patronMovimiento;       //Variable para guardar el patrón de movimiento del objeto    
     public float intervalo_ataque;                  //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar
     public float reactivacion_ataque = 2;           //Variable para manejar la velocidad de ataque
@@ -31,6 +32,12 @@ public class Enemigo : MonoBehaviour, IPersonaje
     public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el objeto
     Vector3 direccion_movimiento;                   //Variable para determinar hacia dónde se moverá
     float x, y, z;                                  //Variable para determinar dónde aparecerán los objetos
+    #region Patron de Movimiento
+    public GameObject rufian;		                //Variable para guardar al objeto Rufian, para controlar su movimiento en patrullaje
+    public Transform[] lista_coordenadas; 		    //Variable para guardar la Cantidad de Coordenadas que se guardará
+    public Transform coordenada_objetivo; 		    //Variable para guardar las Coordenadas del punto al cual se dirigirá
+    public int indice_coordenada;			        //Variable para guardar el indice de la lista_coordenadas para conseguir las Coordenadas a la cual dirigirse
+    #endregion
     #endregion
 
     #region Variables de Personaje
@@ -39,7 +46,6 @@ public class Enemigo : MonoBehaviour, IPersonaje
 
     #region Variables de Rufian
     public GameObject Prefab_Bala, Prefab_Rufian, Prefab_Explosion;
-
     #endregion
 
     #endregion
@@ -47,7 +53,8 @@ public class Enemigo : MonoBehaviour, IPersonaje
     #region Funciones de Unity
     void Start()
     {
-        jugador= GameObject.FindGameObjectWithTag("Player");
+        jugador= GameObject.FindGameObjectWithTag("Player");            //Buscamos al jugador en la escena
+        coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
     }
 
     // Update is called once per frame
@@ -74,10 +81,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
         }
         if (other.CompareTag("BalaPlayer"))
         {
-
             salud.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);
-
-
         }
     }
     #endregion
@@ -154,7 +158,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
         else
         {
             if (patrullaje)                                                 //Verificamos que tipo de movimiento fue asignado para cuando NO detecta al jugador
-            {                                                               
+            {                                                    
                 GestorPatronPatrullaje();                                   //Iniciamos el patrullaje
             }
             else
@@ -165,10 +169,24 @@ public class Enemigo : MonoBehaviour, IPersonaje
     }
     public void GestorPatronPatrullaje()
     {
+        rufian.transform.position = Vector3.MoveTowards(                    //Funcion para mover al objeto
+            rufian.transform.position,	                                    //Definimos la posición del objeto
+            coordenada_objetivo.position,			                        //Definimos la posición a la cual se dirigirá (punto destino)
+            Time.deltaTime * velocidad_normal			                    //Definimos la velocidad de movimiento (caminar) para patrullar
+        );
+
+        if (rufian.transform.position == coordenada_objetivo.position)      //Verificamos si el objeto llego al punto destino
+        {
+            indice_coordenada += 1;                                         //Indicamos que ahora debe ir al siguiente punto
+            if (indice_coordenada == lista_coordenadas.Length)              //Verificamos si llego al último punto
+            {
+                indice_coordenada = 0;                                      //Regresamos al punto inicial
+            }
+            coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos las coordenadas del punto al cual se moverá el objeto
+        } 
     }
     public void GestorPatronReposo()
     {
-
     }
     public void GestorAtaquePersecucion()
     {
@@ -180,6 +198,11 @@ public class Enemigo : MonoBehaviour, IPersonaje
     }
     public void GestorAtaqueReposo()
     {
+        direccion_movimiento =
+           jugador.transform.position - transform.position;                //Calculamos la distancia entre ambos y lo guardamos en el Vector
+        direccion_movimiento.Normalize();                                   //Obtenemos la dirección del Vector
+        transform.Translate(direccion_movimiento
+            * velocidad_normal * Time.deltaTime);                           //Movemos al objeto hacia al jugador  
     }
     #endregion
 
