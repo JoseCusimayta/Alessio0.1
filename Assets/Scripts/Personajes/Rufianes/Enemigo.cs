@@ -144,26 +144,34 @@ public class Enemigo : MonoBehaviour, IPersonaje
     #region Funciones del FixedUpdate
     public void GestorMovimiento()
     {
-        if (rango_vision.personaje_detectado)                               //Verificamos si ha detectado al jugador
+        if (persiguiendo)
         {
-            if (persecucion)                                                //Verificamos que tipo de movimiento fue asignado para cuando detecta al jugador
-            {
-                GestorAtaquePersecucion();                                  //Iniciamos la persecución
-            }
-            else
-            {
-                GestorAtaqueReposo();                                       //Iniciamos el disparo normal sin perseguir
-            }
+            GestorAtaquePersecucion();
         }
         else
         {
-            if (patrullaje)                                                 //Verificamos que tipo de movimiento fue asignado para cuando NO detecta al jugador
-            {                                                    
-                GestorPatronPatrullaje();                                   //Iniciamos el patrullaje
+            if (rango_vision.personaje_detectado)                               //Verificamos si ha detectado al jugador
+            {
+                if (persecucion)                                                //Verificamos que tipo de movimiento fue asignado para cuando detecta al jugador
+                {
+                    persiguiendo = true;
+                    GestorAtaquePersecucion();                                  //Iniciamos la persecución
+                }
+                else
+                {
+                    GestorAtaqueReposo();                                       //Iniciamos el disparo normal sin perseguir
+                }
             }
             else
             {
-                GestorPatronReposo();                                       //Nos quedamos en espera
+                if (patrullaje)                                                 //Verificamos que tipo de movimiento fue asignado para cuando NO detecta al jugador
+                {
+                    GestorPatronPatrullaje();                                   //Iniciamos el patrullaje
+                }
+                else
+                {
+                    GestorPatronReposo();                                       //Nos quedamos en espera
+                }
             }
         }
     }
