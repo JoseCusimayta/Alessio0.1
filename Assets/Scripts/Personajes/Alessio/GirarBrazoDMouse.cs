@@ -5,72 +5,125 @@ using UnityEngine;
 public class GirarBrazoDMouse : MonoBehaviour
 {
     #region Variables
-    SpriteRenderer _sprite;
-    public bool mirando_derecha;
-    public Transform punto_disparo;
-    public Transform jugador;
+    public bool mirando_derecha;                                    //Variable para determinar si el personaje esta viendo a la derecha
+    public float sensibilidad = 500;                                //Variable para determinar la sensibilidad del mouse
+    public Transform punto_disparo;                                 //Variable para guardar el Transform del punto de disparo
+    public Transform jugador;                                       //Variable para guardar el Transform del jugador
     #endregion
 
     #region Funciones de Unity
-    
-	void Start () {
-        _sprite = GetComponent<SpriteRenderer>();
-	}
+
+    void Start()
+    {
+    }
 
 
     void Update()
     {
-
-        if (punto_disparo.position.x > jugador.position.x)
+        if (punto_disparo.position.x > jugador.position.x)          //Verificamos si esta mirando a la derecha con una resta de posiciones entre el jugador y el punto de disparo
             mirando_derecha = true;
         else
             mirando_derecha = false;
 
-        if (mirando_derecha)
+        if (mirando_derecha)                                        //Verificamos si esta mirando a la derecha para decirle que hacer
         {
-            if (transform.rotation.z < 0 && transform.rotation.z > -1)
-            {
-                if ((Input.GetAxis("Mouse Y") > 0))
-                {
-                    punto_disparo.Rotate(new Vector3(0, 0, 1), 200 * Time.deltaTime);
-                    transform.Rotate(new Vector3(0, 0, 1), 200 * Time.deltaTime);
-                }
-            }
-            if (transform.rotation.w > 0.8 && transform.rotation.w < 1)
-            {
-                if (Input.GetAxis("Mouse Y") < 0)
-                {
-                    punto_disparo.Rotate(new Vector3(0, 0, -1), 200 * Time.deltaTime);
-                    transform.Rotate(new Vector3(0, 0, -1), 200 * Time.deltaTime);
-                }
-            }
+            RotacionBrazoArmaDerecha();                             //Función para rotar el brazo cuando mira a la derecha
+            CorrecionAngulosDerecha();                              //Función para asegurarse de que el brazo no salga de los angulos limites cuando mira a la derecha
         }
         else
         {
-            if (transform.rotation.x < 0 && transform.rotation.x > -1)
+            RotacionBrazoArmaIzquierda();                           //Función para rotar el brazo cuando mira a la izquierda
+            CorrecionAngulosIzquierda();                            //Función para asegurarse de que el brazo no salga de los angulos limites cuando mira a la izquierda
+        }
+
+    }
+    #endregion
+
+    #region Funciones Update
+    void RotacionBrazoArmaIzquierda() 
+    {
+        if (0 >= transform.rotation.x && transform.rotation.x >= -0.7)                               //Verificamos entre que ángulos se encuentro la rotacion X del brazo
+        {
+            if ((Input.GetAxis("Mouse Y") > 0))                                                     //Verificamos que el mouse este desplazandose hacia arriba
             {
-                Debug.Log(transform.rotation.x);
-                Debug.Log(transform.rotation.y);
-                if ((Input.GetAxis("Mouse Y") > 0))
-                {
-                    punto_disparo.Rotate(new Vector3(0, 0, 1), 200 * Time.deltaTime);
-                    transform.Rotate(new Vector3(0, 0, 1), 200 * Time.deltaTime);
-                }
-            }
-            if (transform.rotation.y > 0.5 && transform.rotation.y < 1)
-            {
-                if (Input.GetAxis("Mouse Y") < 0)
-                {
-                    punto_disparo.Rotate(new Vector3(0, 0, -1), 200 * Time.deltaTime);
-                    transform.Rotate(new Vector3(0, 0, -1), 200 * Time.deltaTime);
-                }
+                punto_disparo.Rotate(new Vector3(0, 0, 1), sensibilidad * Time.deltaTime);          //Rotamos el punto de disparo hacia arriba
+                transform.Rotate(new Vector3(0, 0, 1), sensibilidad * Time.deltaTime);              //Rotamos el brazo hacia arriba
             }
         }
-        /*
-        Vector3 direccion_movimiento = punto_disparo.position - Input.mousePosition;
-        direccion_movimiento.Normalize();
-        transform.rotation = new Quaternion(-direccion_movimiento.x, -direccion_movimiento.y, 0, 0);
-        Debug.Log(direccion_movimiento);*/
+        if (1 >= transform.rotation.y && transform.rotation.y >= 0.75)                               //Verificamos entre que ángulos se encuentro la rotacion Y del brazo
+        {
+            if (Input.GetAxis("Mouse Y") < 0)                                                       //Verificamos que el mouse este desplazandose hacia abajo
+            {
+                punto_disparo.Rotate(new Vector3(0, 0, -1), sensibilidad * Time.deltaTime);         //Rotamos el punto de disparo hacia abajo
+                transform.Rotate(new Vector3(0, 0, -1), sensibilidad * Time.deltaTime);             //Rotamos el brazo hacia arriba
+            }
+        }
+    }
+    void RotacionBrazoArmaDerecha()
+    {
+        if (0 >= transform.rotation.z && transform.rotation.z >= -0.7)                               //Verificamos entre que ángulos se encuentro la rotacion Z del brazo
+        {
+            if ((Input.GetAxis("Mouse Y") > 0))                                                     //Verificamos que el mouse este desplazandose hacia arriba
+            {
+                punto_disparo.Rotate(new Vector3(0, 0, 1), sensibilidad * Time.deltaTime);          //Rotamos el punto de disparo hacia arriba
+                transform.Rotate(new Vector3(0, 0, 1), sensibilidad * Time.deltaTime);              //Rotamos el brazo hacia arriba
+            }
+        }
+        if (1 >= transform.rotation.w && transform.rotation.w >= 0.75)                               //Verificamos entre que ángulos se encuentro la rotacion W del brazo
+        {
+            if (Input.GetAxis("Mouse Y") < 0)                                                       //Verificamos que el mouse este desplazandose hacia abajo
+            {
+                punto_disparo.Rotate(new Vector3(0, 0, -1), sensibilidad * Time.deltaTime);         //Rotamos el punto de disparo hacia abajo
+                transform.Rotate(new Vector3(0, 0, -1), sensibilidad * Time.deltaTime);             //Rotamos el brazo hacia arriba
+            }
+        }
+    }
+    void CorrecionAngulosIzquierda()
+    {
+        if (transform.rotation.x > 0)                                                               //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = Vector3.zero;                                              //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = new Vector3(0, 0, 90);                                 //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+        if (transform.rotation.x < -0.7)                                                            //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = new Vector3(0, 0, -90);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = Vector3.zero;                                          //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+        if (transform.rotation.y > 1)                                                               //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = Vector3.zero;                                              //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = new Vector3(0, 0, 90);                                 //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+        if (transform.rotation.y < 0.75)                                                            //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = new Vector3(0, 0, -80);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = Vector3.zero;                                          //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+    }
+    void CorrecionAngulosDerecha()
+    {
+        if (transform.rotation.z > 0)                                                               //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = Vector3.zero;                                              //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = new Vector3(0, 0, 90);                                 //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+        if (transform.rotation.z < -0.7)                                                            //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = new Vector3(0, 0, -90);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = Vector3.zero;                                          //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+        if (transform.rotation.w > 1)                                                               //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = Vector3.zero;                                              //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = new Vector3(0, 0, 90);                                 //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+        if (transform.rotation.w < 0.75)                                                            //Verificamos que el angulo se haya salido del rango permitido
+        {
+            transform.localEulerAngles = new Vector3(0, 0, -80);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
+            punto_disparo.localEulerAngles = Vector3.zero;                                          //Corregimos y le damos el angulo máximo o mínimo permitido
+        }
+
     }
     #endregion
 }

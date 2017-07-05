@@ -36,10 +36,12 @@ public class Jugador : MonoBehaviour, IPersonaje
     public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el personaje
     public float veloidad_correr = 10;              //Variable para determinar la velocidad con la que corerrá el personaje
     public float velocidad_con_arma = 2;            //Variable para determinar la velocidad con la que se moverá el personaje cuando sostenga un arma
+    public float velocidad_retrocediendo = 1;        //Variable para determinar la velocidad con la que retrocederá el personaje
     public float axis_horizontal;                   //Variable para guardar la cantidad del Axis en horizontal (-1,1)
     public float axis_vertical;                     //Variable para guardar la cantidad del Axis en vertical (-1,1)
     public bool correr;                             //Variable para saber si el personaje está corriendo
     public bool caminar;                            //Variable para saber si el personaje está caminando
+    public bool fijar_camara;                       //Variable para fijar la mirada del personaje
     #endregion
 
     #region Variables de Colisiones
@@ -192,6 +194,10 @@ public class Jugador : MonoBehaviour, IPersonaje
             {
                 correr = false;                                 //Desactivamos la variable "correr" para decirle a la animación que deje de ejecutar el "correr"
             }
+            if (Input.GetKey(KeyCode.Q))
+                fijar_camara = true;
+            else
+                fijar_camara = false;
         }
     }
     public void GestorMouse()
@@ -210,18 +216,18 @@ public class Jugador : MonoBehaviour, IPersonaje
 
             if (reactivacion_ataque <= 0)                       //Verificamos si es menor o igual a 0 para reactivar los ataques
             {
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0))                    //Verificamos que si hay presión sobre el clic izquierdo
                 {
-                    esta_atacando = true;                       //Activamos la variable de que está atacando con el clic izquierdo
+                    esta_atacando = true;                       //Activamos la variable de que está atacando con el clic Izquierdo
                     Debug.Log("Se ha presionado el botón 0: Clic Izquierdo, esta_atacando = true");
                 }
-                if (Input.GetMouseButton(1))
+                if (Input.GetMouseButton(1))                    //Verificamos que si hay presión sobre el clic Derecho
                 {
                     Debug.Log("Se ha presionado el botón 1: Clic Derecho");
                 }
-                if (Input.GetMouseButton(2))
+                if (Input.GetMouseButton(2))                    //Verificamos que si hay presión sobre el clic del Centro
                 {
-                    Debug.Log("Se ha presionado el botón 2: Clic del medio");
+                    Debug.Log("Se ha presionado el botón 2: Clic del Centro");
                 }
             }
         }
@@ -237,7 +243,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             atacando_pistola = true;                            //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
             Instantiate(Prefab_Bala,
                 punto_disparo.transform.position,
-                arma_jugador.transform.rotation);               //Creamos la bala con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+                punto_disparo.transform.rotation);               //Creamos la bala con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
         }
 
     }
@@ -255,15 +261,18 @@ public class Jugador : MonoBehaviour, IPersonaje
     #region Funciones del FixedUpdate
     public void GestorMovimiento()
     {
-
         Vector3 moveVector = new Vector3(0, 0, 0);                  //Creamos un Vector 3, el cual nos serirá para definir el movimiento
-        if (axis_horizontal > 0)                                    //Verificamos si el personaje se mueve hacia la derecha
+        float velocidad_movimiento = 0;                               //Asignamos una variable para la velocidad de movimiento
+        if (!fijar_camara)                                         //Verificamos que no esté retrocediendo para aplicar los giros
         {
-            transform.rotation = Quaternion.identity;               //Giramos el cuerpo del personaje hacia la derecha
-        }
-        if (axis_horizontal < 0)                                    //Verificamos si el personaje se mueve hacia la izquierda
-        {
-            transform.rotation = new Quaternion(0, 180, 0, 0);      //Giramos el cuerpo del personaje hacia la izquierda
+            if (axis_horizontal > 0)                                    //Verificamos si el personaje se mueve hacia la derecha
+            {
+                transform.rotation = Quaternion.identity;               //Giramos el cuerpo del personaje hacia la derecha
+            }
+            if (axis_horizontal < 0)                                    //Verificamos si el personaje se mueve hacia la izquierda
+            {
+                transform.rotation = new Quaternion(0, 180, 0, 0);      //Giramos el cuerpo del personaje hacia la izquierda
+            }
         }
         if (retroceso > 0)
         {                                                           //Verificamos que exista un retroceso mayor a 0                        
@@ -278,18 +287,17 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
         else
         {
-            if (correr)                                                 //Verificamos si el personaje está corriendo
-            {
-                moveVector.x = axis_horizontal * veloidad_correr;       //Asignamos la velocidad de movimiento al correr en el eje x
-                moveVector.y = axis_vertical * veloidad_correr;         //Asignamos la velocidad de movimiento al correr en el eje y
-            }
-            else
-            {
-                moveVector.x = axis_horizontal * velocidad_normal;      //Asignamos la velocidad de movimiento al caminar en el eje x
-                moveVector.y = axis_vertical * velocidad_normal;        //Asignamos la velocidad de movimiento al caminar en el eje y
-            }
-        }
+            velocidad_movimiento = velocidad_normal;                //Asignamos la velocidad para caminar
 
+            if (correr)                                             //Verificamos si el personaje está corriendo
+                velocidad_movimiento = veloidad_correr;             //Asignamos la velocidad para correr
+
+            if (fijar_camara)                                       //Verificamos si el personaje está retrocediendo
+                velocidad_movimiento = velocidad_retrocediendo;     //Asignamos la velocidad para retroceder
+
+            moveVector.x = axis_horizontal * velocidad_movimiento;  //Definioms el vector de movimiento en el eje X
+            moveVector.y = axis_vertical * velocidad_movimiento;    //Definioms el vector de movimiento en el eje y
+        }
         rigidbody_Jugador.velocity = moveVector;                    //Le damos la velocidad al personaje con el moveVector
     }
 
@@ -418,8 +426,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     {
         if (objeto_arma.name == "Pistola")              //Verificamos que tipo de arma encontramos
         {
-            BrazoD.SetActive(false);
-            BrazoDerechoGirable.SetActive(true);;
+            BrazoD.SetActive(false);                    //Desactivamos el brazo derecho controlado por animator
+            BrazoDerechoGirable.SetActive(true);;       //Activamos el brazo Derecho Girable
             tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
             sprite_brazoDerecho.sprite =
                 sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
@@ -430,7 +438,7 @@ public class Jugador : MonoBehaviour, IPersonaje
 
         }
 
-        if (objeto_arma.name == "Ametralladora")              //Verificamos que tipo de arma encontramos
+        if (objeto_arma.name == "Ametralladora")        //Verificamos que tipo de arma encontramos
         {
             BrazoD.SetActive(false);
             BrazoDerechoGirable.SetActive(true);

@@ -2851,6 +2851,10 @@ Prefab:
       propertyPath: itemRapido.Array.data[3]
       value: 
       objectReference: {fileID: 1547060607}
+    - target: {fileID: 1415779668965136, guid: 934c4989d22bd744a8d72856cd73e158, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 934c4989d22bd744a8d72856cd73e158, type: 2}
   m_IsPrefabParent: 0
