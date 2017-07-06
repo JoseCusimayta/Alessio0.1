@@ -28,6 +28,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
     #endregion
 
     #region Variables de Movimiento
+    public bool mirando_derecha;                    //Variable para determinar si el objeto está mirando a la derecha
     public bool patrullaje;                         //Variable para determinar si el objeto estará en reposo o en patrullaje constante
     public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el objeto
     Vector3 direccion_movimiento;                   //Variable para determinar hacia dónde se moverá
@@ -53,7 +54,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
     #region Funciones de Unity
     void Start()
     {
-        jugador= GameObject.FindGameObjectWithTag("Player");            //Buscamos al jugador en la escena
+        jugador = GameObject.FindGameObjectWithTag("Player");            //Buscamos al jugador en la escena
         coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
     }
 
@@ -66,6 +67,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
         GestorAnimaciones();                        //Función para gestionar las animaciones del objeto
         GestorRetroceso();                          //Función para gestionar el retroceso del jugador
         GestorParpadeo();                           //Función para gestionar el parpadeo del personaje
+        GestorGiros();                              //Funcion para gestionar los giros de personaje con respecto al jugador
     }
     void FixedUpdate()
     {
@@ -112,7 +114,14 @@ public class Enemigo : MonoBehaviour, IPersonaje
         }
         else
         {
-            if (rango_vision.personaje_detectado)               //Verificamos si el personaje está cerca
+            if (rango_vision.personaje_detectado && !persiguiendo)               //Verificamos si el personaje está cerca
+            {
+                Instantiate(Prefab_Bala,
+                    punto_disparo.transform.position,
+                    punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
+                esta_atacando = true;                           //Activamos esta variable para decirle a la animación que hacer
+            }
+            else if (persiguiendo)
             {
                 Instantiate(Prefab_Bala,
                     punto_disparo.transform.position,
@@ -139,14 +148,31 @@ public class Enemigo : MonoBehaviour, IPersonaje
         vida_actual = 10;                                                   //Establecer cantidad de vida del rufian
         Instantiate(Prefab_Rufian, vector3, transform.rotation);            //Crear un nuevo rufian con los anteriores valores 
     }
+    public void GestorGiros()
+    {
+        if (jugador)
+        {
+            if (transform.position.x > jugador.transform.position.x)        //Calculamos quien esta a la derecha
+            {
+                mirando_derecha = false;                                    //Desactivamos el "mirando_derecha" porque el jugador está a la izquierda
+                transform.rotation = new Quaternion(0, 180, 0, 0);          //Giramos al objeto hacia la izquierda
+            }
+            else
+            {
+                mirando_derecha = true;                                     //Activamos el "mirando_derecha" porque el jugador está a la derecha
+                transform.rotation = Quaternion.identity;                   //Giramos al objeto hacia la derecha
+            }
+        }
+    }
     #endregion
 
     #region Funciones del FixedUpdate
     public void GestorMovimiento()
     {
-        if (persiguiendo)
+        if (persiguiendo)                                                   //Verificamos si el objeto está persiguiendo
         {
-            GestorAtaquePersecucion();
+            GestorAtaquePersecucion();                                      //Activamos el gestor de persecicion
+            GestorAtaques();                                                //Tambien activamos el gestor de ataques
         }
         else
         {
@@ -159,6 +185,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
                 }
                 else
                 {
+                    persiguiendo = false;
                     GestorAtaqueReposo();                                       //Iniciamos el disparo normal sin perseguir
                 }
             }
@@ -191,26 +218,43 @@ public class Enemigo : MonoBehaviour, IPersonaje
                 indice_coordenada = 0;                                      //Regresamos al punto inicial
             }
             coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos las coordenadas del punto al cual se moverá el objeto
-        } 
+        }
     }
     public void GestorPatronReposo()
     {
     }
     public void GestorAtaquePersecucion()
     {
-        direccion_movimiento = 
-            jugador.transform.position - transform.position;                //Calculamos la distancia entre ambos y lo guardamos en el Vector
-        direccion_movimiento.Normalize();                                   //Obtenemos la dirección del Vector
-        transform.Translate(direccion_movimiento 
-            * velocidad_normal * Time.deltaTime);                           //Movemos al objeto hacia al jugador  
+        if (jugador)                                                            //Verificamos la existencia del jugador
+        {            
+            if (mirando_derecha)                                                                //Verificamos si el objeto está mirando a la derecha
+            {
+                transform.Translate(Vector3.right * velocidad_normal * Time.deltaTime);         //Movemos el objeto al a derecha
+            }
+            else
+            {
+                transform.Translate(Vector3.left * -velocidad_normal * Time.deltaTime);         //Movemos el objeto a la izquierda
+            }
+            if (transform.position.y > jugador.transform.position.y)                            //Verificamos si el objeto está arriba del personaje
+            {
+                transform.Translate(Vector3.down * velocidad_normal * Time.deltaTime);          //Movemos el objeto hacia abajo
+            }
+            else
+            {
+                transform.Translate(Vector3.up * velocidad_normal * Time.deltaTime);            //Movemos el objeto hacia arriba
+            }
+        }
     }
     public void GestorAtaqueReposo()
     {
-        direccion_movimiento =
-           jugador.transform.position - transform.position;                //Calculamos la distancia entre ambos y lo guardamos en el Vector
-        direccion_movimiento.Normalize();                                   //Obtenemos la dirección del Vector
-        transform.Translate(direccion_movimiento
-            * velocidad_normal * Time.deltaTime);                           //Movemos al objeto hacia al jugador  
+        if (jugador)                                                            //Verificamos la existencia del jugador
+        {
+            direccion_movimiento =
+               transform.position - jugador.transform.position;                //Calculamos la distancia entre ambos y lo guardamos en el Vector
+            direccion_movimiento.Normalize();                                   //Obtenemos la dirección del Vector
+            transform.Translate(direccion_movimiento
+                * velocidad_normal * Time.deltaTime);                           //Movemos al objeto hacia al jugador  
+        }
     }
     #endregion
 
