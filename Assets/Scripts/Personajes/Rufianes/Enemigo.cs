@@ -97,7 +97,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
         vida_actual = salud._vidaActual;                        //Actualizamos la vida del objeto
         if (vida_actual <= 0)
         {                                                       //Verificamos si el personaje está sin vida
-            Nuevo_Rufian();                                     //Creamos un nuevo Rufian
+           // Nuevo_Rufian();                                     //Creamos un nuevo Rufian
         }
     }
     public void GestorAtaques()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Jugador : MonoBehaviour, IPersonaje
 {
@@ -116,7 +117,7 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     void Update()
     {
-        Hurt();
+        JugadorHerido();
         GestorVida();                               //Función para gestionar la vida del objeto y sus respectivas acciones
         GestorTeclado();                            //Función para recibir los Inputs del teclado
         GestorMouse();                              //Función para recibir los Inputs del mouse
@@ -124,6 +125,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         GestorAnimaciones();                        //Función para gestionar las animaciones del objeto
         GestorRetroceso();                          //Función para gestionar el retroceso del jugador
         GestorParpadeo();                           //Función para gestionar el parpadeo del personaje
+        seleccionarItem();
     }
 
     void FixedUpdate()
@@ -254,7 +256,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         _animator.SetBool("AtacandoPistola", atacando_pistola); //Asignamos el valor de "atacando_pistola" a la animación
         _animator.SetBool("TienePistola", tiene_pistola);       //Asignamos el valor de "tiene_pistola" a la animación
         _animator.SetBool("TieneArma", tiene_arma);             //Asignamos el valor de "tiene_arma" a la animación                          
-        _animator.SetBool("hurt", retrocediendo);
+        _animator.SetBool("EsHerido", retrocediendo);
     }
     #endregion
 
@@ -323,10 +325,12 @@ public class Jugador : MonoBehaviour, IPersonaje
 
             if (newColor.a > 0.9f)                                          //Revisamos el valor de la transparencia
             {
+                Debug.Log("color=" + newColor.a);
                 transparencia_objetivo = 0;                                 //Le decimos que se haga invisible
             }
             else if (newColor.a < 0.1f)                                     //Revisamos el valor de la transparencia
             {
+                Debug.Log("color2=" + newColor.a);
                 transparencia_objetivo = 1;                                 //Le decimos que se haga visible
             }
 
@@ -351,8 +355,8 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     }
 
-
-    void Hurt()
+    //funcion que gestiona todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
+    void JugadorHerido()
     {
         if (vida_actual < vida_anterior)                                    //Verificamos que haya un cambio en la vida
         {
@@ -393,6 +397,46 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
     }
 
+    //permite el intercambiar los items que se encuentran en el inventario rapido
+    public void seleccionarItem()
+    {
+        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(vKey))
+            {
+                //Debug.Log("Presione " + vKey.ToString());
+                switch (vKey.ToString())
+                {
+                    //POR AHORA TIENEN UNA VALIDACION IF PREVIA con el sprite.name, de alli continuo con esta logica para el intercambio de armas
+                    case "Alpha1":
+                        Debug.Log("Seleccione item 1:");
+                        if (GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0")
+                        {
+                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = sprite_mano_arma;
+                        }
+                        else
+                        {
+                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite;
+                        }
+                       
+                        break;
+                    case "Alpha2":
+                          Debug.Log("Seleccione item 2:");
+                        if (GetComponent<GestionInventario>().itemRapido[1].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0")
+                        {
+                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = sprite_mano_arma;
+                        }
+                        else
+                        {
+                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().itemRapido[1].GetComponent<Image>().sprite;
+                        }
+                            
+                        break;
+                }
+
+            }
+        }
+    }
     #endregion
 
     #region Funciones del onTrigger (Colisiones)
@@ -427,10 +471,10 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (objeto_arma.name == "Pistola")              //Verificamos que tipo de arma encontramos
         {
             BrazoD.SetActive(false);                    //Desactivamos el brazo derecho controlado por animator
-            BrazoDerechoGirable.SetActive(true);;       //Activamos el brazo Derecho Girable
+            BrazoDerechoGirable.SetActive(true);      //Activamos el brazo Derecho Girable
             tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
-            sprite_brazoDerecho.sprite =
-                sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
+            //sprite_brazoDerecho.sprite =
+            //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
             tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
             ActualizarInventarioRapido(objeto_arma.gameObject);
@@ -443,8 +487,8 @@ public class Jugador : MonoBehaviour, IPersonaje
             BrazoD.SetActive(false);
             BrazoDerechoGirable.SetActive(true);
             tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
-            sprite_brazoDerecho.sprite =
-                sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
+            //sprite_brazoDerecho.sprite =
+            //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
             tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
             ActualizarInventarioRapido(objeto_arma.gameObject);

@@ -8,7 +8,7 @@ AnimatorController:
   m_Name: Cuerpo
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: hurt
+  - m_Name: EsHerido
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -218,7 +218,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: hurt
+    m_ConditionEvent: EsHerido
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: Caminar
@@ -542,7 +542,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: hurt
+    m_ConditionEvent: EsHerido
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: Caminar
@@ -791,7 +791,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: hurt
+    m_ConditionEvent: EsHerido
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: Caminar
@@ -872,7 +872,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: hurt
+    m_ConditionEvent: EsHerido
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102293555177890698}
@@ -1010,7 +1010,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: hurt
+    m_ConditionEvent: EsHerido
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: Caminar
@@ -1463,7 +1463,7 @@ AnimatorStateMachine:
   m_AnyStatePosition: {x: 48, y: -60, z: 0}
   m_EntryPosition: {x: 36, y: 24, z: 0}
   m_ExitPosition: {x: 648, y: 108, z: 0}
-  m_ParentStateMachinePosition: {x: 636, y: -12, z: 0}
+  m_ParentStateMachinePosition: {x: 552, y: -48, z: 0}
   m_DefaultState: {fileID: 1102453064205954406}
 --- !u!1107 &1107712134923274342
 AnimatorStateMachine:
@@ -1502,7 +1502,7 @@ AnimatorStateMachine:
     m_Position: {x: 336, y: -144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102285748850964562}
-    m_Position: {x: 371, y: -79, z: 0}
+    m_Position: {x: 552, y: -108, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107560819477697550}
