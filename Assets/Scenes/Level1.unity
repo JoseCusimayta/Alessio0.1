@@ -3635,6 +3635,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114789822943011060, guid: 934c4989d22bd744a8d72856cd73e158,
+        type: 2}
+      propertyPath: sprite_mano_arma.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4307425006720498, guid: 934c4989d22bd744a8d72856cd73e158, type: 2}
       propertyPath: m_LocalPosition.x
       value: -8.1
@@ -3743,6 +3748,18 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -149.36601
       objectReference: {fileID: 0}
+    - target: {fileID: 114789822943011060, guid: 934c4989d22bd744a8d72856cd73e158,
+        type: 2}
+      propertyPath: sprite_mano_arma.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300002, guid: 17a15e6c569b95645b0e9051b98c5e0c,
+        type: 3}
+    - target: {fileID: 114789822943011060, guid: 934c4989d22bd744a8d72856cd73e158,
+        type: 2}
+      propertyPath: sprite_mano_arma.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 658751a6e908f07479fc9f8e64b89790,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 934c4989d22bd744a8d72856cd73e158, type: 2}
   m_IsPrefabParent: 0

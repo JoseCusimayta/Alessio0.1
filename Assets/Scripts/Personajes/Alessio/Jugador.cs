@@ -62,7 +62,8 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     #region Variables de Animacion
     public Animator _animator;                      //Variable para guardar el Animator del personaje
-    public Sprite sprite_mano_arma;                 //Variable para guardar el sprite de la mano derecha con arma
+    public Sprite[] sprite_mano_arma;                 //Arreglo que para guardar los sprites de la mano derecha con arma
+
     public SpriteRenderer sprite_brazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
     public float transparencia_objetivo;            //Variable para determinar el nivel de transparencia (Alpha)
     #endregion
@@ -410,27 +411,15 @@ public class Jugador : MonoBehaviour, IPersonaje
                     //POR AHORA TIENEN UNA VALIDACION IF PREVIA con el sprite.name, de alli continuo con esta logica para el intercambio de armas
                     case "Alpha1":
                         Debug.Log("Seleccione item 1:");
-                        if (GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0")
-                        {
-                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = sprite_mano_arma;
-                        }
-                        else
-                        {
-                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite;
-                        }
+                      
+                            //GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0"
+                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                        
                         break;
                     case "Alpha2":
                           Debug.Log("Seleccione item 2:");
-                        if (GetComponent<GestionInventario>().itemRapido[1].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0")
-                        {
-                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = sprite_mano_arma;
-                        }
-                        else
-                        {
-                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().itemRapido[1].GetComponent<Image>().sprite;
-                        }
-                            
+                        BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+
                         break;
                 }
 
@@ -462,9 +451,9 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
 
     //permite el ingreso de items al inventario rapido que se encuentra en la pantalla
-    private void ActualizarInventarioRapido(GameObject ga)
+    private void ActualizarInventarioRapido(GameObject ga,Sprite accion)
     {
-        GetComponent<GestionInventario>().asignarItemACasilla(ga);
+        GetComponent<GestionInventario>().asignarItemACasilla(ga,accion);
     }
     public void DetectarObjetoArma(Collider objeto_arma)
     {
@@ -477,7 +466,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
             tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
-            ActualizarInventarioRapido(objeto_arma.gameObject);
+            ActualizarInventarioRapido(objeto_arma.gameObject, sprite_mano_arma[0]);
             Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
 
         }
@@ -491,7 +480,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
             tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
-            ActualizarInventarioRapido(objeto_arma.gameObject);
+            ActualizarInventarioRapido(objeto_arma.gameObject, sprite_mano_arma[1]);
             Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
 
         }
