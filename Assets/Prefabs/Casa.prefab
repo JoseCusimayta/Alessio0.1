@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4171571495670124}
   - component: {fileID: 212224931141077094}
+  - component: {fileID: 65289668832744202}
   m_Layer: 0
   m_Name: Casa
   m_TagString: Untagged
@@ -34,12 +35,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1146965055269448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.47, y: -14.69, z: 0}
-  m_LocalScale: {x: 7, y: 5, z: 1}
+  m_LocalPosition: {x: -1.9, y: -37.7, z: 0}
+  m_LocalScale: {x: 76.87727, y: 39.652027, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65289668832744202
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146965055269448}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.2716436, z: 0.2}
+  m_Center: {x: 0, y: 0.016440524, z: 0}
 --- !u!212 &212224931141077094
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -71,8 +84,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300008, guid: a349781fb2fae6647b27f4b4a401d6a5, type: 3}
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300008, guid: e9357a0187306a342a9b05e62675056c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -80,3 +93,4 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1

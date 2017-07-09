@@ -23,12 +23,19 @@ public class Jugador : MonoBehaviour, IPersonaje
     public int contador_apoyo;                      //Variable para guardar la cantidad de poder acumulado para llamar a la habilidad especial
     public float intervalo_ataque = 0.5f;           //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar    
     public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
+    public Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
     public Transform punto_disparo;                 //Variable para guardar la posición y rotación de punto del disparo
     #region Pistola
     public bool tiene_pistola;                      //Variable para saber si el personaje tiene una pistola
-    public bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola
-    public Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
+    public bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola    
     public Pistola pistola;                         //Variable para guardar la clase Pistola
+    public Sprite mano_pistola;                     //Variable para guardar el sprite de la mano con la pistola
+    #endregion
+    #region Metralleta
+    public bool tiene_metralleta;                   //Variable para saber si el personaje tiene una metralleta
+    public bool atacando_metralleta;                //Variable para saber si el personaje está atacando con una metralleta
+    public Metralleta metralleta;                   //Variable para guardar la clase Metralleta
+    public Sprite mano_metralleta;                  //Variable para guardar el sprite de la mano con la metralleta
     #endregion
     #endregion
 
@@ -51,6 +58,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     public bool colision_izquierda;                 //Variable para saber si el personaje aun se puede hacia izquierda
     public float distancia_colision = 0.6f;         //Variable para detectar la distancia entre el personaje y el objeto solido a colisionar
     public Vector3 caja_colision;                   //Variable para determinar la caja de colisión del personaje
+    RaycastHit rayCast_informacion;                 //Variable para guardar la información del objeto con el que colisiona
+    public LayerMask mascara_objeto;                //Variable para guardar y modificar la máscara del Personaje
     #endregion
 
     #region Variables de Retroceso (KnockBack)
@@ -62,8 +71,6 @@ public class Jugador : MonoBehaviour, IPersonaje
     #region Variables de Animacion
     public Animator _animator;                      //Variable para guardar el Animator del personaje
     public Sprite[] sprite_mano_arma;                 //Arreglo que para guardar los sprites de la mano derecha con arma
-
-    public SpriteRenderer sprite_brazoDerecho;      //Variable de Tipo Sprite para guardar el sprite del BrazoDerecho
     public float transparencia_objetivo;            //Variable para determinar el nivel de transparencia (Alpha)
     #endregion
 
@@ -73,7 +80,6 @@ public class Jugador : MonoBehaviour, IPersonaje
     public GameObject Prefab_Bala;                  //Variable para guardar el prefab de la Bala
     public GameObject Prefab_Golpe;                 //Variable para guardar el prefab del golpe
     public GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
-    public LayerMask _mask;                         //Variable para guardar y modificar la máscara del Personaje
     public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje    
     #region Partes del Cuerpo
     public GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
@@ -117,58 +123,58 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     void Update()
     {
-        JugadorHerido();
-        GestorVida();                               //Función para gestionar la vida del objeto y sus respectivas acciones
-        GestorTeclado();                            //Función para recibir los Inputs del teclado
-        GestorMouse();                              //Función para recibir los Inputs del mouse
-        GestorAtaques();                            //Función para gestionar los Ataques y tipos de Ataques
-        GestorAnimaciones();                        //Función para gestionar las animaciones del objeto
-        GestorRetroceso();                          //Función para gestionar el retroceso del jugador
-        GestorParpadeo();                           //Función para gestionar el parpadeo del personaje
-        seleccionarItem();
+        JugadorHerido();                                //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
+        GestorVida();                                   //Función para gestionar la vida del objeto y sus respectivas acciones
+        GestorTeclado();                                //Función para recibir los Inputs del teclado
+        GestorMouse();                                  //Función para recibir los Inputs del mouse
+        GestorAtaques();                                //Función para gestionar los Ataques y tipos de Ataques
+        GestorAnimaciones();                            //Función para gestionar las animaciones del objeto
+        GestorRetroceso();                              //Función para gestionar el retroceso del jugador
+        GestorParpadeo();                               //Función para gestionar el parpadeo del personaje
+        seleccionarItem();                              //Función que permite el intercambio los items que se encuentran en el inventario rapido
     }
 
     void FixedUpdate()
     {
-        GestorMovimiento();                         //Función para manejar el movimiendo con fisica
+        GestorMovimiento();                             //Función para manejar el movimiendo con fisica
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Arma"))
-        {                                           //Verificamos que el objeto colisionado sea un arma (Tag: Arma)            
-            DetectarObjetoArma(other);              //Función para detectar el arma con el que ha colisionado
+        if (other.CompareTag("Arma"))                   //Verificamos que el objeto colisionado sea un arma (Tag: Arma)            
+        {                                               
+            DetectarObjetoArma(other);                  //Función para detectar el arma con el que ha colisionado
         }
-        if (other.CompareTag("Item"))
-        {                                           //Verificamos que el objeto colisionado sea un item (Tag: Item)            
-            DetectarObjetoCura(other);             //Función para detectar el objeto que le aumentará vida
+        if (other.CompareTag("ObjetoHiriente"))         //Verificamos que el objeto colisionado sea un item (Tag: ObjetoHiriente)
+        {
+            DetectarObjetoHiriente(other);              //Función para detectar el objeto que le disminuirá vida
         }
-        DetectarObjetoHiriente(other);              //Función para detectar el objeto que le disminuirá vida
-                         
+        if (other.CompareTag("Cura"))                   //Verificamos que el objeto colisionado sea un item (Tag: Cura)
+        {
+            DetectarObjetoCura(other);                  //Función para detectar el objeto que le aumentará vida
+        }
         ColissionParedes();
-
-
     }
-
     #endregion
 
     #region Funciones del Update
     void GestorVida()
     {
-        vida_actual = salud._vidaActual;                    //Guardamos la vida actual del objeto
-        if (vida_actual <= alerta_vida)                     //Verificamos si la vida del objeto está en riesgo
+        vida_actual = salud._vidaActual;                        //Guardamos la vida actual del objeto
+        if (vida_actual <= alerta_vida)                         //Verificamos si la vida del objeto está en riesgo
         {
-            if (vida_actual > 0)                            //Verificamos si el objeto aun tiene vida
+            if (vida_actual > 0)                                //Verificamos si el objeto aun tiene vida
             {
-                Debug.Log("Alerta de vida baja");           //Disparamos la animación de alerta de vida baja
+                Debug.Log("Alerta de vida baja");               //Disparamos la animación de alerta de vida baja
             }
             else
             {
-                Debug.Log("Dead End");                      //Disparamos la animación de la muerte del personaje
+                Debug.Log("Dead End");                          //Disparamos la animación de la muerte del personaje
                 Destroy(gameObject);
             }
         }
     }
+
     public void GestorTeclado()
     {
         if (puede_controlar)
@@ -206,6 +212,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                 fijar_camara = false;
         }
     }
+
     public void GestorMouse()
     {        
         if (esta_atacando)                                      //Verificamos si el personaje está atacando
@@ -225,19 +232,20 @@ public class Jugador : MonoBehaviour, IPersonaje
                 if (Input.GetMouseButton(0))                    //Verificamos que si hay presión sobre el clic izquierdo
                 {
                     esta_atacando = true;                       //Activamos la variable de que está atacando con el clic Izquierdo
-                    Debug.Log("Se ha presionado el botón 0: Clic Izquierdo, esta_atacando = true");
+                    
                 }
                 if (Input.GetMouseButton(1))                    //Verificamos que si hay presión sobre el clic Derecho
                 {
-                    Debug.Log("Se ha presionado el botón 1: Clic Derecho");
+                    
                 }
                 if (Input.GetMouseButton(2))                    //Verificamos que si hay presión sobre el clic del Centro
                 {
-                    Debug.Log("Se ha presionado el botón 2: Clic del Centro");
+                    
                 }
             }
         }
     }
+
     public void GestorAtaques()
     {
         if (atacando_pistola)                                   //Verificamos si el personaje está atacando con una pistola
@@ -253,6 +261,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
 
     }
+
     public void GestorAnimaciones()
     {
         _animator.SetBool("Caminar", caminar);                  //Asignamos el valor del estado "caminar" a la animación
@@ -260,51 +269,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         _animator.SetBool("AtacandoPistola", atacando_pistola); //Asignamos el valor de "atacando_pistola" a la animación
         _animator.SetBool("TienePistola", tiene_pistola);       //Asignamos el valor de "tiene_pistola" a la animación
         _animator.SetBool("TieneArma", tiene_arma);             //Asignamos el valor de "tiene_arma" a la animación                          
-        _animator.SetBool("EsHerido", retrocediendo);
-    }
-    #endregion
-
-    #region Funciones del FixedUpdate
-    public void GestorMovimiento()
-    {
-        Vector3 moveVector = new Vector3(0, 0, 0);                  //Creamos un Vector 3, el cual nos serirá para definir el movimiento
-        float velocidad_movimiento = 0;                               //Asignamos una variable para la velocidad de movimiento
-        if (!fijar_camara)                                         //Verificamos que no esté retrocediendo para aplicar los giros
-        {
-            if (axis_horizontal > 0)                                    //Verificamos si el personaje se mueve hacia la derecha
-            {
-                transform.rotation = Quaternion.identity;               //Giramos el cuerpo del personaje hacia la derecha
-            }
-            if (axis_horizontal < 0)                                    //Verificamos si el personaje se mueve hacia la izquierda
-            {
-                transform.rotation = new Quaternion(0, 180, 0, 0);      //Giramos el cuerpo del personaje hacia la izquierda
-            }
-        }
-        if (retroceso > 0)
-        {                                                           //Verificamos que exista un retroceso mayor a 0                        
-            if (retroceder_derecha)
-            {                                                       //Verificamos si el personaje retrocerá hacia la derecha
-                moveVector.x = retroceso;                           //Hacemos retroceder al personaje hacia la derecha
-            }
-            else
-            {
-                moveVector.x = -retroceso;                          //Hacemos retroceder al personaje hacia la derecha
-            }
-        }
-        else
-        {
-            velocidad_movimiento = velocidad_normal;                //Asignamos la velocidad para caminar
-
-            if (correr)                                             //Verificamos si el personaje está corriendo
-                velocidad_movimiento = veloidad_correr;             //Asignamos la velocidad para correr
-
-            if (fijar_camara)                                       //Verificamos si el personaje está retrocediendo
-                velocidad_movimiento = velocidad_retrocediendo;     //Asignamos la velocidad para retroceder
-
-            moveVector.x = axis_horizontal * velocidad_movimiento;  //Definioms el vector de movimiento en el eje X
-            moveVector.y = axis_vertical * velocidad_movimiento;    //Definioms el vector de movimiento en el eje y
-        }
-        rigidbody_Jugador.velocity = moveVector;                    //Le damos la velocidad al personaje con el moveVector
+        _animator.SetBool("EsHerido", retrocediendo);           //Asignamos el valor de "EsHerido" a la animación
     }
 
     void GestorParpadeo()
@@ -312,7 +277,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (gameObject.layer == 12)                                         //Verificamos en que capa está (Layer 12: Capa de invulnerabilidad)
         {
             Color newColor = cabeza.GetComponent<SpriteRenderer>().color;   //Creamos una variable newColor para manejar la transparencia (alpha)
-            newColor.a = Mathf.Lerp(newColor.a, 
+            newColor.a = Mathf.Lerp(newColor.a,
                 transparencia_objetivo, Time.deltaTime * 20);               //Cambiamos el valor de la transparencia con el tiempo
             cabeza.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
             cuerpo.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
@@ -329,12 +294,10 @@ public class Jugador : MonoBehaviour, IPersonaje
 
             if (newColor.a > 0.9f)                                          //Revisamos el valor de la transparencia
             {
-                //Debug.Log("color=" + newColor.a);
                 transparencia_objetivo = 0;                                 //Le decimos que se haga invisible
             }
             else if (newColor.a < 0.1f)                                     //Revisamos el valor de la transparencia
             {
-                //Debug.Log("color2=" + newColor.a);
                 transparencia_objetivo = 1;                                 //Le decimos que se haga visible
             }
 
@@ -356,10 +319,8 @@ public class Jugador : MonoBehaviour, IPersonaje
             PiernaI.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
             PieI.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
         }
-
     }
-
-    //funcion que gestiona todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
+    
     void JugadorHerido()
     {
         if (vida_actual < vida_anterior)                                    //Verificamos que haya un cambio en la vida
@@ -370,7 +331,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             retroceso = 2;                                                  //Le damos una velocidad al retroceso
             if (salud._ultimoAtacante != null)                              //Verificamos que haya un atacante
             {
-                if (transform.position.x < 
+                if (transform.position.x <
                     salud._ultimoAtacante.transform.position.x)             //Verificamos la posición del atacante y del personaje
                 {
                     retroceder_derecha = false;                             //Le decimos de dónde nos está atacando para saber de donde retroceder
@@ -401,15 +362,14 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
     }
 
-    //permite el intercambiar los items que se encuentran en el inventario rapido
+    
     public void seleccionarItem()
     {
-        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))    //Recibimos la información de los números del teclado
         {
-            if (Input.GetKeyDown(vKey))
+            if (Input.GetKeyDown(vKey))                                     //Verificamos si se está presionado una tecla
             {
-                //Debug.Log("Presione " + vKey.ToString());
-                switch (vKey.ToString())
+                switch (vKey.ToString())                                    //Obtenemos el nombre de la tecla que se está presionando
                 {
                     //POR AHORA TIENEN UNA VALIDACION IF PREVIA con el sprite.name, de alli continuo con esta logica para el intercambio de armas
                     case "Alpha2":
@@ -420,12 +380,12 @@ public class Jugador : MonoBehaviour, IPersonaje
                             Sanacion sanaAux = GetComponent<GestionInventario>().items[1].objeto.GetComponent<Sanacion>();
                             salud.ModificarVida(sanaAux.vidaExtra, GetComponent<GestionInventario>().items[1].objeto);
                         }
-                            //GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0"
-                         else   BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
-                       
+                        //GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0"
+                        else BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+
                         break;
                     case "Alpha1":
-                          Debug.Log("Seleccione item 1:");
+                        Debug.Log("Seleccione item 1:");
                         BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
 
                         break;
@@ -436,114 +396,137 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     #endregion
 
+    #region Funciones del FixedUpdate
+    public void GestorMovimiento()
+    {
+        Vector3 moveVector = new Vector3(0, 0, 0);                          //Creamos un Vector 3, el cual nos serirá para definir el movimiento
+        float velocidad_movimiento = 0;                                     //Asignamos una variable para la velocidad de movimiento
+        if (!fijar_camara)                                                  //Verificamos que no esté retrocediendo para aplicar los giros
+        {
+            if (axis_horizontal > 0)                                        //Verificamos si el personaje se mueve hacia la derecha
+            {
+                transform.rotation = Quaternion.identity;                   //Giramos el cuerpo del personaje hacia la derecha
+            }
+            if (axis_horizontal < 0)                                        //Verificamos si el personaje se mueve hacia la izquierda
+            {
+                transform.rotation = new Quaternion(0, 180, 0, 0);          //Giramos el cuerpo del personaje hacia la izquierda
+            }
+        }
+        if (retroceso > 0)
+        {                                                                   //Verificamos que exista un retroceso mayor a 0                        
+            if (retroceder_derecha)
+            {                                                               //Verificamos si el personaje retrocerá hacia la derecha
+                moveVector.x = retroceso;                                   //Hacemos retroceder al personaje hacia la derecha
+            }
+            else
+            {
+                moveVector.x = -retroceso;                                  //Hacemos retroceder al personaje hacia la derecha
+            }
+        }
+        else
+        {
+            velocidad_movimiento = velocidad_normal;                        //Asignamos la velocidad para caminar
+
+            if (correr)                                                     //Verificamos si el personaje está corriendo
+                velocidad_movimiento = veloidad_correr;                     //Asignamos la velocidad para correr
+
+            if (fijar_camara)                                               //Verificamos si el personaje está retrocediendo
+                velocidad_movimiento = velocidad_retrocediendo;             //Asignamos la velocidad para retroceder
+
+            moveVector.x = axis_horizontal * velocidad_movimiento;          //Definioms el vector de movimiento en el eje X
+            moveVector.y = axis_vertical * velocidad_movimiento;            //Definioms el vector de movimiento en el eje y
+        }
+        rigidbody_Jugador.velocity = moveVector;                            //Le damos la velocidad al personaje con el moveVector
+    }
+    #endregion
+
     #region Funciones del onTrigger (Colisiones)
 
     public void ColissionParedes()
     {
-        caja_colision = transform.localScale;                           //Asignamos el valor del tramaño del objeto a la caja de colisión
-        caja_colision *= 0.99f;                                         //y le multiplicamos por un número pequeño para que la caja sea más grande que el objeto
-        RaycastHit raycastInfo;
+        Debug.Log("Colision");
+        caja_colision = transform.localScale*0.99f;                             //Variable en forma de una caja para detectar las colisiones del personaje
+        colision_izquierda =                                                    //Le asignamos un valor
+            Physics.BoxCast(
+                transform.position, 
+                caja_colision / 2, 
+                Vector3.left, 
+                out rayCast_informacion, 
+                Quaternion.identity, 
+                distancia_colision, 
+                mascara_objeto.value);
 
-        //raycast para controlar si hay colision desde la izquierda
-        colision_izquierda = Physics.BoxCast(transform.position, caja_colision / 2, Vector3.left, out raycastInfo, Quaternion.identity, distancia_colision, _mask.value);
-        if (colision_izquierda)
+        if (colision_izquierda)                                                 //Verificamos si hay colisión por el lado de la izquierda
         {
             Debug.Log("Colision conizq");
             //si al player le impacta una bala enemiga
-            if (raycastInfo.collider.gameObject.CompareTag("BalaEnemigo"))
+            if (rayCast_informacion.collider.gameObject.CompareTag("BalaEnemigo"))
             {
                 Debug.Log("Colision con bala enemiga");
             }
-
-        }
+        }        
     }
 
-    //permite el ingreso de items al inventario rapido que se encuentra en la pantalla
-    private void ActualizarInventarioRapido(GameObject ga,Sprite accion)
+    
+    private void ActualizarInventarioRapido(GameObject ga,Sprite accion)        //Permite el ingreso de items al inventario rapido que se encuentra en la pantalla
     {
-        GetComponent<GestionInventario>().asignarItemACasilla(ga,accion);
+        GetComponent<GestionInventario>().asignarItemACasilla(ga,accion);       //Asignamos un item a la última casilla disponible
     }
-    public void DetectarObjetoArma(Collider objeto)
+    public void DetectarObjetoArma(Collider arma)
     {
-        if (objeto.tag == "Arma")
+        BrazoD.SetActive(false);                                                //Desactivamos el brazo derecho sin arma controlado por animator
+        tipo_arma = arma.name;                                                  //Asignamos el nombre del arma a la variable "tipo_arma"
+        BrazoDerechoGirable.SetActive(true);                                    //Activamos el brazo Derecho Girable
+        tiene_arma = true;                                                      //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+        if (tipo_arma == "Pistola")                                             //Verificamos que el objeto detectado sea una pistola
         {
-          
-                BrazoD.SetActive(false);                    //Desactivamos el brazo derecho controlado por animator
-                BrazoDerechoGirable.SetActive(true);      //Activamos el brazo Derecho Girable
-                tipo_arma = objeto.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
-                                                       //sprite_brazoDerecho.sprite =
-                                                       //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
-                tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
-                tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
-                ActualizarInventarioRapido(objeto.gameObject, sprite_mano_arma[0]);
-                Destroy(objeto.gameObject);            //Destruimos el arma que está en el suelo
+            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con pistola al brazo derecho girable
+                mano_pistola;                        
+            tiene_pistola = true;                                               //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
+        }
 
-            }
-
-            if (objeto.name == "Ametralladora")        //Verificamos que tipo de arma encontramos
-            {
-                BrazoD.SetActive(false);
-                BrazoDerechoGirable.SetActive(true);
-                tipo_arma = objeto.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
-                                                       //sprite_brazoDerecho.sprite =
-                                                       //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
-                tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
-                tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
-                ActualizarInventarioRapido(objeto.gameObject, sprite_mano_arma[1]);
-                Destroy(objeto.gameObject);            //Destruimos el arma que está en el suelo
-
-            }
-
-        
-
-        //if (objeto_arma.name == "Ametralladora")        //Verificamos que tipo de arma encontramos
-        //{
-        //    BrazoD.SetActive(false);
-        //    BrazoDerechoGirable.SetActive(true);
-        //    tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
-        //    //sprite_brazoDerecho.sprite =
-        //    //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
-        //    tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
-        //    tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
-        //    ActualizarInventarioRapido(objeto_arma.gameObject, sprite_mano_arma[1]);
-        //    Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
-
-        //}
+        if (tipo_arma == "Ametralladora")                                       //Verificamos que el objeto detectado sea una pistola
+        {
+            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con metralleta al brazo derecho girable
+                mano_metralleta;
+            tiene_metralleta = true;                                            //Activamos la variable "tiene_metralleta" para decirle a la animación que muestre las animaciones con pistola
+        }
+        ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[0]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
+        Destroy(arma.gameObject);                                               //Destruimos el arma que está en el suelo
     }
     public void DetectarObjetoHiriente(Collider objeto_hiriente)
     {
-        if (objeto_hiriente.CompareTag("BalaEnemigo"))
-        {                                               //Verificamos que el objeto sea una Bala del enemigo
-            salud.ModificarVida(                        //Activamos la acción de modificar la vida del personaje
+        if (objeto_hiriente.name == "BalaEnemigo")                              //Verificamos que el objeto detectado sea una Bala del enemigo
+        {                                                                       
+            salud.ModificarVida(                                                //Activamos la acción de modificar la vida del personaje
                 objeto_hiriente.GetComponent<Bala>().danio_bala, 
                 objeto_hiriente.gameObject);
         }
-        if (objeto_hiriente.CompareTag("Enemigo"))
-        {                                               //Verificamos que el objeto sea un enemigo
+        if (objeto_hiriente.name == "Enemigo")                                  //Verificamos que el objeto detectado sea un enemigo
+        {                                                                       
             salud.ModificarVida(20, 
-                objeto_hiriente.gameObject);            //Activamos la acción de modificar la vida del personaje
+                objeto_hiriente.gameObject);                                    //Activamos la acción de modificar la vida del personaje
 
         }
     }
     public void DetectarObjetoCura(Collider objeto_cura)
     {
-        if (objeto_cura.name=="Curacion")
+        if (objeto_cura.name== "primerosAuxilios")                              //Verificamos que el objeto detectado sea primerosAuxilios
         {
-            //si la salud del jugador esta completa, que la cura se guarde en inventario
-            if (salud._vidaActual == salud._vidaMaxima)
+            if (salud._vidaActual == salud._vidaMaxima)                         //Verificamos si la cantidad de la vida actual es la vida máxima del jugador
             {
-                ActualizarInventarioRapido(objeto_cura.gameObject, objeto_cura.GetComponentInChildren<SpriteRenderer>().sprite);
-               
+                ActualizarInventarioRapido(                                     //Guardamos los primeros axuilios en el inventario
+                    objeto_cura.gameObject, 
+                    objeto_cura.GetComponentInChildren<SpriteRenderer>().sprite);
             }
-            //si el jugador esta herido, que la cura se use de inmediato
             else
             {
-                Debug.Log("Se curo");
-                salud.ModificarVida(objeto_cura.GetComponent<Sanacion>().vidaExtra,
-                    objeto_cura.gameObject);            //Activamos la acción de modificar la vida del personaje
+                salud.ModificarVida(                                            //Curamos al personaje si tiene menos vida que la vida máxima
+                    objeto_cura.GetComponent<Sanacion>().vidaExtra,
+                    objeto_cura.gameObject);            
                
             }
-            Destroy(objeto_cura.gameObject);
+            Destroy(objeto_cura.gameObject);                                    //Destruimos el objeto que está curando
         }
     }
     #endregion

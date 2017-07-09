@@ -10,7 +10,7 @@ public class GirarBrazoDMouse : MonoBehaviour
     public Transform punto_disparo;                                 //Variable para guardar el Transform del punto de disparo
     public Transform jugador;                                       //Variable para guardar el Transform del jugador
     #endregion
-
+    
     #region Funciones de Unity
 
     void Start()
@@ -97,7 +97,7 @@ public class GirarBrazoDMouse : MonoBehaviour
         }
         if (transform.rotation.y < 0.75)                                                            //Verificamos que el angulo se haya salido del rango permitido
         {
-            transform.localEulerAngles = new Vector3(0, 0, -80);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
+            transform.localEulerAngles = new Vector3(0, 0, -79);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
             punto_disparo.localEulerAngles = Vector3.zero;                                          //Corregimos y le damos el angulo máximo o mínimo permitido
         }
     }
@@ -120,7 +120,7 @@ public class GirarBrazoDMouse : MonoBehaviour
         }
         if (transform.rotation.w < 0.75)                                                            //Verificamos que el angulo se haya salido del rango permitido
         {
-            transform.localEulerAngles = new Vector3(0, 0, -80);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
+            transform.localEulerAngles = new Vector3(0, 0, -79);                                    //Corregimos y le damos el angulo máximo o mínimo permitido
             punto_disparo.localEulerAngles = Vector3.zero;                                          //Corregimos y le damos el angulo máximo o mínimo permitido
         }
 

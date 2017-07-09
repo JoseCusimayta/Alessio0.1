@@ -22,6 +22,8 @@ TagManager:
   - Inventario
   - Item
   - ItemRapido
+  - ObjetoHiriente
+  - Cura
   layers:
   - Default
   - TransparentFX

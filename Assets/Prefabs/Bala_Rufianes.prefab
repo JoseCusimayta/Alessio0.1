@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114003635568655402}
   m_Layer: 10
   m_Name: Bala_Rufianes
-  m_TagString: BalaEnemigo
+  m_TagString: ObjetoHiriente
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
