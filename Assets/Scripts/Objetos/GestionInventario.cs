@@ -26,6 +26,7 @@ public class GestionInventario : MonoBehaviour {
             Debug.Log("items[i]=" + items[i]);
             if (items[i] == null)
             {
+                Debug.Log("ItemPresentacion=" + ItemPresentacion);
                 items[i] = new Item();
                 items[i].cargarImagenes(ItemPresentacion, ItemAccion);
                 break;
@@ -41,13 +42,13 @@ public class GestionInventario : MonoBehaviour {
         for (int i = 0; i < itemRapido.Length; i++)                  
         {
             //el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
-            Debug.Log("nombre=" + itemRapido[i].GetComponent<Image>().sprite.name);
+            //Debug.Log("nombre=" + itemRapido[i].GetComponent<Image>().sprite.name);
             if (itemRapido[i].GetComponent<Image>().sprite.name=="UIMask")
             {
                 //si el casillero esta vacio se le asigna el item recogido
 
                 itemRapido[i].GetComponent<Image>().sprite = items[i].presentacion;
-                Debug.Log("nombre luego de seleccionar=" + itemRapido[i].GetComponent<Image>().sprite.name);
+                //Debug.Log("nombre luego de seleccionar=" + itemRapido[i].GetComponent<Image>().sprite.name);
                 break;
             }
         }

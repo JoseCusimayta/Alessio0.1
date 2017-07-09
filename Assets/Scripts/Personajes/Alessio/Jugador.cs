@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Jugador : MonoBehaviour, IPersonaje
 {
@@ -140,8 +139,12 @@ public class Jugador : MonoBehaviour, IPersonaje
         {                                           //Verificamos que el objeto colisionado sea un arma (Tag: Arma)            
             DetectarObjetoArma(other);              //Función para detectar el arma con el que ha colisionado
         }
+        if (other.CompareTag("Item"))
+        {                                           //Verificamos que el objeto colisionado sea un item (Tag: Item)            
+            DetectarObjetoCura(other);             //Función para detectar el objeto que le aumentará vida
+        }
         DetectarObjetoHiriente(other);              //Función para detectar el objeto que le disminuirá vida
-        DetectarObjetoCura(other);                  //Función para detectar el objeto que le aumentará vida
+                         
         ColissionParedes();
 
 
@@ -326,12 +329,12 @@ public class Jugador : MonoBehaviour, IPersonaje
 
             if (newColor.a > 0.9f)                                          //Revisamos el valor de la transparencia
             {
-                Debug.Log("color=" + newColor.a);
+                //Debug.Log("color=" + newColor.a);
                 transparencia_objetivo = 0;                                 //Le decimos que se haga invisible
             }
             else if (newColor.a < 0.1f)                                     //Revisamos el valor de la transparencia
             {
-                Debug.Log("color2=" + newColor.a);
+                //Debug.Log("color2=" + newColor.a);
                 transparencia_objetivo = 1;                                 //Le decimos que se haga visible
             }
 
@@ -409,16 +412,21 @@ public class Jugador : MonoBehaviour, IPersonaje
                 switch (vKey.ToString())
                 {
                     //POR AHORA TIENEN UNA VALIDACION IF PREVIA con el sprite.name, de alli continuo con esta logica para el intercambio de armas
-                    case "Alpha1":
-                        Debug.Log("Seleccione item 1:");
-                      
+                    case "Alpha2":
+                        Debug.Log("Seleccione item 2:");
+                        Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[1]);
+                        if (GetComponent<GestionInventario>().items[1].objeto.name == "Curacion")
+                        {
+                            Sanacion sanaAux = GetComponent<GestionInventario>().items[1].objeto.GetComponent<Sanacion>();
+                            salud.ModificarVida(sanaAux.vidaExtra, GetComponent<GestionInventario>().items[1].objeto);
+                        }
                             //GetComponent<GestionInventario>().itemRapido[0].GetComponent<Image>().sprite.name == "Alessio-SPRITE-PISTOLA_0"
-                            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                         else   BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
                        
                         break;
-                    case "Alpha2":
-                          Debug.Log("Seleccione item 2:");
-                        BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+                    case "Alpha1":
+                          Debug.Log("Seleccione item 1:");
+                        BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
 
                         break;
                 }
@@ -455,35 +463,52 @@ public class Jugador : MonoBehaviour, IPersonaje
     {
         GetComponent<GestionInventario>().asignarItemACasilla(ga,accion);
     }
-    public void DetectarObjetoArma(Collider objeto_arma)
+    public void DetectarObjetoArma(Collider objeto)
     {
-        if (objeto_arma.name == "Pistola")              //Verificamos que tipo de arma encontramos
+        if (objeto.tag == "Arma")
         {
-            BrazoD.SetActive(false);                    //Desactivamos el brazo derecho controlado por animator
-            BrazoDerechoGirable.SetActive(true);      //Activamos el brazo Derecho Girable
-            tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
-            //sprite_brazoDerecho.sprite =
-            //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
-            tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
-            tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
-            ActualizarInventarioRapido(objeto_arma.gameObject, sprite_mano_arma[0]);
-            Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
+          
+                BrazoD.SetActive(false);                    //Desactivamos el brazo derecho controlado por animator
+                BrazoDerechoGirable.SetActive(true);      //Activamos el brazo Derecho Girable
+                tipo_arma = objeto.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
+                                                       //sprite_brazoDerecho.sprite =
+                                                       //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
+                tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
+                tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+                ActualizarInventarioRapido(objeto.gameObject, sprite_mano_arma[0]);
+                Destroy(objeto.gameObject);            //Destruimos el arma que está en el suelo
 
-        }
+            }
 
-        if (objeto_arma.name == "Ametralladora")        //Verificamos que tipo de arma encontramos
-        {
-            BrazoD.SetActive(false);
-            BrazoDerechoGirable.SetActive(true);
-            tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
-            //sprite_brazoDerecho.sprite =
-            //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
-            tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
-            tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
-            ActualizarInventarioRapido(objeto_arma.gameObject, sprite_mano_arma[1]);
-            Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
+            if (objeto.name == "Ametralladora")        //Verificamos que tipo de arma encontramos
+            {
+                BrazoD.SetActive(false);
+                BrazoDerechoGirable.SetActive(true);
+                tipo_arma = objeto.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
+                                                       //sprite_brazoDerecho.sprite =
+                                                       //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
+                tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
+                tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+                ActualizarInventarioRapido(objeto.gameObject, sprite_mano_arma[1]);
+                Destroy(objeto.gameObject);            //Destruimos el arma que está en el suelo
 
-        }
+            }
+
+        
+
+        //if (objeto_arma.name == "Ametralladora")        //Verificamos que tipo de arma encontramos
+        //{
+        //    BrazoD.SetActive(false);
+        //    BrazoDerechoGirable.SetActive(true);
+        //    tipo_arma = objeto_arma.name;               //Reconocemos el tipo de arma como "Pistola" (Nombre: Pistola)
+        //    //sprite_brazoDerecho.sprite =
+        //    //    sprite_mano_arma;                       //Cambiamos el brazo sin arma, por un brazo con Arma
+        //    tiene_pistola = true;                       //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
+        //    tiene_arma = true;                          //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+        //    ActualizarInventarioRapido(objeto_arma.gameObject, sprite_mano_arma[1]);
+        //    Destroy(objeto_arma.gameObject);            //Destruimos el arma que está en el suelo
+
+        //}
     }
     public void DetectarObjetoHiriente(Collider objeto_hiriente)
     {
@@ -502,7 +527,24 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void DetectarObjetoCura(Collider objeto_cura)
     {
-
+        if (objeto_cura.name=="Curacion")
+        {
+            //si la salud del jugador esta completa, que la cura se guarde en inventario
+            if (salud._vidaActual == salud._vidaMaxima)
+            {
+                ActualizarInventarioRapido(objeto_cura.gameObject, objeto_cura.GetComponentInChildren<SpriteRenderer>().sprite);
+               
+            }
+            //si el jugador esta herido, que la cura se use de inmediato
+            else
+            {
+                Debug.Log("Se curo");
+                salud.ModificarVida(objeto_cura.GetComponent<Sanacion>().vidaExtra,
+                    objeto_cura.gameObject);            //Activamos la acción de modificar la vida del personaje
+               
+            }
+            Destroy(objeto_cura.gameObject);
+        }
     }
     #endregion
 

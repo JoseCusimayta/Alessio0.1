@@ -47,6 +47,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
 
     #region Variables de Rufian
     public GameObject Prefab_Bala, Prefab_Rufian, Prefab_Explosion;
+    public GameObject[] itemsDesprendibles;         //items que se despenden cuando muera el enemigo
     #endregion
 
     #endregion
@@ -54,6 +55,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
     #region Funciones de Unity
     void Start()
     {
+        //Debug.Log("itemsDesprendibles[0]" + itemsDesprendibles[0]);
         jugador = GameObject.FindGameObjectWithTag("Player");            //Buscamos al jugador en la escena
         coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
     }
@@ -61,7 +63,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
     // Update is called once per frame
     void Update()
     {
-        Hurt();
+       
         GestorVida();                               //Función para gestionar la vida del objeto y sus respectivas acciones        
         GestorAtaques();                            //Función para gestionar los Ataques y tipos de Ataques
         GestorAnimaciones();                        //Función para gestionar las animaciones del objeto
@@ -89,15 +91,16 @@ public class Enemigo : MonoBehaviour, IPersonaje
     #endregion
 
     #region Funciones del Update
-    public void Hurt()
-    {
-    }
+   
     public void GestorVida()
     {
-        vida_actual = salud._vidaActual;                        //Actualizamos la vida del objeto
-        if (vida_actual <= 0)
-        {                                                       //Verificamos si el personaje está sin vida
-           // Nuevo_Rufian();                                     //Creamos un nuevo Rufian
+        vida_actual = salud._vidaActual;
+        //Debug.Log("Vida enemigo:" + vida_actual);//Actualizamos la vida del objeto
+        if (vida_actual <= 0) //Verificamos si el personaje está sin vida
+        {
+            
+            //Morir();
+            // Nuevo_Rufian();                                     //Creamos un nuevo Rufian
         }
     }
     public void GestorAtaques()
@@ -256,6 +259,21 @@ public class Enemigo : MonoBehaviour, IPersonaje
                 * velocidad_normal * Time.deltaTime);                           //Movemos al objeto hacia al jugador  
         }
     }
+
+    public GameObject desprenderItem()
+    {
+        //GetComponent<MeshRenderer>().enabled = false;
+        Debug.Log("Desprendera un item al morir");
+        //el item se elige aleatoriamente
+        int itemElegido = Random.Range(0, itemsDesprendibles.Length - 1);
+        Debug.Log("itemElegido="+ itemElegido);
+        itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
+        itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
+
+        //gameObject.SetActive(false);
+        Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
+        return itemsDesprendibles[itemElegido];
+    }
     #endregion
 
     #region Funciones del onTrigger
@@ -269,6 +287,20 @@ public class Enemigo : MonoBehaviour, IPersonaje
 
     public void Morir()
     {
+        Debug.Log("Desprendera un item al morir");
+        //el item se elige aleatoriamente
+        int itemElegido = Random.Range(0, itemsDesprendibles.Length - 1);
+        Debug.Log("itemElegido=" + itemElegido);
+        itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
+        itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
+
+        //Al morir el enemigo desprende un item al azar;
+        string nombreAux = itemsDesprendibles[2].name;
+        Debug.Log("nombre del item=" + nombreAux);
+        GameObject g= Instantiate(itemsDesprendibles[2], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
+        //se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
+        g.name= nombreAux;
+        Destroy(gameObject);
     }
     public void Mover()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Sanacion : MonoBehaviour {
 
-	public float vidaExtra;			//Cantidad de vida a curar
+	public float vidaExtra=-20;			//Cantidad de vida a curar
 
 	// Use this for initialization
 	void Start () {
