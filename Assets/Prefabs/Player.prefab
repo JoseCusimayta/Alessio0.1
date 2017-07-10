@@ -586,16 +586,25 @@ MonoBehaviour:
   esta_atacando: 0
   tiene_arma: 0
   tipo_arma: 
-  danio_golpe: 0
   contador_apoyo: 0
   intervalo_ataque: 0.5
   reactivacion_ataque: 0
+  arma_jugador: {fileID: 4783467381151784}
   punto_disparo: {fileID: 4697151779742784}
+  "atacando_pu\xF1os": 0
+  danio_golpe: 10
+  prefab_golpe: {fileID: 0}
   tiene_pistola: 0
   atacando_pistola: 0
-  arma_jugador: {fileID: 4783467381151784}
   pistola: {fileID: 0}
   mano_pistola: {fileID: 21300002, guid: 17a15e6c569b95645b0e9051b98c5e0c, type: 3}
+  prefab_bala_pistola: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+    type: 2}
+  tiene_metralleta: 0
+  atacando_metralleta: 0
+  metralleta: {fileID: 0}
+  mano_metralleta: {fileID: 21300010, guid: c9e6ef53049591f4399c63506ca69cd1, type: 3}
+  prefab_bala_metralleta: {fileID: 0}
   velocidad_normal: 15
   veloidad_correr: 20
   velocidad_con_arma: 10
@@ -611,6 +620,9 @@ MonoBehaviour:
   colision_izquierda: 0
   distancia_colision: 0.6
   caja_colision: {x: 0, y: 0, z: 0}
+  mascara_objeto:
+    serializedVersion: 2
+    m_Bits: 0
   retroceso: 2
   retroceder_derecha: 0
   retrocediendo: 0
@@ -621,14 +633,7 @@ MonoBehaviour:
   transparencia_objetivo: 0
   inventario: []
   rigidbody_Jugador: {fileID: 54605245508816216}
-  Prefab_Bala: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
-    type: 2}
-  Prefab_Golpe: {fileID: 1161956906494282, guid: 9ff3761d64c6d3340b3029b5c8604ddb,
-    type: 2}
   Prefab_Explosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
-  _mask:
-    serializedVersion: 2
-    m_Bits: 4294967039
   puede_controlar: 1
   cabeza: {fileID: 1292514452659014}
   cuerpo: {fileID: 1117414148017850}

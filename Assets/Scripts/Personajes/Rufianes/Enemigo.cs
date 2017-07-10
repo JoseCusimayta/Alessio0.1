@@ -33,6 +33,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
     public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el objeto
     Vector3 direccion_movimiento;                   //Variable para determinar hacia dónde se moverá
     float x, y, z;                                  //Variable para determinar dónde aparecerán los objetos
+    public Vector3 posicion_original;             //Variable para guardar la posición inicial del objeto
     #region Patron de Movimiento
     public GameObject rufian;		                //Variable para guardar al objeto Rufian, para controlar su movimiento en patrullaje
     public Transform[] lista_coordenadas; 		    //Variable para guardar la Cantidad de Coordenadas que se guardará
@@ -58,6 +59,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
         //Debug.Log("itemsDesprendibles[0]" + itemsDesprendibles[0]);
         jugador = GameObject.FindGameObjectWithTag("Player");            //Buscamos al jugador en la escena
         coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
+        posicion_original = transform.position;
     }
 
     // Update is called once per frame
@@ -78,11 +80,6 @@ public class Enemigo : MonoBehaviour, IPersonaje
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            other.GetComponent<Health>().ModificarVida(20, gameObject);
-
-        }
         if (other.CompareTag("BalaPlayer"))
         {
             salud.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);
@@ -172,10 +169,10 @@ public class Enemigo : MonoBehaviour, IPersonaje
     #region Funciones del FixedUpdate
     public void GestorMovimiento()
     {
-        if (persiguiendo)                                                   //Verificamos si el objeto está persiguiendo
+        if (persiguiendo)                                                       //Verificamos si el objeto está persiguiendo
         {
-            GestorAtaquePersecucion();                                      //Activamos el gestor de persecicion
-            GestorAtaques();                                                //Tambien activamos el gestor de ataques
+            GestorAtaquePersecucion();                                          //Activamos el gestor de persecicion
+            GestorAtaques();                                                    //Tambien activamos el gestor de ataques
         }
         else
         {
@@ -207,24 +204,30 @@ public class Enemigo : MonoBehaviour, IPersonaje
     }
     public void GestorPatronPatrullaje()
     {
-        rufian.transform.position = Vector3.MoveTowards(                    //Funcion para mover al objeto
-            rufian.transform.position,	                                    //Definimos la posición del objeto
-            coordenada_objetivo.position,			                        //Definimos la posición a la cual se dirigirá (punto destino)
-            Time.deltaTime * velocidad_normal			                    //Definimos la velocidad de movimiento (caminar) para patrullar
+        rufian.transform.position = Vector3.MoveTowards(                        //Funcion para mover al objeto
+            rufian.transform.position,	                                        //Definimos la posición del objeto
+            coordenada_objetivo.position,			                            //Definimos la posición a la cual se dirigirá (punto destino)
+            Time.deltaTime * velocidad_normal			                        //Definimos la velocidad de movimiento (caminar) para patrullar
         );
 
-        if (rufian.transform.position == coordenada_objetivo.position)      //Verificamos si el objeto llego al punto destino
+        if (rufian.transform.position == coordenada_objetivo.position)          //Verificamos si el objeto llego al punto destino
         {
-            indice_coordenada += 1;                                         //Indicamos que ahora debe ir al siguiente punto
-            if (indice_coordenada == lista_coordenadas.Length)              //Verificamos si llego al último punto
+            indice_coordenada += 1;                                             //Indicamos que ahora debe ir al siguiente punto
+            if (indice_coordenada == lista_coordenadas.Length)                  //Verificamos si llego al último punto
             {
-                indice_coordenada = 0;                                      //Regresamos al punto inicial
+                indice_coordenada = 0;                                          //Regresamos al punto inicial
             }
-            coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos las coordenadas del punto al cual se moverá el objeto
+            coordenada_objetivo = lista_coordenadas[indice_coordenada];         //Definimos las coordenadas del punto al cual se moverá el objeto
         }
     }
     public void GestorPatronReposo()
     {
+
+        rufian.transform.position = Vector3.MoveTowards(                                    //Funcion para mover al objeto
+        rufian.transform.position,	                                                        //Definimos la posición del objeto
+        posicion_original,                          			                            //Definimos la posición a la cual se dirigirá (punto destino)
+        Time.deltaTime * velocidad_normal			                                        //Definimos la velocidad de movimiento (caminar) para patrullar
+        );
     }
     public void GestorAtaquePersecucion()
     {
@@ -250,13 +253,24 @@ public class Enemigo : MonoBehaviour, IPersonaje
     }
     public void GestorAtaqueReposo()
     {
-        if (jugador)                                                            //Verificamos la existencia del jugador
+        if (jugador)                                                                            //Verificamos la existencia del jugador
         {
-            direccion_movimiento =
-               transform.position - jugador.transform.position;                //Calculamos la distancia entre ambos y lo guardamos en el Vector
-            direccion_movimiento.Normalize();                                   //Obtenemos la dirección del Vector
-            transform.Translate(direccion_movimiento
-                * velocidad_normal * Time.deltaTime);                           //Movemos al objeto hacia al jugador  
+            if (mirando_derecha)                                                                //Verificamos si el objeto está mirando a la derecha
+            {
+                transform.Translate(Vector3.right * velocidad_normal * Time.deltaTime);         //Movemos el objeto al a derecha
+            }
+            else
+            {
+                transform.Translate(Vector3.left * -velocidad_normal * Time.deltaTime);         //Movemos el objeto a la izquierda
+            }
+            if (transform.position.y > jugador.transform.position.y)                            //Verificamos si el objeto está arriba del personaje
+            {
+                transform.Translate(Vector3.down * velocidad_normal * Time.deltaTime);          //Movemos el objeto hacia abajo
+            }
+            else
+            {
+                transform.Translate(Vector3.up * velocidad_normal * Time.deltaTime);            //Movemos el objeto hacia arriba
+            }
         }
     }
 

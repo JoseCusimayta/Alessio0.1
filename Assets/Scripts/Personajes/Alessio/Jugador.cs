@@ -18,24 +18,30 @@ public class Jugador : MonoBehaviour, IPersonaje
     #region Variables de Ataques
     public bool esta_atacando;                      //Variable para saber si el personaje está atacando
     public bool tiene_arma;                         //Variable para saber si el personaje tiene algún tipo de arma
-    public string tipo_arma;                        //Variable para guardar el tipo de arma que esta usando actualmente
-    public float danio_golpe;                       //Variable para determinar la cantidad de daño que tendrán los golpes del personaje
+    public string tipo_arma;                        //Variable para guardar el tipo de arma que esta usando actualmente    
     public int contador_apoyo;                      //Variable para guardar la cantidad de poder acumulado para llamar a la habilidad especial
     public float intervalo_ataque = 0.5f;           //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar    
     public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
     public Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
     public Transform punto_disparo;                 //Variable para guardar la posición y rotación de punto del disparo
+    #region Puños
+    public bool atacando_golpes;                     //Variable para saber si el personaje está atacando con puños
+    public float danio_golpe;                       //Variable para determinar la cantidad de daño que tendrán los golpes del personaje
+    public GameObject prefab_golpe;                 //Variable para guardar el prefab del efecto del golpe
+    #endregion
     #region Pistola
     public bool tiene_pistola;                      //Variable para saber si el personaje tiene una pistola
     public bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola    
     public Pistola pistola;                         //Variable para guardar la clase Pistola
     public Sprite mano_pistola;                     //Variable para guardar el sprite de la mano con la pistola
+    public GameObject prefab_bala_pistola;          //Variable para guardar el prefab de la Bala de la pistola
     #endregion
     #region Metralleta
     public bool tiene_metralleta;                   //Variable para saber si el personaje tiene una metralleta
     public bool atacando_metralleta;                //Variable para saber si el personaje está atacando con una metralleta
     public Metralleta metralleta;                   //Variable para guardar la clase Metralleta
     public Sprite mano_metralleta;                  //Variable para guardar el sprite de la mano con la metralleta
+    public GameObject prefab_bala_metralleta;       //Variable para guardar el prefab de la Bala de la metralleta
     #endregion
     #endregion
 
@@ -77,8 +83,6 @@ public class Jugador : MonoBehaviour, IPersonaje
     #region Variables de Personaje
     public Recurso[] inventario;	                //Variable de tipo "Arreglo" para almacenar los recursos del personaje
     public Rigidbody rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
-    public GameObject Prefab_Bala;                  //Variable para guardar el prefab de la Bala
-    public GameObject Prefab_Golpe;                 //Variable para guardar el prefab del golpe
     public GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
     public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje    
     #region Partes del Cuerpo
@@ -123,12 +127,12 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     void Update()
     {
+        GestorAnimaciones();                            //Función para gestionar las animaciones del objeto
         JugadorHerido();                                //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
         GestorVida();                                   //Función para gestionar la vida del objeto y sus respectivas acciones
         GestorTeclado();                                //Función para recibir los Inputs del teclado
         GestorMouse();                                  //Función para recibir los Inputs del mouse
         GestorAtaques();                                //Función para gestionar los Ataques y tipos de Ataques
-        GestorAnimaciones();                            //Función para gestionar las animaciones del objeto
         GestorRetroceso();                              //Función para gestionar el retroceso del jugador
         GestorParpadeo();                               //Función para gestionar el parpadeo del personaje
         seleccionarItem();                              //Función que permite el intercambio los items que se encuentran en el inventario rapido
@@ -219,6 +223,10 @@ public class Jugador : MonoBehaviour, IPersonaje
         {
             reactivacion_ataque = intervalo_ataque;             //Reiniciamos el tiempo de reactivación para atacar
             esta_atacando = false;                              //Desactivamos la variable "esta_atacando", si no, se reiniciaría el tiempo en cada frame
+            Debug.Log("eeee");
+            atacando_pistola = false;
+            atacando_golpes = false;
+
         }
         if (puede_controlar)
         {
@@ -231,8 +239,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             {
                 if (Input.GetMouseButton(0))                    //Verificamos que si hay presión sobre el clic izquierdo
                 {
-                    esta_atacando = true;                       //Activamos la variable de que está atacando con el clic Izquierdo
-                    
+                    esta_atacando = true;                       //Activamos la variable de que está atacando con el clic Izquierdo                    
                 }
                 if (Input.GetMouseButton(1))                    //Verificamos que si hay presión sobre el clic Derecho
                 {
@@ -248,28 +255,43 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     public void GestorAtaques()
     {
-        if (atacando_pistola)                                   //Verificamos si el personaje está atacando con una pistola
+        if (esta_atacando)                                      //Verificamos si el personaje está atacando
         {
-            atacando_pistola = false;                           //Desactivamos la variable "atacando_pistola"
+            if (!tiene_arma)                                    //Verificamos si el personaje no tiene armas
+            {
+                Debug.Log("AAA");
+                atacando_golpes = true;                          //Activamos la variable "atacando_golpes" para decirle a la animación que debe ejecutar 
+                Instantiate(prefab_golpe,
+                    punto_disparo.transform.position,
+                    punto_disparo.transform.rotation);          //Creamos el efecto del golpe con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+            }
+            if (tiene_pistola)                                  //Verificamos si el personaje tiene pistola
+            {
+                atacando_pistola = true;                        //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+                Instantiate(prefab_bala_pistola,
+                    punto_disparo.transform.position,
+                    punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+            }
+            if (tiene_metralleta)
+            {
+                atacando_metralleta = true;                     //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+                Instantiate(prefab_bala_metralleta,
+                    punto_disparo.transform.position,
+                    punto_disparo.transform.rotation);          //Creamos la bala de la metralleta con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+            }
         }
-        if (esta_atacando && tiene_pistola)                     //Verificamos si el personaje está atacando y si el tipo de arma que sostiene es una Pistola
-        {
-            atacando_pistola = true;                            //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
-            Instantiate(Prefab_Bala,
-                punto_disparo.transform.position,
-                punto_disparo.transform.rotation);               //Creamos la bala con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
-        }
-
     }
 
     public void GestorAnimaciones()
     {
         _animator.SetBool("Caminar", caminar);                  //Asignamos el valor del estado "caminar" a la animación
         _animator.SetBool("Correr", correr);                    //Asignamos el valor del estado "caminar" a la animación
+        _animator.SetBool("Golpeando", atacando_golpes);           //Asignamos el valor de "atacando_golpes" a la animación
         _animator.SetBool("AtacandoPistola", atacando_pistola); //Asignamos el valor de "atacando_pistola" a la animación
         _animator.SetBool("TienePistola", tiene_pistola);       //Asignamos el valor de "tiene_pistola" a la animación
         _animator.SetBool("TieneArma", tiene_arma);             //Asignamos el valor de "tiene_arma" a la animación                          
         _animator.SetBool("EsHerido", retrocediendo);           //Asignamos el valor de "EsHerido" a la animación
+
     }
 
     void GestorParpadeo()
@@ -375,7 +397,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                     case "Alpha2":
                         Debug.Log("Seleccione item 2:");
                         Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[1]);
-                        if (GetComponent<GestionInventario>().items[1].objeto.name == "Curacion")
+                        if (GetComponent<GestionInventario>().items[1].objeto.tag == "Cura")
                         {
                             Sanacion sanaAux = GetComponent<GestionInventario>().items[1].objeto.GetComponent<Sanacion>();
                             salud.ModificarVida(sanaAux.vidaExtra, GetComponent<GestionInventario>().items[1].objeto);
@@ -474,6 +496,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void DetectarObjetoArma(Collider arma)
     {
+        tiene_metralleta = false;                                               //Desactivamos la variable "tiene_metralleta"
+        tiene_pistola = false;                                                  //Desactivamos la variable "tiene_pistola"
         BrazoD.SetActive(false);                                                //Desactivamos el brazo derecho sin arma controlado por animator
         tipo_arma = arma.name;                                                  //Asignamos el nombre del arma a la variable "tipo_arma"
         BrazoDerechoGirable.SetActive(true);                                    //Activamos el brazo Derecho Girable
@@ -496,22 +520,16 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void DetectarObjetoHiriente(Collider objeto_hiriente)
     {
-        if (objeto_hiriente.name == "BalaEnemigo")                              //Verificamos que el objeto detectado sea una Bala del enemigo
+        if (objeto_hiriente.name == "Bala_Rufianes(Clone)")                     //Verificamos que el objeto detectado sea una Bala del enemigo
         {                                                                       
             salud.ModificarVida(                                                //Activamos la acción de modificar la vida del personaje
                 objeto_hiriente.GetComponent<Bala>().danio_bala, 
                 objeto_hiriente.gameObject);
         }
-        if (objeto_hiriente.name == "Enemigo")                                  //Verificamos que el objeto detectado sea un enemigo
-        {                                                                       
-            salud.ModificarVida(20, 
-                objeto_hiriente.gameObject);                                    //Activamos la acción de modificar la vida del personaje
-
-        }
     }
     public void DetectarObjetoCura(Collider objeto_cura)
     {
-        if (objeto_cura.name== "primerosAuxilios")                              //Verificamos que el objeto detectado sea primerosAuxilios
+        if (objeto_cura.name== "Curacion")                              //Verificamos que el objeto detectado sea primerosAuxilios
         {
             if (salud._vidaActual == salud._vidaMaxima)                         //Verificamos si la cantidad de la vida actual es la vida máxima del jugador
             {
