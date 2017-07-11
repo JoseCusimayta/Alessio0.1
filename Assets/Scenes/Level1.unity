@@ -3123,6 +3123,10 @@ Prefab:
       propertyPath: m_Name
       value: Enemigo (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1264228535582790, guid: 622045d46935a96489cf368911e58f64, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 622045d46935a96489cf368911e58f64, type: 2}
   m_IsPrefabParent: 0
@@ -3536,6 +3540,12 @@ Prefab:
       propertyPath: pistola
       value: 
       objectReference: {fileID: 1050459489}
+    - target: {fileID: 114789822943011060, guid: 934c4989d22bd744a8d72856cd73e158,
+        type: 2}
+      propertyPath: prefab_bala_metralleta
+      value: 
+      objectReference: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 934c4989d22bd744a8d72856cd73e158, type: 2}
   m_IsPrefabParent: 0
