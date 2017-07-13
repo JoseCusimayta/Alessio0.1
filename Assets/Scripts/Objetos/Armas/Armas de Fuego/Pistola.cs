@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Pistola : MonoBehaviour {
     public static int Daño_Pistola = 3;
-    public static string tipoArma = "Pistola";
+    private string tipoArma = "Pistola";
+    public int cantidadBalas = 6;
 
-    // Use this for initialization
+    // Use this for tipoArma
     void Start () {
 		
 	}
@@ -16,6 +17,21 @@ public class Pistola : MonoBehaviour {
 		
 	}
 
+    public void setPistola(string tipo)
+    {
+        tipoArma = tipo;
+        switch (tipoArma)
+        {
+            case "Ametralladora":
+                cantidadBalas = 30;
+                break;
+            case "Pistola":
+                cantidadBalas = 6;
+                break;
+        }
+
+
+    }
     public string getPistola()
     {
         return tipoArma;

@@ -155,6 +155,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
         if (other.CompareTag("Cura"))                   //Verificamos que el objeto colisionado sea un item (Tag: Cura)
         {
+            Debug.Log("Accedi a cura");
             DetectarObjetoCura(other);                  //Función para detectar el objeto que le aumentará vida
         }
         ColissionParedes();
@@ -396,7 +397,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                     //POR AHORA TIENEN UNA VALIDACION IF PREVIA con el sprite.name, de alli continuo con esta logica para el intercambio de armas
                     case "Alpha1":
                         Debug.Log("Seleccione item 1:");
-                        Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[0].objeto);
+                        //Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[0].objeto);
                         if (GetComponent<GestionInventario>().items[0] != null)
                         {
                             if (GetComponent<GestionInventario>().items[0].objeto.name == "Curacion")
@@ -543,7 +544,8 @@ public class Jugador : MonoBehaviour, IPersonaje
         BrazoD.SetActive(false);                                                //Desactivamos el brazo derecho sin arma controlado por animator
         tipo_arma = arma.name;                                                  //Asignamos el nombre del arma a la variable "tipo_arma"
         BrazoDerechoGirable.SetActive(true);                                    //Activamos el brazo Derecho Girable
-        tiene_arma = true;                                                      //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
+        tiene_arma = true;   
+                                                           //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
         if (tipo_arma == "Pistola")                                             //Verificamos que el objeto detectado sea una pistola
         {
             BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con pistola al brazo derecho girable
@@ -573,8 +575,10 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void DetectarObjetoCura(Collider objeto_cura)
     {
+        Debug.Log("objeto_cura.name:"+objeto_cura.name);
         if (objeto_cura.name== "Curacion")                              //Verificamos que el objeto detectado sea primerosAuxilios
         {
+            Debug.Log("accedi a curacion");
             if (salud._vidaActual == salud._vidaMaxima)                         //Verificamos si la cantidad de la vida actual es la vida máxima del jugador
             {
                 ActualizarInventarioRapido(                                     //Guardamos los primeros axuilios en el inventario

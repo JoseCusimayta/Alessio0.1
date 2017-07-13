@@ -7,6 +7,7 @@ public class Item {
     #region Variables
     public Sprite presentacion;                                 //Es el sprite que aparece en la caja de inventario 
     public Sprite accion;                                       //Es el sprite que aparece cuando el jugador manipula el script
+    private int stock;                                          //variable que permite contar la cantidad actual del item, no aplicable en pistolas
     public GameObject objeto;
     #endregion
 
@@ -15,22 +16,36 @@ public class Item {
     {
         objeto = new GameObject();
         //si es sanacion se recrea el objeto 
+        Debug.Log("ItemPresentacion.name=" + ItemPresentacion.name);
         switch (ItemPresentacion.name)
         {
             case "Curacion":
+                ItemPresentacion.GetComponentInChildren<SpriteRenderer>().flipX = true;
                 objeto.AddComponent<Sanacion>();
                 objeto.name = ItemPresentacion.name;
+                stock = 1;
             break;
             case "Ametralladora": 
-                 objeto.AddComponent<Pistola>();
-                 objeto.name = ItemPresentacion.name;
+                objeto.AddComponent<Pistola>();
+                objeto.GetComponent<Pistola>().setPistola("Ametralladora");
+                objeto.name = ItemPresentacion.name;
            break;
+            case "Pistola":
+                objeto.AddComponent<Pistola>();
+                objeto.GetComponent<Pistola>().setPistola("Pistola");
+                objeto.name = ItemPresentacion.name;
+                break;
         }
         
         Debug.Log("objecto=" + objeto);
         presentacion =ItemPresentacion.GetComponentInChildren<SpriteRenderer>().sprite;
         accion=ItemAccion;
         
+    }
+
+    public int getStock()
+    {
+        return stock;
     }
     #endregion
 }

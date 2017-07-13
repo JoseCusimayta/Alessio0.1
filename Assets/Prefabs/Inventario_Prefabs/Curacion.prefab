@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212575022400749266}
   m_Layer: 14
   m_Name: botiquin
-  m_TagString: Untagged
+  m_TagString: Cura
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,8 +65,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329090216292754}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.59, y: -1.97, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 75.44005, y: -9.465147, z: 0}
   m_LocalScale: {x: 0.27220535, y: 0.27649257, z: 2}
   m_Children:
   - {fileID: 4119109936116774}

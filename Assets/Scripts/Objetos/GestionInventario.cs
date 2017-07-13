@@ -72,8 +72,39 @@ public class GestionInventario : MonoBehaviour {
                 cargarSpritePorDefecto(itemRapido[i].GetComponent<Image>().sprite);
                 //si el casillero esta vacio se le asigna el item recogido
                 itemRapido[i].GetComponent<Image>().sprite = items[i].presentacion;
-                //Debug.Log("nombre luego de seleccionar=" + itemRapido[i].GetComponent<Image>().sprite.name);
+                switch (items[i].objeto.name)
+                {
+                    case "Curacion":
+                        
+                        //agregamos un texto que indique el numero de botiquines que se posee
+                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].getStock()+"";
+                        break;
+                    case "Pistola":
+                        //agregamos un texto que indique el numero de balas a usar
+                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                        break;
+                    case "Ametralladora":
+                        //agregamos un texto que indique el numero de balas a usar
+                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                        break;
+                }
+               
+                Debug.Log("El nombre del nuevo elemento es=" + itemRapido[i].GetComponent<Image>().sprite.name);
                 break;
+            }
+            else
+            {
+                switch (items[i].objeto.name)
+                {
+                    case "Curacion":
+                        //agregamos un texto que indique el numero de botiquines que se posee
+                        itemRapido[i].GetComponentInChildren<Text>().text = "0";
+                        break;
+                    case "Pistola":
+                        //agregamos un texto que indique el numero de balas a usar
+                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                        break;
+                }
             }
         }
     }

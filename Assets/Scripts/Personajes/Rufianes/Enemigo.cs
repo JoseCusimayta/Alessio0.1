@@ -303,15 +303,15 @@ public class Enemigo : MonoBehaviour, IPersonaje
     {
         Debug.Log("Desprendera un item al morir");
         //el item se elige aleatoriamente
-        int itemElegido = Random.Range(0, itemsDesprendibles.Length - 1);
+        int itemElegido = Random.Range(0, itemsDesprendibles.Length);
         Debug.Log("itemElegido=" + itemElegido);
         itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
         itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
 
         //Al morir el enemigo desprende un item al azar;
-        string nombreAux = itemsDesprendibles[itemElegido].name;
+        string nombreAux = itemsDesprendibles[2].name;
         Debug.Log("nombre del item=" + nombreAux);
-        GameObject g= Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
+        GameObject g= Instantiate(itemsDesprendibles[2], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
         //se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
         g.name= nombreAux;
         Destroy(gameObject);
