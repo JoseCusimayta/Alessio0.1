@@ -6,6 +6,7 @@ public class Pistola : MonoBehaviour {
     public static int Daño_Pistola = 3;
     private string tipoArma = "Pistola";
     public int cantidadBalas = 6;
+    public int TotalBalas = 6;
 
     // Use this for tipoArma
     void Start () {
@@ -24,9 +25,11 @@ public class Pistola : MonoBehaviour {
         {
             case "Ametralladora":
                 cantidadBalas = 30;
+                TotalBalas = 30;
                 break;
             case "Pistola":
                 cantidadBalas = 6;
+                TotalBalas = 6;
                 break;
         }
 
@@ -36,4 +39,6 @@ public class Pistola : MonoBehaviour {
     {
         return tipoArma;
     }
+
+    
 }

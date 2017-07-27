@@ -29,11 +29,13 @@ public class Item {
                 objeto.AddComponent<Pistola>();
                 objeto.GetComponent<Pistola>().setPistola("Ametralladora");
                 objeto.name = ItemPresentacion.name;
+                stock = 30;
            break;
             case "Pistola":
                 objeto.AddComponent<Pistola>();
                 objeto.GetComponent<Pistola>().setPistola("Pistola");
                 objeto.name = ItemPresentacion.name;
+                stock = 6;
                 break;
         }
         

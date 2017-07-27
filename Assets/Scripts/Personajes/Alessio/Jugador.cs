@@ -84,7 +84,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     public Recurso[] inventario;	                //Variable de tipo "Arreglo" para almacenar los recursos del personaje
     public Rigidbody rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
     public GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
-    public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje    
+    public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje
+    private int armaActualEnMano=-1;                   //variable que representa el arma actual que posee alessio en su marno, sacada del inventario rapido   
     #region Partes del Cuerpo
     public GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
     public GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
@@ -266,19 +267,49 @@ public class Jugador : MonoBehaviour, IPersonaje
                     punto_disparo.transform.position,
                     punto_disparo.transform.rotation);          //Creamos el efecto del golpe con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
             }
-            if (tiene_pistola)                                  //Verificamos si el personaje tiene pistola
+            Debug.Log("Tipo de arma ahora: " + tipo_arma+ "y tiene_metralleta="+ tiene_metralleta);
+            if (tiene_pistola && tipo_arma=="Pistola")                                  //Verificamos si el personaje tiene pistola
             {
-                atacando_pistola = true;                        //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
-                Instantiate(prefab_bala_pistola,
-                    punto_disparo.transform.position,
-                    punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+                if (armaActualEnMano > -1)
+                {
+                    //verificar cuantas balas quedan
+                    int balasRestantes = GetComponent<GestionInventario>().items[armaActualEnMano].objeto.GetComponent<Pistola>().cantidadBalas;
+                    if (balasRestantes > 0)//mientras la municion sea mayor que cero, se puede disparar
+                    {
+                        Debug.Log("Disparando con la pistola");
+                        atacando_pistola = true;                        //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+                        Instantiate(prefab_bala_pistola,
+                        punto_disparo.transform.position,
+                        punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+
+
+                        Debug.Log("Se reduce municion: " + balasRestantes);
+                        GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
+                    }
+                    
+                }
+                
             }
-            if (tiene_metralleta)
+            if (tiene_metralleta && tipo_arma == "Ametralladora")
             {
-                atacando_metralleta = true;                     //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
-                Instantiate(prefab_bala_metralleta,
-                    punto_disparo.transform.position,
-                    punto_disparo.transform.rotation);          //Creamos la bala de la metralleta con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+                if (armaActualEnMano > -1)
+                {
+                    int balasRestantes = GetComponent<GestionInventario>().items[armaActualEnMano].objeto.GetComponent<Pistola>().cantidadBalas;
+                    if (balasRestantes > 0) //mientras la municion sea mayor que cero, se puede disparar
+                    {
+                        Debug.Log("Disparando con la metraca");
+                        atacando_metralleta = true;                     //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+                        Instantiate(prefab_bala_metralleta,
+                        punto_disparo.transform.position,
+                        punto_disparo.transform.rotation);          //Creamos la bala de la metralleta con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+
+
+                        Debug.Log("Se reduce municion: " + balasRestantes);
+                        GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
+                    }
+                       
+                }
+               
             }
         }
     }
@@ -400,6 +431,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                         //Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[0].objeto);
                         if (GetComponent<GestionInventario>().items[0] != null)
                         {
+                            Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[0].objeto.name);
                             if (GetComponent<GestionInventario>().items[0].objeto.name == "Curacion")
                             {
                                 Sanacion sanaAux = GetComponent<GestionInventario>().items[0].objeto.GetComponent<Sanacion>();
@@ -407,7 +439,21 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(0);
                             }
-                            else BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                            if (GetComponent<GestionInventario>().items[0].objeto.name == "Pistola")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                tipo_arma = "Pistola";
+                                tiene_pistola = true;
+                                armaActualEnMano = 0;
+                            }
+                            if (GetComponent<GestionInventario>().items[0].objeto.name == "Ametralladora")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                tipo_arma = "Ametralladora";
+                                tiene_metralleta = true;
+                                armaActualEnMano = 0;
+                            }
+                           
                         }
                         
                     break;
@@ -415,6 +461,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                         Debug.Log("Seleccione item 2:");
                         if (GetComponent<GestionInventario>().items[1] != null)
                         {
+                            Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[1].objeto.name);
                             if (GetComponent<GestionInventario>().items[1].objeto.name == "Curacion")
                             {
                                 Sanacion sanaAux = GetComponent<GestionInventario>().items[1].objeto.GetComponent<Sanacion>();
@@ -422,7 +469,20 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(1);
                             }
-                            else BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+                            if (GetComponent<GestionInventario>().items[1].objeto.name == "Pistola")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+                                tipo_arma = "Pistola";
+                                tiene_pistola = true;
+                                armaActualEnMano = 1;
+                            }
+                            if (GetComponent<GestionInventario>().items[1].objeto.name == "Ametralladora")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+                                tipo_arma = "Ametralladora";
+                                tiene_metralleta = true;
+                                armaActualEnMano = 1;
+                            }
                         }
                     break;
                     case "Alpha3":
@@ -436,7 +496,20 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(2);
                             }
-                            else BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[2].accion;
+                            if (GetComponent<GestionInventario>().items[2].objeto.name == "Pistola")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[2].accion;
+                                tipo_arma = "Pistola";
+                                tiene_pistola = true;
+                                armaActualEnMano = 2;
+                            }
+                            if (GetComponent<GestionInventario>().items[2].objeto.name == "Ametralladora")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[2].accion;
+                                tipo_arma = "Ametralladora";
+                                tiene_metralleta = true;
+                                armaActualEnMano = 2;
+                            }
                         }
                     break;
 
@@ -451,7 +524,20 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(3);
                             }
-                            else BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
+                            if (GetComponent<GestionInventario>().items[3].objeto.name == "Pistola")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
+                                tipo_arma = "Pistola";
+                                tiene_pistola = true;
+                                armaActualEnMano = 3;
+                            }
+                            if (GetComponent<GestionInventario>().items[3].objeto.name == "Ametralladora")
+                            {
+                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
+                                tipo_arma = "Ametralladora";
+                                tiene_metralleta = true;
+                                armaActualEnMano = 3;
+                            }
                         }
                    break;
                 }
@@ -544,7 +630,8 @@ public class Jugador : MonoBehaviour, IPersonaje
         BrazoD.SetActive(false);                                                //Desactivamos el brazo derecho sin arma controlado por animator
         tipo_arma = arma.name;                                                  //Asignamos el nombre del arma a la variable "tipo_arma"
         BrazoDerechoGirable.SetActive(true);                                    //Activamos el brazo Derecho Girable
-        tiene_arma = true;   
+        tiene_arma = true;
+        Debug.Log("Cogi " + tipo_arma);
                                                            //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
         if (tipo_arma == "Pistola")                                             //Verificamos que el objeto detectado sea una pistola
         {

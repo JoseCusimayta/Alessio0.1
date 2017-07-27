@@ -108,5 +108,40 @@ public class GestionInventario : MonoBehaviour {
             }
         }
     }
+
+    public void restarMunicion(int posicionItem, int municionActual)
+    {
+        switch (items[posicionItem].objeto.name)
+        {
+            
+            case "Pistola":
+                if (municionActual <= 0)
+                {
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0";
+                    items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
+                }
+                //agregamos un texto que indique el numero de balas que quedan
+                else
+                {
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + "";
+                    items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
+                }
+                break;
+            case "Ametralladora":
+                //en caso que se acaben las balas se retira objeto
+                if (municionActual <= 0)
+                {
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text ="0";
+                    items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
+                }
+                //agregamos un texto que indique el numero de balas que quedan
+                else
+                {
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + "";
+                    items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
+                }
+                break;
+        }
+    }
     #endregion
 }
