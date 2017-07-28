@@ -3327,9 +3327,11 @@ MonoBehaviour:
   punto_disparo: {fileID: 1900167951}
   danio_golpe: 0
   mano_pistola: {fileID: 21300008, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
-  prefab_bala_pistola: {fileID: 1876361328065704, guid: 13e700b0f4271c84bac0cda885d2c7f8,
+  prefab_bala_pistola: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
     type: 2}
-  mano_metralleta: {fileID: 21300008, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
+  mano_metralleta: {fileID: 21300000, guid: 658751a6e908f07479fc9f8e64b89790, type: 3}
+  prefab_bala_metralleta: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+    type: 2}
   velocidad_normal: 1
   veloidad_correr: 4
   velocidad_con_arma: 2

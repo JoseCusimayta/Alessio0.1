@@ -41,7 +41,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     private bool atacando_metralleta;                //Variable para saber si el personaje está atacando con una metralleta
     private Metralleta metralleta;                   //Variable para guardar la clase Metralleta
     public Sprite mano_metralleta;                  //Variable para guardar el sprite de la mano con la metralleta
-    private GameObject prefab_bala_metralleta;       //Variable para guardar el prefab de la Bala de la metralleta
+    public GameObject prefab_bala_metralleta;       //Variable para guardar el prefab de la Bala de la metralleta
     #endregion
     #endregion
 
@@ -645,9 +645,9 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
 
     
-    private void ActualizarInventarioRapido(GameObject ga,Sprite accion)        //Permite el ingreso de items al inventario rapido que se encuentra en la pantalla
+    private int ActualizarInventarioRapido(GameObject ga,Sprite accion)        //Permite el ingreso de items al inventario rapido que se encuentra en la pantalla
     {
-        GetComponent<GestionInventario>().asignarItemACasilla(ga,accion);       //Asignamos un item a la última casilla disponible
+        return GetComponent<GestionInventario>().asignarItemACasilla(ga,accion);       //Asignamos un item a la última casilla disponible
     }
     public void DetectarObjetoArma(Collider arma)
     {
@@ -661,20 +661,22 @@ public class Jugador : MonoBehaviour, IPersonaje
                                                            //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
         if (tipo_arma == "Pistola")                                             //Verificamos que el objeto detectado sea una pistola
         {
+            //armaActualEnMano = 1;
             BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con pistola al brazo derecho girable
                 mano_pistola;
             tiene_pistola = true;                                              //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             sprite_mano_arma[0] = mano_pistola;
-            ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[0]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
+            armaActualEnMano = ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[0]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
         }
 
         if (tipo_arma == "Ametralladora")                                       //Verificamos que el objeto detectado sea una pistola
         {
+            //armaActualEnMano = 1;
             BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con metralleta al brazo derecho girable
                 mano_metralleta;
             tiene_metralleta = true;                                            //Activamos la variable "tiene_metralleta" para decirle a la animación que muestre las animaciones con pistola
             sprite_mano_arma[1] = mano_metralleta;
-            ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[1]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
+            armaActualEnMano = ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[1]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
         }
         Destroy(arma.gameObject);                                               //Destruimos el arma que está en el suelo
     }

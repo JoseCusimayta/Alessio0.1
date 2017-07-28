@@ -57,9 +57,10 @@ public class GestionInventario : MonoBehaviour {
         }
         
     }
-    public void asignarItemACasilla(GameObject ItemPresentacion, Sprite ItemAccion)
+    public int asignarItemACasilla(GameObject ItemPresentacion, Sprite ItemAccion)
     {
         Debug.Log("Gestion Inventario accedi");
+        int lugarAsignado = -1;
         asignarItems(ItemPresentacion,ItemAccion);
         //se hace una busqueda entre los casilleros, para encontrar alguno vacio
         for (int i = 0; i < itemRapido.Length; i++)                  
@@ -78,14 +79,17 @@ public class GestionInventario : MonoBehaviour {
                         
                         //agregamos un texto que indique el numero de botiquines que se posee
                         itemRapido[i].GetComponentInChildren<Text>().text = items[i].getStock()+"";
+                        lugarAsignado = i;
                         break;
                     case "Pistola":
                         //agregamos un texto que indique el numero de balas a usar
                         itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                        lugarAsignado = i;
                         break;
                     case "Ametralladora":
                         //agregamos un texto que indique el numero de balas a usar
                         itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                        lugarAsignado = i;
                         break;
                 }
                
@@ -106,7 +110,9 @@ public class GestionInventario : MonoBehaviour {
                         break;
                 }
             }
+           
         }
+        return lugarAsignado;
     }
 
     public void restarMunicion(int posicionItem, int municionActual)
