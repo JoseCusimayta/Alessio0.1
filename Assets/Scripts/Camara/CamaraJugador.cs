@@ -2,32 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamaraJugador : MonoBehaviour {
+public class CamaraJugador : MonoBehaviour
+{
 
     #region Variables
-    public GameObject jugador;                                  //Variable para guardar el objeto  "Player"
-    public Vector3 distancia_camara_jugador;                    //Variable para determinar la distancia entre el jugador y la cámara
+    public Transform jugador;                                  //Variable para guardar el objeto  "Player"    
+    public float distanciaX;                                    //Variable para definir la distancia en el eje X, con respecto al "Player"
+    public float distanciaY;                                    //Variable para definir la distancia en el eje Y, con respecto al "Player"
     Record record;
     #endregion
-    
+
     #region Start & Update
     void Start()
-    {        
-        
-        distancia_camara_jugador =
-            transform.position - jugador.transform.position;    //Definimos que la distancia entre la cámara y el jugador será la que está en la escena
+    {
+        jugador = GameObject.FindWithTag("Player").GetComponent<Transform>();        
+        transform.position =
+            jugador.position +
+            new Vector3(distanciaX, distanciaY, -10);             // Le damos la posicion de la camara, con respecto al jugador, agregandole la distancia que hemos decidido        
     }
 
     void Update()
     {
-        
-        if (jugador)                                            //Verificamos si el "Player" existe para que la cámara persiga al jugador
-        {
-            transform.position =                                //Asignamos la posición de la cámara en cada frame para perseguir al jugador
-                jugador.transform.position +                    //Calculamos la posición actual del jugador y...
-                distancia_camara_jugador;                       //Sumamos la distancia que asignamos
-        }
-        
+        if (jugador)
+            transform.position = jugador.position + new Vector3(distanciaX, distanciaY, -10);
     }
     #endregion
 }

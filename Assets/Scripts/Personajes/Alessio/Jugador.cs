@@ -8,40 +8,40 @@ public class Jugador : MonoBehaviour, IPersonaje
     #region Variables
 
     #region Variables de Salud
-    public Health salud;                            //Variable para obtener la clase Health
-    public float vida_actual;                       //Variable para guardar la cantidad de vida actual    
-    public float vida_maxima;                       //Variable para determinar la cantidad de vida máxima posible que puede tener el personaje
-    public float vida_anterior;                     //Variable para guardar la cantidad de vida que tenía antes de ser golpeado
+    private Health salud;                            //Variable para obtener la clase Health
+    private float vida_actual;                       //Variable para guardar la cantidad de vida actual    
+    private float vida_maxima;                       //Variable para determinar la cantidad de vida máxima posible que puede tener el personaje
+    private float vida_anterior;                     //Variable para guardar la cantidad de vida que tenía antes de ser golpeado
     public float alerta_vida;	                    //Variable para determinar cuando se activará la animación para alertar al jugador que su vida corre peligro
     #endregion
 
     #region Variables de Ataques
-    public bool esta_atacando;                      //Variable para saber si el personaje está atacando
-    public bool tiene_arma;                         //Variable para saber si el personaje tiene algún tipo de arma
-    public string tipo_arma;                        //Variable para guardar el tipo de arma que esta usando actualmente    
-    public int contador_apoyo;                      //Variable para guardar la cantidad de poder acumulado para llamar a la habilidad especial
+    private bool esta_atacando;                      //Variable para saber si el personaje está atacando
+    private bool tiene_arma;                         //Variable para saber si el personaje tiene algún tipo de arma
+    private string tipo_arma;                        //Variable para guardar el tipo de arma que esta usando actualmente    
+    private int contador_apoyo;                      //Variable para guardar la cantidad de poder acumulado para llamar a la habilidad especial
     public float intervalo_ataque = 0.5f;           //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar    
     public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
-    public Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
+    private Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
     public Transform punto_disparo;                 //Variable para guardar la posición y rotación de punto del disparo
     #region Puños
-    public bool atacando_golpes;                     //Variable para saber si el personaje está atacando con puños
+    private bool atacando_golpes;                     //Variable para saber si el personaje está atacando con puños
     public float danio_golpe;                       //Variable para determinar la cantidad de daño que tendrán los golpes del personaje
-    public GameObject prefab_golpe;                 //Variable para guardar el prefab del efecto del golpe
+    private GameObject prefab_golpe;                 //Variable para guardar el prefab del efecto del golpe
     #endregion
     #region Pistola
-    public bool tiene_pistola;                      //Variable para saber si el personaje tiene una pistola
-    public bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola    
-    public Pistola pistola;                         //Variable para guardar la clase Pistola
+    private bool tiene_pistola;                      //Variable para saber si el personaje tiene una pistola
+    private bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola    
+    private Pistola pistola;                         //Variable para guardar la clase Pistola
     public Sprite mano_pistola;                     //Variable para guardar el sprite de la mano con la pistola
     public GameObject prefab_bala_pistola;          //Variable para guardar el prefab de la Bala de la pistola
     #endregion
     #region Metralleta
-    public bool tiene_metralleta;                   //Variable para saber si el personaje tiene una metralleta
-    public bool atacando_metralleta;                //Variable para saber si el personaje está atacando con una metralleta
-    public Metralleta metralleta;                   //Variable para guardar la clase Metralleta
+    private bool tiene_metralleta;                   //Variable para saber si el personaje tiene una metralleta
+    private bool atacando_metralleta;                //Variable para saber si el personaje está atacando con una metralleta
+    private Metralleta metralleta;                   //Variable para guardar la clase Metralleta
     public Sprite mano_metralleta;                  //Variable para guardar el sprite de la mano con la metralleta
-    public GameObject prefab_bala_metralleta;       //Variable para guardar el prefab de la Bala de la metralleta
+    private GameObject prefab_bala_metralleta;       //Variable para guardar el prefab de la Bala de la metralleta
     #endregion
     #endregion
 
@@ -50,18 +50,18 @@ public class Jugador : MonoBehaviour, IPersonaje
     public float veloidad_correr = 10;              //Variable para determinar la velocidad con la que corerrá el personaje
     public float velocidad_con_arma = 2;            //Variable para determinar la velocidad con la que se moverá el personaje cuando sostenga un arma
     public float velocidad_retrocediendo = 1;        //Variable para determinar la velocidad con la que retrocederá el personaje
-    public float axis_horizontal;                   //Variable para guardar la cantidad del Axis en horizontal (-1,1)
-    public float axis_vertical;                     //Variable para guardar la cantidad del Axis en vertical (-1,1)
-    public bool correr;                             //Variable para saber si el personaje está corriendo
-    public bool caminar;                            //Variable para saber si el personaje está caminando
-    public bool fijar_camara;                       //Variable para fijar la mirada del personaje
+    private float axis_horizontal;                   //Variable para guardar la cantidad del Axis en horizontal (-1,1)
+    private float axis_vertical;                     //Variable para guardar la cantidad del Axis en vertical (-1,1)
+    private bool correr;                             //Variable para saber si el personaje está corriendo
+    private bool caminar;                            //Variable para saber si el personaje está caminando
+    private bool fijar_camara;                       //Variable para fijar la mirada del personaje
     #endregion
 
     #region Variables de Colisiones
-    public bool colision_abajo;                     //Variable para saber si el personaje aun se puede hacia abajo
-    public bool colision_arriba;                    //Variable para saber si el personaje aun se puede hacia arriba
-    public bool colision_derecha;                   //Variable para saber si el personaje aun se puede hacia derecha
-    public bool colision_izquierda;                 //Variable para saber si el personaje aun se puede hacia izquierda
+    private bool colision_abajo;                     //Variable para saber si el personaje aun se puede hacia abajo
+    private bool colision_arriba;                    //Variable para saber si el personaje aun se puede hacia arriba
+    private bool colision_derecha;                   //Variable para saber si el personaje aun se puede hacia derecha
+    private bool colision_izquierda;                 //Variable para saber si el personaje aun se puede hacia izquierda
     public float distancia_colision = 0.6f;         //Variable para detectar la distancia entre el personaje y el objeto solido a colisionar
     public Vector3 caja_colision;                   //Variable para determinar la caja de colisión del personaje
     RaycastHit rayCast_informacion;                 //Variable para guardar la información del objeto con el que colisiona
@@ -70,46 +70,51 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     #region Variables de Retroceso (KnockBack)
     public float retroceso;                         //Variable para guardar la velocidad con la que retrocederá el personaje (KnockBack)
-    public bool retroceder_derecha;                 //Variable para saber si el personaje va a retroceder a la derecha
-    public bool retrocediendo;                      //Variable para saber si el personaje está retrocediendo, usado para la animación
+    private bool retroceder_derecha;                 //Variable para saber si el personaje va a retroceder a la derecha
+    private bool retrocediendo;                      //Variable para saber si el personaje está retrocediendo, usado para la animación
     #endregion
 
     #region Variables de Animacion
-    public Animator _animator;                      //Variable para guardar el Animator del personaje
+    private Animator _animator;                      //Variable para guardar el Animator del personaje
     public Sprite[] sprite_mano_arma;                 //Arreglo que para guardar los sprites de la mano derecha con arma
-    public float transparencia_objetivo;            //Variable para determinar el nivel de transparencia (Alpha)
+    private float transparencia_objetivo;            //Variable para determinar el nivel de transparencia (Alpha)
     #endregion
 
     #region Variables de Personaje
-    public Recurso[] inventario;	                //Variable de tipo "Arreglo" para almacenar los recursos del personaje
-    public Rigidbody rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
-    public GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
+    private Recurso[] inventario;	                //Variable de tipo "Arreglo" para almacenar los recursos del personaje
+    private Rigidbody rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
+    private GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
     public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje
     private int armaActualEnMano=-1;                   //variable que representa el arma actual que posee alessio en su marno, sacada del inventario rapido   
     #region Partes del Cuerpo
-    public GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
-    public GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
-    public GameObject AnteBrazoD;                   //Variable para guardar el GameObject del Ante Brazo Derecho del jugador
-    public GameObject BrazoD;                       //Variable para guardar el GameObject del Brazo Derecho del jugador
+    private GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
+    private GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
+    private GameObject AnteBrazoD;                   //Variable para guardar el GameObject del Ante Brazo Derecho del jugador
+    private GameObject BrazoD;                       //Variable para guardar el GameObject del Brazo Derecho del jugador
     public GameObject BrazoDerechoGirable;          //Variable para guardar el GameObject del Brazo Derecho Variable del jugador
-    public GameObject AnteBrazoI;                   //Variable para guardar el GameObject del Ante Brazo Izquierdo del jugador
-    public GameObject BrazoI;                       //Variable para guardar el GameObject del Brazo Izquierdo del jugador
-    public GameObject MusloD;                       //Variable para guardar el GameObject del Muslo Derecho del jugador
-    public GameObject PiernaD;                      //Variable para guardar el GameObject de la Pierna Derecha del jugador
-    public GameObject PieD;                         //Variable para guardar el GameObject del Pie Derecho del jugador
-    public GameObject MusloI;                       //Variable para guardar el GameObject del Muslo Izquierdo del jugador
-    public GameObject PiernaI;                      //Variable para guardar el GameObject de la Pierna Izquierdo del jugador
-    public GameObject PieI;                         //Variable para guardar el GameObject del Pie Izquierdo del jugador
+    private GameObject AnteBrazoI;                   //Variable para guardar el GameObject del Ante Brazo Izquierdo del jugador
+    private GameObject BrazoI;                       //Variable para guardar el GameObject del Brazo Izquierdo del jugador
+    private GameObject MusloD;                       //Variable para guardar el GameObject del Muslo Derecho del jugador
+    private GameObject PiernaD;                      //Variable para guardar el GameObject de la Pierna Derecha del jugador
+    private GameObject PieD;                         //Variable para guardar el GameObject del Pie Derecho del jugador
+    private GameObject MusloI;                       //Variable para guardar el GameObject del Muslo Izquierdo del jugador
+    private GameObject PiernaI;                      //Variable para guardar el GameObject de la Pierna Izquierdo del jugador
+    private GameObject PieI;                         //Variable para guardar el GameObject del Pie Izquierdo del jugador
     #endregion
     #endregion
 
-  
+
     #endregion
 
     #region Funciones de Unity
     void Start()
     {
         retroceso = 0;                                  //Iniciamos la variable "retroceso con 0", porque al inicio tiene un número positivo y eso genera errores en la animación del inicio        
+        #region Declarando Variables
+        _animator = GameObject.Find("Alessio").GetComponent<Animator>();
+        salud = GameObject.Find("Alessio").GetComponent<Health>();
+        rigidbody_Jugador = GameObject.Find("Alessio").GetComponent<Rigidbody>();
+        #endregion
         #region Asignando el cuerpo del Personaje
         cabeza = GameObject.Find("Cabeza");
         cuerpo = GameObject.Find("Cuerpo");
@@ -128,15 +133,17 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     void Update()
     {
-        GestorAnimaciones();                            //Función para gestionar las animaciones del objeto
-        JugadorHerido();                                //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
-        GestorVida();                                   //Función para gestionar la vida del objeto y sus respectivas acciones
-        GestorTeclado();                                //Función para recibir los Inputs del teclado
-        GestorMouse();                                  //Función para recibir los Inputs del mouse
-        GestorAtaques();                                //Función para gestionar los Ataques y tipos de Ataques
-        GestorRetroceso();                              //Función para gestionar el retroceso del jugador
-        GestorParpadeo();                               //Función para gestionar el parpadeo del personaje
-        seleccionarItem();                              //Función que permite el intercambio los items que se encuentran en el inventario rapido
+        axis_horizontal = Input.GetAxis("Horizontal");          //Guardamos la variable Horizontal del Axis
+        axis_vertical = Input.GetAxis("Vertical");              //Guardamos la variable Vertical del Axis
+        GestorAnimaciones(axis_vertical, axis_horizontal);      //Función para gestionar las animaciones del objeto
+        JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
+        GestorVida();                                           //Función para gestionar la vida del objeto y sus respectivas acciones
+        GestorTeclado();                                        //Función para recibir los Inputs del teclado
+        GestorMouse();                                          //Función para recibir los Inputs del mouse
+        GestorAtaques();                                        //Función para gestionar los Ataques y tipos de Ataques
+        GestorRetroceso();                                      //Función para gestionar el retroceso del jugador
+        GestorParpadeo();                                       //Función para gestionar el parpadeo del personaje
+        seleccionarItem();                                      //Función que permite el intercambio los items que se encuentran en el inventario rapido
     }
 
     void FixedUpdate()
@@ -225,7 +232,6 @@ public class Jugador : MonoBehaviour, IPersonaje
         {
             reactivacion_ataque = intervalo_ataque;             //Reiniciamos el tiempo de reactivación para atacar
             esta_atacando = false;                              //Desactivamos la variable "esta_atacando", si no, se reiniciaría el tiempo en cada frame
-            Debug.Log("eeee");
             atacando_pistola = false;
             atacando_golpes = false;
 
@@ -261,23 +267,25 @@ public class Jugador : MonoBehaviour, IPersonaje
         {
             if (!tiene_arma)                                    //Verificamos si el personaje no tiene armas
             {
-                Debug.Log("AAA");
                 atacando_golpes = true;                          //Activamos la variable "atacando_golpes" para decirle a la animación que debe ejecutar 
                 Instantiate(prefab_golpe,
                     punto_disparo.transform.position,
                     punto_disparo.transform.rotation);          //Creamos el efecto del golpe con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
             }
-            Debug.Log("Tipo de arma ahora: " + tipo_arma+ "y tiene_metralleta="+ tiene_metralleta);
+            Debug.Log("Tipo de arma ahora: " + tipo_arma+ " y tiene_pistola=" + tiene_pistola);
             if (tiene_pistola && tipo_arma=="Pistola")                                  //Verificamos si el personaje tiene pistola
             {
+
                 if (armaActualEnMano > -1)
                 {
+                    Debug.Log("Disparando con Tipo de arma ahora: " + tipo_arma + " y tiene_pistola=" + tiene_pistola);
                     //verificar cuantas balas quedan
                     int balasRestantes = GetComponent<GestionInventario>().items[armaActualEnMano].objeto.GetComponent<Pistola>().cantidadBalas;
                     if (balasRestantes > 0)//mientras la municion sea mayor que cero, se puede disparar
                     {
                         Debug.Log("Disparando con la pistola");
                         atacando_pistola = true;                        //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+                        Debug.Log(punto_disparo.name);
                         Instantiate(prefab_bala_pistola,
                         punto_disparo.transform.position,
                         punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
@@ -314,16 +322,33 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
     }
 
-    public void GestorAnimaciones()
+    public void GestorAnimaciones(float axis_vertical, float axis_horizontal)
     {
-        _animator.SetBool("Caminar", caminar);                  //Asignamos el valor del estado "caminar" a la animación
-        _animator.SetBool("Correr", correr);                    //Asignamos el valor del estado "caminar" a la animación
-        _animator.SetBool("Golpeando", atacando_golpes);           //Asignamos el valor de "atacando_golpes" a la animación
-        _animator.SetBool("AtacandoPistola", atacando_pistola); //Asignamos el valor de "atacando_pistola" a la animación
-        _animator.SetBool("TienePistola", tiene_pistola);       //Asignamos el valor de "tiene_pistola" a la animación
-        _animator.SetBool("TieneArma", tiene_arma);             //Asignamos el valor de "tiene_arma" a la animación                          
-        _animator.SetBool("EsHerido", retrocediendo);           //Asignamos el valor de "EsHerido" a la animación
+        /*_animator.SetBool("Caminar", caminar);                          //Asignamos el valor del estado "caminar" a la animación
+        _animator.SetBool("Correr", correr);                            //Asignamos el valor del estado "caminar" a la animación
+        _animator.SetBool("Golpeando", atacando_golpes);                //Asignamos el valor de "atacando_golpes" a la animación
+        _animator.SetBool("AtacandoPistola", atacando_pistola);         //Asignamos el valor de "atacando_pistola" a la animación
+        _animator.SetBool("TienePistola", tiene_pistola);               //Asignamos el valor de "tiene_pistola" a la animación
+        _animator.SetBool("TieneArma", tiene_arma);                     //Asignamos el valor de "tiene_arma" a la animación                          
+        _animator.SetBool("EsHerido", retrocediendo);                   //Asignamos el valor de "EsHerido" a la animación
+        */
 
+        float end;                                                      //Variable para determinar si el limite es 0, 1 o 2  
+        if (axis_vertical != 0 || axis_horizontal != 0)                 //Detectamos el movimiento
+        {
+            if (Input.GetKey(KeyCode.LeftShift))                        //Detectamos si está corriendo
+                end = 2;                                                //Asignamos el valor de correr a la variable
+            else
+                end = 1;                                                //Asignamos el valor de caminar a la variable
+        }
+        else
+        {
+            end = 0;                                                    //Asignamos el valor de espera a la variable
+        }
+        float start = _animator.GetFloat("Velocidad");                  //Obtenemos el valor de velocidad para modificarlo
+        float result = Mathf.Lerp(start, end, Time.deltaTime * 5);      //Modificamos el valor inicial gradualmente hasta llegar al valor final
+        _animator.SetFloat("Velocidad", result);                        //Asignamos el valor de "Velocidad" para definir si está corriendo o caminando o espera
+        _animator.SetBool("Pistola", tiene_pistola);               //Asignamos el valor de "tiene_pistola" a la animación
     }
 
     void GestorParpadeo()
@@ -445,6 +470,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 tipo_arma = "Pistola";
                                 tiene_pistola = true;
                                 armaActualEnMano = 0;
+                                Debug.Log("Arma en Mano: Pistola");
                             }
                             if (GetComponent<GestionInventario>().items[0].objeto.name == "Ametralladora")
                             {
@@ -636,8 +662,9 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (tipo_arma == "Pistola")                                             //Verificamos que el objeto detectado sea una pistola
         {
             BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con pistola al brazo derecho girable
-                mano_pistola;                        
+                mano_pistola;
             tiene_pistola = true;                                              //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
+            sprite_mano_arma[0] = mano_pistola;
             ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[0]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
         }
 
@@ -646,9 +673,9 @@ public class Jugador : MonoBehaviour, IPersonaje
             BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con metralleta al brazo derecho girable
                 mano_metralleta;
             tiene_metralleta = true;                                            //Activamos la variable "tiene_metralleta" para decirle a la animación que muestre las animaciones con pistola
+            sprite_mano_arma[1] = mano_metralleta;
             ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[1]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
         }
-        
         Destroy(arma.gameObject);                                               //Destruimos el arma que está en el suelo
     }
     public void DetectarObjetoHiriente(Collider objeto_hiriente)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bala : MonoBehaviour
 {
     #region Variables
-    public float danio_bala;                //La cantidad de vida que reducira al enemigo
+    public float danio_bala=20;                //La cantidad de vida que reducira al enemigo
     public float velocidad_bala = 15f;        //La velocidad con la que se moverá la bala
     public string Target_Tag = "Enemigo";    // Se encarga de marcar a que tipo de elemento le causara daño la bala
     public GameObject Prefab_Explosion;     //Permite generar una explosion al colisionar

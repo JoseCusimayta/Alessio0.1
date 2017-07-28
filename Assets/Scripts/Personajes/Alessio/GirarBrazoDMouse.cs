@@ -9,16 +9,35 @@ public class GirarBrazoDMouse : MonoBehaviour
     public float sensibilidad = 500;                                //Variable para determinar la sensibilidad del mouse
     public Transform punto_disparo;                                 //Variable para guardar el Transform del punto de disparo
     public Transform jugador;                                       //Variable para guardar el Transform del jugador
+
     #endregion
     
     #region Funciones de Unity
 
     void Start()
     {
+        punto_disparo = GameObject.FindGameObjectWithTag("PuntoDisparo").GetComponent<Transform>();
+        jugador = GameObject.Find("Alessio").GetComponent<Transform>();
     }
 
 
     void Update()
+    {
+        RotarRueditaMouse();
+
+    }
+    #endregion
+
+    #region Funciones Update
+    void RotarRueditaMouse()
+    {
+        float rotar = Input.GetAxis("Mouse ScrollWheel");
+        float angle = 0;
+        angle += rotar * sensibilidad;
+        Vector3 rotacion = new Vector3(0, 0, angle);
+        transform.Rotate(rotacion);
+    }
+    void GirarBrazoMouse()
     {
         if (punto_disparo.position.x > jugador.position.x)          //Verificamos si esta mirando a la derecha con una resta de posiciones entre el jugador y el punto de disparo
             mirando_derecha = true;
@@ -35,11 +54,7 @@ public class GirarBrazoDMouse : MonoBehaviour
             RotacionBrazoArmaIzquierda();                           //Función para rotar el brazo cuando mira a la izquierda
             CorrecionAngulosIzquierda();                            //Función para asegurarse de que el brazo no salga de los angulos limites cuando mira a la izquierda
         }
-
     }
-    #endregion
-
-    #region Funciones Update
     void RotacionBrazoArmaIzquierda() 
     {
         if (0 >= transform.rotation.x && transform.rotation.x >= -0.7)                               //Verificamos entre que ángulos se encuentro la rotacion X del brazo

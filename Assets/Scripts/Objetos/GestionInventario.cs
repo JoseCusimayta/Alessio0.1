@@ -64,8 +64,8 @@ public class GestionInventario : MonoBehaviour {
         //se hace una busqueda entre los casilleros, para encontrar alguno vacio
         for (int i = 0; i < itemRapido.Length; i++)                  
         {
-            //el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
-            //Debug.Log("nombre=" + itemRapido[i].GetComponent<Image>().sprite.name);
+            ////el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
+            //Debug.Log("nombre=" + itemRapido[i+1].GetComponent<Image>().sprite.name);            
             if (itemRapido[i].GetComponent<Image>().sprite.name=="UIMask")
             {
                 //cargamos el sprite por defecto (solo una vez)

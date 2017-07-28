@@ -24,6 +24,8 @@ TagManager:
   - ItemRapido
   - ObjetoHiriente
   - Cura
+  - BrazoArma
+  - PuntoDisparo
   layers:
   - Default
   - TransparentFX
