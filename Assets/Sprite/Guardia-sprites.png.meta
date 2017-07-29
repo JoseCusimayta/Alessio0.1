@@ -1,9 +1,24 @@
 fileFormatVersion: 2
 guid: 5cee202f0ca1af14793a4fcdbec547a7
-timeCreated: 1501259134
+timeCreated: 1501360515
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Cabeza
+    21300002: Cuerpo
+    21300004: CuerpoB
+    21300006: AnteBrazoI
+    21300008: BrazoI
+    21300010: AnteBrazoD
+    21300012: BrazoD
+    21300014: MusloD
+    21300016: MusloI
+    21300018: PiernaD
+    21300020: PiernaI
+    21300022: PieD
+    21300024: PieI
+    21300026: Sombrero
+    21300028: BrazoDArma
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -39,7 +54,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -63,9 +78,235 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Cabeza
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 246
+        width: 129
+        height: 145
+      alignment: 9
+      pivot: {x: 0.59975475, y: 0.06336333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Cuerpo
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 106
+        width: 99
+        height: 136
+      alignment: 9
+      pivot: {x: 0.53487927, y: 0.6586876}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: CuerpoB
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 63
+        width: 79
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AnteBrazoI
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 341
+        width: 66
+        height: 37
+      alignment: 9
+      pivot: {x: 0.12274424, y: 0.57544935}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BrazoI
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 341
+        width: 84
+        height: 51
+      alignment: 9
+      pivot: {x: 0.10501353, y: 0.404246}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: AnteBrazoD
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 267
+        width: 74
+        height: 39
+      alignment: 9
+      pivot: {x: 0.12295553, y: 0.578535}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BrazoD
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 265
+        width: 99
+        height: 56
+      alignment: 9
+      pivot: {x: 0.11533363, y: 0.44726452}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MusloD
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 186
+        width: 37
+        height: 53
+      alignment: 9
+      pivot: {x: 0.5612991, y: 0.85839957}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MusloI
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 185
+        width: 33
+        height: 55
+      alignment: 9
+      pivot: {x: 0.5085912, y: 0.85567653}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PiernaD
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 117
+        width: 39
+        height: 55
+      alignment: 9
+      pivot: {x: 0.565425, y: 0.8350572}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PiernaI
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 117
+        width: 37
+        height: 55
+      alignment: 9
+      pivot: {x: 0.46935046, y: 0.8453669}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PieD
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 64
+        width: 60
+        height: 34
+      alignment: 9
+      pivot: {x: 0.19758911, y: 0.80018705}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PieI
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 64
+        width: 65
+        height: 34
+      alignment: 9
+      pivot: {x: 0.17723483, y: 0.8252027}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sombrero
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 62
+        width: 90
+        height: 200
+      alignment: 9
+      pivot: {x: 0.90321386, y: 0.47590172}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BrazoDArma
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 337
+        width: 109
+        height: 52
+      alignment: 9
+      pivot: {x: 0.11441516, y: 0.45459336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 

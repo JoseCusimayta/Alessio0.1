@@ -22,7 +22,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     private int contador_apoyo;                      //Variable para guardar la cantidad de poder acumulado para llamar a la habilidad especial
     public float intervalo_ataque = 0.5f;           //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar    
     public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
-    private Transform arma_jugador;                  //Variable para guardar la posición y rotación del arma
+    private GameObject arma_jugador;                  //Variable para guardar la posición y rotación del arma
     public Transform punto_disparo;                 //Variable para guardar la posición y rotación de punto del disparo
     #region Puños
     private bool atacando_golpes;                     //Variable para saber si el personaje está atacando con puños
@@ -30,6 +30,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     private GameObject prefab_golpe;                 //Variable para guardar el prefab del efecto del golpe
     #endregion
     #region Pistola
+    public Sprite sprite_pistola;                      //Variable para guardar el sprite de la pistola
     private bool tiene_pistola;                      //Variable para saber si el personaje tiene una pistola
     private bool atacando_pistola;                   //Variable para saber si el personaje está atacando con una pistola    
     private Pistola pistola;                         //Variable para guardar la clase Pistola
@@ -37,6 +38,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public GameObject prefab_bala_pistola;          //Variable para guardar el prefab de la Bala de la pistola
     #endregion
     #region Metralleta
+    public Sprite sprite_metralleta;                      //Variable para guardar el sprite de la metralleta
     private bool tiene_metralleta;                   //Variable para saber si el personaje tiene una metralleta
     private bool atacando_metralleta;                //Variable para saber si el personaje está atacando con una metralleta
     private Metralleta metralleta;                   //Variable para guardar la clase Metralleta
@@ -119,7 +121,8 @@ public class Jugador : MonoBehaviour, IPersonaje
         cabeza = GameObject.Find("Cabeza");
         cuerpo = GameObject.Find("Cuerpo");
         AnteBrazoD = GameObject.Find("AnteBrazoD");
-        BrazoD = GameObject.Find("BrazoD");
+        
+        BrazoD = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD");
         AnteBrazoI = GameObject.Find("AnteBrazoI");
         BrazoI = GameObject.Find("BrazoI");
         MusloD = GameObject.Find("MusloD");
@@ -656,6 +659,8 @@ public class Jugador : MonoBehaviour, IPersonaje
         BrazoD.SetActive(false);                                                //Desactivamos el brazo derecho sin arma controlado por animator
         tipo_arma = arma.name;                                                  //Asignamos el nombre del arma a la variable "tipo_arma"
         BrazoDerechoGirable.SetActive(true);                                    //Activamos el brazo Derecho Girable
+                                                                                //BrazoD = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD");
+        arma_jugador= GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
         tiene_arma = true;
         Debug.Log("Cogi " + tipo_arma);
                                                            //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
@@ -664,6 +669,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             //armaActualEnMano = 1;
             BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con pistola al brazo derecho girable
                 mano_pistola;
+            arma_jugador.GetComponent<SpriteRenderer>().sprite = sprite_pistola;    //Le damos la sprite de la pistola al objeto vacio llamado "arma_jugador" para que aparezca en la mano del jugador
             tiene_pistola = true;                                              //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             sprite_mano_arma[0] = mano_pistola;
             armaActualEnMano = ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[0]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
@@ -673,9 +679,10 @@ public class Jugador : MonoBehaviour, IPersonaje
         {
             //armaActualEnMano = 1;
             BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con metralleta al brazo derecho girable
-                mano_metralleta;
+                mano_pistola;
+            arma_jugador.GetComponent<SpriteRenderer>().sprite = sprite_metralleta;     //Le damos la sprite de la metralleta al objeto vacio llamado "arma_jugador" para que aparezca en la mano del jugador
             tiene_metralleta = true;                                            //Activamos la variable "tiene_metralleta" para decirle a la animación que muestre las animaciones con pistola
-            sprite_mano_arma[1] = mano_metralleta;
+            sprite_mano_arma[1] = mano_pistola;                                 
             armaActualEnMano = ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[1]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
         }
         Destroy(arma.gameObject);                                               //Destruimos el arma que está en el suelo
