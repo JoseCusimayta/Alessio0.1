@@ -352,6 +352,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         float result = Mathf.Lerp(start, end, Time.deltaTime * 5);      //Modificamos el valor inicial gradualmente hasta llegar al valor final
         _animator.SetFloat("Velocidad", result);                        //Asignamos el valor de "Velocidad" para definir si está corriendo o caminando o espera
         _animator.SetBool("Pistola", tiene_pistola);               //Asignamos el valor de "tiene_pistola" a la animación
+        _animator.SetBool("Metralleta", tiene_metralleta);               //Asignamos el valor de "tiene_pistola" a la animación
     }
 
     void GestorParpadeo()
@@ -469,7 +470,10 @@ public class Jugador : MonoBehaviour, IPersonaje
                             }
                             if (GetComponent<GestionInventario>().items[0].objeto.name == "Pistola")
                             {
-                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                Debug.Log("Nombre del sprite: " + GetComponent<GestionInventario>().items[0].accion.name);
+                                arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 tipo_arma = "Pistola";
                                 tiene_pistola = true;
                                 armaActualEnMano = 0;
@@ -477,7 +481,10 @@ public class Jugador : MonoBehaviour, IPersonaje
                             }
                             if (GetComponent<GestionInventario>().items[0].objeto.name == "Ametralladora")
                             {
-                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                Debug.Log("Nombre del sprite: " + GetComponent<GestionInventario>().items[0].accion.name);
+                                arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
                                 armaActualEnMano = 0;
@@ -500,14 +507,20 @@ public class Jugador : MonoBehaviour, IPersonaje
                             }
                             if (GetComponent<GestionInventario>().items[1].objeto.name == "Pistola")
                             {
-                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                Debug.Log("Nombre del sprite: " + GetComponent<GestionInventario>().items[1].accion.name);
+                                arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
                                 tipo_arma = "Pistola";
                                 tiene_pistola = true;
                                 armaActualEnMano = 1;
                             }
                             if (GetComponent<GestionInventario>().items[1].objeto.name == "Ametralladora")
                             {
-                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                Debug.Log("Nombre del sprite: " + GetComponent<GestionInventario>().items[1].accion.name);
+                                arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
                                 armaActualEnMano = 1;
@@ -667,8 +680,9 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (tipo_arma == "Pistola")                                             //Verificamos que el objeto detectado sea una pistola
         {
             //armaActualEnMano = 1;
-            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con pistola al brazo derecho girable
-                mano_pistola;
+            //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con pistola al brazo derecho girable
+            //    mano_pistola;
+            arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
             arma_jugador.GetComponent<SpriteRenderer>().sprite = sprite_pistola;    //Le damos la sprite de la pistola al objeto vacio llamado "arma_jugador" para que aparezca en la mano del jugador
             tiene_pistola = true;                                              //Activamos la variable "tiene_pistola" para decirle a la animación que muestre las animaciones con pistola
             sprite_mano_arma[0] = mano_pistola;
@@ -678,11 +692,12 @@ public class Jugador : MonoBehaviour, IPersonaje
         if (tipo_arma == "Ametralladora")                                       //Verificamos que el objeto detectado sea una pistola
         {
             //armaActualEnMano = 1;
-            BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con metralleta al brazo derecho girable
-                mano_pistola;
+            //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite =         //Asignamos el sprite de la mano con metralleta al brazo derecho girable
+            //    mano_pistola;
+            arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
             arma_jugador.GetComponent<SpriteRenderer>().sprite = sprite_metralleta;     //Le damos la sprite de la metralleta al objeto vacio llamado "arma_jugador" para que aparezca en la mano del jugador
             tiene_metralleta = true;                                            //Activamos la variable "tiene_metralleta" para decirle a la animación que muestre las animaciones con pistola
-            sprite_mano_arma[1] = mano_pistola;                                 
+            sprite_mano_arma[1] = mano_metralleta;                                 
             armaActualEnMano = ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[1]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
         }
         Destroy(arma.gameObject);                                               //Destruimos el arma que está en el suelo

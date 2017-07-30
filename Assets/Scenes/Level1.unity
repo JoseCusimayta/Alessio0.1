@@ -820,11 +820,12 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300040, guid: a4259ec419a48fd46a8abb0265132652,
+        type: 3}
     - target: {fileID: 212425094158151864, guid: 081c726d91fa1274890bf3b44d0e28a8,
         type: 2}
       propertyPath: m_WasSpriteAssigned
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
         type: 2}
@@ -845,6 +846,39 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: velocidad_normal
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: mano_metralleta
+      value: 
+      objectReference: {fileID: 21300040, guid: a4259ec419a48fd46a8abb0265132652,
+        type: 3}
+    - target: {fileID: 212425094158151864, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 2.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 212425094158151864, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: mano_pistola
+      value: 
+      objectReference: {fileID: 21300010, guid: a4259ec419a48fd46a8abb0265132652,
+        type: 3}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: prefab_bala_pistola
+      value: 
+      objectReference: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 081c726d91fa1274890bf3b44d0e28a8, type: 2}
   m_IsPrefabParent: 0
@@ -1754,8 +1788,8 @@ GameObject:
   m_Component:
   - component: {fileID: 886947162}
   - component: {fileID: 886947161}
-  - component: {fileID: 886947159}
   - component: {fileID: 886947160}
+  - component: {fileID: 886947159}
   m_Layer: 0
   m_Name: Ametralladora
   m_TagString: Arma
@@ -1771,9 +1805,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 886947158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 649542bac4ac72f419428333d0ffc4b6, type: 3}
+  m_Script: {fileID: 11500000, guid: cd2e328e5078b374c897c4174b859c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cantidadBalas: 30
+  TotalBalas: 30
 --- !u!65 &886947160
 BoxCollider:
   m_ObjectHideFlags: 0
