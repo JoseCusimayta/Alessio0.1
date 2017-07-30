@@ -304,7 +304,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
     {
         Debug.Log("Desprendera un item al morir");
         //el item se elige aleatoriamente
-        int itemElegido = 3;//Random.Range(0, itemsDesprendibles.Length);
+        int itemElegido = 0;//Random.Range(0, itemsDesprendibles.Length);
         Debug.Log("itemElegido=" + itemElegido);
         itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
         itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
