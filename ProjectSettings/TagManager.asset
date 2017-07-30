@@ -26,6 +26,7 @@ TagManager:
   - Cura
   - BrazoArma
   - PuntoDisparo
+  - Municion
   layers:
   - Default
   - TransparentFX

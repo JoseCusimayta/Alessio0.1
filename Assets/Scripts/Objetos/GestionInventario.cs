@@ -57,6 +57,83 @@ public class GestionInventario : MonoBehaviour {
         }
         
     }
+
+    public void recargarMunicion(GameObject municion,Sprite aux)
+    {
+        bool encontrado = false;
+        Debug.Log("La municion se llama: " + municion.name);
+        switch (municion.name)
+        {
+            case "MunicionPistola":
+               
+                //se hace una busqueda entre los casilleros, para encontrar alguno vacio
+                for (int i = 0; i < itemRapido.Length; i++)
+                {
+                    ////el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
+                    //Debug.Log("nombre=" + itemRapido[i+1].GetComponent<Image>().sprite.name);            
+                    if (itemRapido[i].GetComponent<Image>().sprite.name != "UIMask")
+                    {
+                        
+                        switch (items[i].objeto.name)
+                        {
+                           
+                            case "Pistola":
+                                //agregamos un texto que indique el numero de balas a usar
+                                items[i].objeto.GetComponent<Pistola>().cantidadBalas += 6;
+                                itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas+"";
+                                encontrado = true;
+                                break;
+                           
+                        }
+
+                    }
+                    if (encontrado)
+                    {
+                        break;
+                    }
+                    
+                }
+                if (!encontrado)
+                {
+                    asignarItemACasilla(municion,aux);
+                }
+                break;
+            case "MunicionAmetralladora":
+                //se hace una busqueda entre los casilleros, para encontrar alguno vacio
+                for (int i = 0; i < itemRapido.Length; i++)
+                {
+                    ////el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
+                    //Debug.Log("nombre=" + itemRapido[i+1].GetComponent<Image>().sprite.name);            
+                    if (itemRapido[i].GetComponent<Image>().sprite.name != "UIMask")
+                    {
+
+                        switch (items[i].objeto.name)
+                        {
+
+                            case "Ametralladora":
+                                //agregamos un texto que indique el numero de balas a usar
+                                items[i].objeto.GetComponent<Pistola>().cantidadBalas += 30;
+                                itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas+ "";
+
+                                break;
+
+                        }
+
+                    }
+                    if (encontrado)
+                    {
+                        break;
+                    }
+
+                }
+                if (!encontrado)
+                {
+                    asignarItemACasilla(municion, aux);
+                }
+                break;
+        }
+    }
+
     public int asignarItemACasilla(GameObject ItemPresentacion, Sprite ItemAccion)
     {
         Debug.Log("Gestion Inventario accedi");
@@ -91,6 +168,17 @@ public class GestionInventario : MonoBehaviour {
                         itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
                         lugarAsignado = i;
                         break;
+                    case "MunicionPistola":
+                        //agregamos un texto que indique el numero de balas a usar
+                        itemRapido[i].GetComponentInChildren<Text>().text ="6";
+                        lugarAsignado = i;
+                        break;
+                    case "MunicionAmetralladora":
+                        //agregamos un texto que indique el numero de balas a usar
+                        itemRapido[i].GetComponentInChildren<Text>().text = "30";
+                        lugarAsignado = i;
+                        break;
+
                 }
                
                 Debug.Log("El nombre del nuevo elemento es=" + itemRapido[i].GetComponent<Image>().sprite.name);

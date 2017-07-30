@@ -2505,13 +2505,18 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114738257276541424, guid: 622045d46935a96489cf368911e58f64,
+        type: 2}
+      propertyPath: itemsDesprendibles.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4810562427396452, guid: 622045d46935a96489cf368911e58f64, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 89.3
+      value: -9.503
       objectReference: {fileID: 0}
     - target: {fileID: 4810562427396452, guid: 622045d46935a96489cf368911e58f64, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -14.8
+      value: -17.156
       objectReference: {fileID: 0}
     - target: {fileID: 4810562427396452, guid: 622045d46935a96489cf368911e58f64, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2565,8 +2570,43 @@ Prefab:
         type: 2}
     - target: {fileID: 1264228535582790, guid: 622045d46935a96489cf368911e58f64, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114738257276541424, guid: 622045d46935a96489cf368911e58f64,
+        type: 2}
+      propertyPath: itemsDesprendibles.Array.data[3]
+      value: 
+      objectReference: {fileID: 1245064573036532, guid: 3e072db3851a70f4ca0f13c1e78ca8d6,
+        type: 2}
+    - target: {fileID: 4810562427396452, guid: 622045d46935a96489cf368911e58f64, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 4.5720005
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810562427396452, guid: 622045d46935a96489cf368911e58f64, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.73453236
+      objectReference: {fileID: 0}
+    - target: {fileID: 114612350933415090, guid: 622045d46935a96489cf368911e58f64,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114738257276541424, guid: 622045d46935a96489cf368911e58f64,
+        type: 2}
+      propertyPath: velocidad_normal
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114488668866027126, guid: 622045d46935a96489cf368911e58f64,
+        type: 2}
+      propertyPath: _vidaActual
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114738257276541424, guid: 622045d46935a96489cf368911e58f64,
+        type: 2}
+      propertyPath: itemsDesprendibles.Array.data[4]
+      value: 
+      objectReference: {fileID: 1957271360265176, guid: 31dcf3d0ac0c37d47902765674b79b36,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 622045d46935a96489cf368911e58f64, type: 2}
   m_IsPrefabParent: 0

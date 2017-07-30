@@ -38,6 +38,14 @@ public class Item {
                 objeto.name = ItemPresentacion.name;
                 stock = 6;
                 break;
+            case "MunicionPistola":
+                objeto.name = ItemPresentacion.name;
+                stock = 6;
+                break;
+            case "MunicionAmetralladora":
+                objeto.name = ItemPresentacion.name;
+                stock = 30;
+                break;
         }
         
         Debug.Log("objecto=" + objeto);

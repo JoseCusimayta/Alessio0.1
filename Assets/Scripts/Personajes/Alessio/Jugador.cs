@@ -169,6 +169,11 @@ public class Jugador : MonoBehaviour, IPersonaje
             Debug.Log("Accedi a cura");
             DetectarObjetoCura(other);                  //Función para detectar el objeto que le aumentará vida
         }
+        if (other.CompareTag("Municion"))                   //Verificamos que el objeto colisionado sea un item (Tag: Cura)
+        {
+            Debug.Log("Accedi a municion");
+            DetectarMuniciones(other);                 //Función para detectar el objeto que le aumentará vida
+        }
         ColissionParedes();
     }
     #endregion
@@ -701,6 +706,13 @@ public class Jugador : MonoBehaviour, IPersonaje
             armaActualEnMano = ActualizarInventarioRapido(arma.gameObject, sprite_mano_arma[1]);       //Actualizamos el inventario rapido con el sprite que contiene el sprite_mano_arma
         }
         Destroy(arma.gameObject);                                               //Destruimos el arma que está en el suelo
+    }
+
+    public void DetectarMuniciones(Collider objeto_municion)
+    {
+        
+        GetComponent<GestionInventario>().recargarMunicion(objeto_municion.gameObject, objeto_municion.GetComponentInChildren<SpriteRenderer>().sprite);
+        Destroy(objeto_municion.gameObject);
     }
     public void DetectarObjetoHiriente(Collider objeto_hiriente)
     {
