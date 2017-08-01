@@ -154,19 +154,19 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: 0, y: 0, z: -10}
+        value: {x: 0, y: 0, z: 14.277}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
         time: 0.25
-        value: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 3.061}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
         time: 0.5
-        value: {x: 0, y: 0, z: -10}
+        value: {x: 0, y: 0, z: 14.277}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -271,7 +271,7 @@ AnimationClip:
         tangentMode: 0
       - serializedVersion: 2
         time: 0.25
-        value: {x: 0, y: 0, z: -10}
+        value: {x: 0, y: 0, z: 22.607}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -911,19 +911,19 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -10
+        value: 14.277
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - serializedVersion: 2
         time: 0.25
-        value: 0
+        value: 3.061
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - serializedVersion: 2
         time: 0.5
-        value: -10
+        value: 14.277
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1277,7 +1277,7 @@ AnimationClip:
         tangentMode: 0
       - serializedVersion: 2
         time: 0.25
-        value: -10
+        value: 22.607
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1416,7 +1416,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Cuerpo/cuerpoB/MusloD/PiernaD/PieD
+    path: Cuerpo/AnteBrazoI
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1426,7 +1426,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Cuerpo/cuerpoB/MusloD/PiernaD/PieD
+    path: Cuerpo/AnteBrazoI
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1436,7 +1436,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Cuerpo/cuerpoB/MusloD/PiernaD/PieD
+    path: Cuerpo/AnteBrazoI
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1626,7 +1626,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Cuerpo/AnteBrazoI
+    path: Cuerpo/cuerpoB/MusloD/PiernaD/PieD
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1636,7 +1636,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Cuerpo/AnteBrazoI
+    path: Cuerpo/cuerpoB/MusloD/PiernaD/PieD
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -1646,7 +1646,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Cuerpo/AnteBrazoI
+    path: Cuerpo/cuerpoB/MusloD/PiernaD/PieD
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
