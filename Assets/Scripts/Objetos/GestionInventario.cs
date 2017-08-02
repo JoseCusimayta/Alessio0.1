@@ -135,79 +135,147 @@ public class GestionInventario : MonoBehaviour {
         }
     }
 
-    public int asignarItemACasilla(GameObject ItemPresentacion, Sprite ItemAccion)
+    //metodo que nos ayuda a verificar si ya tenemos un item y no sea necesario ponerlo en el invetario, sino solo aumentar su numero
+    private int buscarItem(string nombre)
     {
-        Debug.Log("Gestion Inventario accedi");
-        int lugarAsignado = -1;
-        asignarItems(ItemPresentacion,ItemAccion);
-        //se hace una busqueda entre los casilleros, para encontrar alguno vacio
-        for (int i = 0; i < itemRapido.Length; i++)                  
+       
+        int lugarItem = -1;
+       
+        //se hace una busqueda entre los casilleros, para encontrar al item
+        for (int i = 0; i < itemRapido.Length; i++)
         {
-            ////el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
-            //Debug.Log("nombre=" + itemRapido[i+1].GetComponent<Image>().sprite.name);            
-            if (itemRapido[i].GetComponent<Image>().sprite.name=="UIMask")
+            if (itemRapido[i].GetComponent<Image>().sprite.name != "UIMask")
             {
-                //cargamos el sprite por defecto (solo una vez)
-                cargarSpritePorDefecto(itemRapido[i].GetComponent<Image>().sprite);
-                //si el casillero esta vacio se le asigna el item recogido
-                itemRapido[i].GetComponent<Image>().sprite = items[i].presentacion;
                 switch (items[i].objeto.name)
                 {
                     case "Curacion":
-                        
-                        //agregamos un texto que indique el numero de botiquines que se posee
-                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].getStock()+"";
-                        lugarAsignado = i;
+                        //verificamos si ya tenemos este item, si ya existe se guarda el lugar del item actualmente
+                        if(nombre== "Curacion")
+                        {
+                           Debug.Log("Se encontro otra curacion");
+                           int nroCuras = int.Parse(itemRapido[i].GetComponentInChildren<Text>().text) ;
+                           nroCuras++;
+                           itemRapido[i].GetComponentInChildren<Text>().text = nroCuras+"";
+                           lugarItem = i;
+                            
+                        }
                         break;
                     case "Pistola":
-                        //agregamos un texto que indique el numero de balas a usar
-                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
-                        lugarAsignado = i;
+                        //verificamos si ya tenemos este item, si ya existe se guarda el lugar del item actualmente
+                        if (nombre == "Pistola")
+                        {
+                            Debug.Log("Se encontro otra Pistola");
+                            items[i].objeto.GetComponent<Pistola>().cantidadBalas += 6;
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            lugarItem = i;
+                           
+                        }
                         break;
                     case "Ametralladora":
-                        //agregamos un texto que indique el numero de balas a usar
-                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
-                        lugarAsignado = i;
-                        break;
-                    case "MunicionPistola":
-                        //agregamos un texto que indique el numero de balas a usar
-                        itemRapido[i].GetComponentInChildren<Text>().text ="6";
-                        lugarAsignado = i;
-                        break;
-                    case "MunicionAmetralladora":
-                        //agregamos un texto que indique el numero de balas a usar
-                        itemRapido[i].GetComponentInChildren<Text>().text = "30";
-                        lugarAsignado = i;
-                        break;
+                        //verificamos si ya tenemos este item, si ya existe se guarda el lugar del item actualmente
+                        if (nombre == "Ametralladora")
+                        {
+                            Debug.Log("Se encontro otra Ametralladora");
+                            items[i].objeto.GetComponent<Pistola>().cantidadBalas += 30;
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            lugarItem = i;
 
-                }
-               
-                Debug.Log("El nombre del nuevo elemento es=" + itemRapido[i].GetComponent<Image>().sprite.name);
-                break;
-            }
-            else
-            {
-                switch (items[i].objeto.name)
-                {
-                    case "Curacion":
-                        //agregamos un texto que indique el numero de botiquines que se posee
-                        itemRapido[i].GetComponentInChildren<Text>().text = "0";
-                        break;
-                    case "Pistola":
-                        //agregamos un texto que indique el numero de balas a usar
-                        Debug.Log("Repeti pistola");
-                        //desasignarItemACasilla(items.Length-1);
-                        //items[items.Length - 1] = null;
-                        //agregamos un texto que indique el numero de balas a usar
-                        items[i].objeto.GetComponent<Pistola>().cantidadBalas += 6;
-                        itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
-                        //itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                        }
                         break;
                 }
-                //break;
             }
-           
         }
+        
+        
+        return lugarItem;
+    }
+
+    public int asignarItemACasilla(GameObject ItemPresentacion, Sprite ItemAccion)
+    {
+        Debug.Log("Gestion Inventario accedi ");
+        int lugarAsignado = -1;
+        Debug.Log("ItemPresentacion="+ ItemPresentacion.name);
+
+        //buscaremos si el item que sera asignado ya existe en nuestro inventario
+        //buscarItem devuelve el lugar del item si es que ya existe, de lo contrario, envia -1
+        lugarAsignado = buscarItem(ItemPresentacion.name);
+        
+        Debug.Log("itemEncontrado en lugar nro=" + lugarAsignado);
+        //si no se encontro el item, entonces se procede a agregar al inventario
+        if (lugarAsignado==-1)
+        {
+            asignarItems(ItemPresentacion, ItemAccion);
+            //se hace una busqueda entre los casilleros, para encontrar alguno vacio
+            for (int i = 0; i < itemRapido.Length; i++)
+            {
+                ////el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
+                //Debug.Log("nombre=" + itemRapido[i+1].GetComponent<Image>().sprite.name);            
+                if (itemRapido[i].GetComponent<Image>().sprite.name == "UIMask")
+                {
+                    //cargamos el sprite por defecto (solo una vez)
+                    cargarSpritePorDefecto(itemRapido[i].GetComponent<Image>().sprite);
+                    //si el casillero esta vacio se le asigna el item recogido
+                    itemRapido[i].GetComponent<Image>().sprite = items[i].presentacion;
+                    switch (items[i].objeto.name)
+                    {
+                        case "Curacion":
+
+                            //agregamos un texto que indique el numero de botiquines que se posee
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].getStock() + "";
+                            lugarAsignado = i;
+                            break;
+                        case "Pistola":
+                            //agregamos un texto que indique el numero de balas a usar
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            lugarAsignado = i;
+                            break;
+                        case "Ametralladora":
+                            //agregamos un texto que indique el numero de balas a usar
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            lugarAsignado = i;
+                            break;
+                        case "MunicionPistola":
+                            //agregamos un texto que indique el numero de balas a usar
+                            itemRapido[i].GetComponentInChildren<Text>().text = "6";
+                            lugarAsignado = i;
+                            break;
+                        case "MunicionAmetralladora":
+                            //agregamos un texto que indique el numero de balas a usar
+                            itemRapido[i].GetComponentInChildren<Text>().text = "30";
+                            lugarAsignado = i;
+                            break;
+
+                    }
+
+                    Debug.Log("El nombre del nuevo elemento es=" + itemRapido[i].GetComponent<Image>().sprite.name);
+                    break;
+                }
+                //else
+                //{
+                //    switch (items[i].objeto.name)
+                //    {
+                //        case "Curacion":
+                //            //agregamos un texto que indique el numero de botiquines que se posee
+                //            itemRapido[i].GetComponentInChildren<Text>().text = "0";
+                //            break;
+                //        case "Pistola":
+                //            //agregamos un texto que indique el numero de balas a usar
+                //            Debug.Log("Repeti pistola");
+                //            //desasignarItemACasilla(items.Length-1);
+                //            //items[items.Length - 1] = null;
+                //            //agregamos un texto que indique el numero de balas a usar
+                //            items[i].objeto.GetComponent<Pistola>().cantidadBalas += 6;
+                //            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                //            //itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                //            break;
+                //    }
+                //break;
+                // }
+
+            }//fin de for
+
+        }
+        
         return lugarAsignado;
     }
 

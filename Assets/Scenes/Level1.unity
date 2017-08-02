@@ -670,6 +670,26 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: velocidad_normal
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: veloidad_correr
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: velocidad_con_arma
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114947456727826992, guid: 081c726d91fa1274890bf3b44d0e28a8,
+        type: 2}
+      propertyPath: velocidad_retrocediendo
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 081c726d91fa1274890bf3b44d0e28a8, type: 2}
   m_IsPrefabParent: 0
@@ -1145,6 +1165,10 @@ Prefab:
     - target: {fileID: 4867018320660870, guid: b3aef6a2d98d971468bd1f68a3f422d9, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783151241880432, guid: b3aef6a2d98d971468bd1f68a3f422d9, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3aef6a2d98d971468bd1f68a3f422d9, type: 2}
@@ -2095,7 +2119,7 @@ Prefab:
         type: 2}
     - target: {fileID: 1264228535582790, guid: 622045d46935a96489cf368911e58f64, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114738257276541424, guid: 622045d46935a96489cf368911e58f64,
         type: 2}

@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1743562143922198}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 88.21885, y: -11.337401, z: 0}
+  m_LocalPosition: {x: 1.5770261, y: -11.995882, z: 0}
   m_LocalScale: {x: 0.32484055, y: 0.32484055, z: 1}
   m_Children:
   - {fileID: 4383934146457864}
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cantidadBalas: 6
+  TotalBalas: 6
 --- !u!212 &212510277963765592
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -178,6 +179,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!222 &222989765547718374
 CanvasRenderer:
   m_ObjectHideFlags: 1
