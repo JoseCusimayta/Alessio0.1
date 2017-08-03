@@ -166,7 +166,7 @@ public class GestionInventario : MonoBehaviour {
                         {
                             Debug.Log("Se encontro otra Pistola");
                             items[i].objeto.GetComponent<Pistola>().cantidadBalas += 6;
-                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / "+ items[i].objeto.GetComponent<Pistola>().TotalBalas;
                             lugarItem = i;
                            
                         }
@@ -177,7 +177,7 @@ public class GestionInventario : MonoBehaviour {
                         {
                             Debug.Log("Se encontro otra Ametralladora");
                             items[i].objeto.GetComponent<Pistola>().cantidadBalas += 30;
-                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / " + items[i].objeto.GetComponent<Pistola>().TotalBalas;
                             lugarItem = i;
 
                         }
@@ -226,12 +226,12 @@ public class GestionInventario : MonoBehaviour {
                             break;
                         case "Pistola":
                             //agregamos un texto que indique el numero de balas a usar
-                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / " + items[i].objeto.GetComponent<Pistola>().TotalBalas;
                             lugarAsignado = i;
                             break;
                         case "Ametralladora":
                             //agregamos un texto que indique el numero de balas a usar
-                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + "";
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / " + items[i].objeto.GetComponent<Pistola>().TotalBalas;
                             lugarAsignado = i;
                             break;
                         case "MunicionPistola":
@@ -287,13 +287,13 @@ public class GestionInventario : MonoBehaviour {
             case "Pistola":
                 if (municionActual <= 0)
                 {
-                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0";
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0 / "+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
                 }
                 //agregamos un texto que indique el numero de balas que quedan
                 else
                 {
-                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + "";
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / "+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
                 }
                 break;
@@ -307,7 +307,7 @@ public class GestionInventario : MonoBehaviour {
                 //agregamos un texto que indique el numero de balas que quedan
                 else
                 {
-                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + "";
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / " + items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
                 }
                 break;
