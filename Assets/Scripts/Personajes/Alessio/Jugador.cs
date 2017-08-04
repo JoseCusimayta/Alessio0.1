@@ -494,7 +494,15 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 tiene_metralleta = true;
                                 armaActualEnMano = 0;
                             }
-                           
+
+                            if (GetComponent<GestionInventario>().items[0].objeto.name == "MunicionAmetralladora")
+                            {
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                GetComponent<GestionInventario>().recargarMunicion(GetComponent<GestionInventario>().items[0].objeto.gameObject, GetComponent<GestionInventario>().items[0].accion);
+                               
+                            }
+
                         }
                         
                     break;
@@ -530,6 +538,13 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 tiene_metralleta = true;
                                 armaActualEnMano = 1;
                             }
+                            if (GetComponent<GestionInventario>().items[1].objeto.name == "MunicionAmetralladora")
+                            {
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                GetComponent<GestionInventario>().recargarMunicion(GetComponent<GestionInventario>().items[1].objeto.gameObject, GetComponent<GestionInventario>().items[1].accion);
+
+                            }
                         }
                     break;
                     case "Alpha3":
@@ -556,6 +571,14 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
                                 armaActualEnMano = 2;
+                            }
+
+                            if (GetComponent<GestionInventario>().items[2].objeto.name == "MunicionAmetralladora")
+                            {
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                GetComponent<GestionInventario>().recargarMunicion(GetComponent<GestionInventario>().items[2].objeto.gameObject, GetComponent<GestionInventario>().items[2].accion);
+
                             }
                         }
                     break;
@@ -584,6 +607,13 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
                                 armaActualEnMano = 3;
+                            }
+                            if (GetComponent<GestionInventario>().items[3].objeto.name == "MunicionAmetralladora")
+                            {
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
+                                GetComponent<GestionInventario>().recargarMunicion(GetComponent<GestionInventario>().items[3].objeto.gameObject, GetComponent<GestionInventario>().items[3].accion);
+
                             }
                         }
                    break;
