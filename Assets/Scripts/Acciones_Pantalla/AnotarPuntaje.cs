@@ -26,7 +26,14 @@ public class AnotarPuntaje : MonoBehaviour
                 numeroPuntuacion += cantidad_puntaje;
 
             //al llegar la vida del enemigo a menos que cero, se procede a matarlo, dejando a su paso un item para el jugador
-            GetComponent<Enemigo>().Morir();
+            if (GetComponent<Enemigo>())
+            {
+                GetComponent<Enemigo>().Morir();
+            }
+            if (GetComponent<Guardia>())
+            {
+                GetComponent<Guardia>().Morir();
+            }
             //////////////////////
             //this.enabled = false;
 

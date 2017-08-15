@@ -118,19 +118,18 @@ public class Jugador : MonoBehaviour, IPersonaje
         rigidbody_Jugador = GameObject.Find("Alessio").GetComponent<Rigidbody>();
         #endregion
         #region Asignando el cuerpo del Personaje
-        cabeza = GameObject.Find("Cabeza");
-        cuerpo = GameObject.Find("Cuerpo");
-        AnteBrazoD = GameObject.Find("AnteBrazoD");
-        
+        cuerpo = GameObject.Find("Alessio/Cuerpo");
+        cabeza = GameObject.Find("Alessio/Cuerpo/Cabeza");        
+        AnteBrazoD = GameObject.Find("Alessio/Cuerpo/AnteBrazoD");        
         BrazoD = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD");
-        AnteBrazoI = GameObject.Find("AnteBrazoI");
-        BrazoI = GameObject.Find("BrazoI");
-        MusloD = GameObject.Find("MusloD");
-        PiernaD = GameObject.Find("PiernaD");
-        PieD = GameObject.Find("PieD");
-        MusloI = GameObject.Find("MusloI");
-        PiernaI = GameObject.Find("PiernaI");
-        PieI = GameObject.Find("PieI");
+        AnteBrazoI = GameObject.Find("Alessio/Cuerpo/AnteBrazoI");
+        BrazoI = GameObject.Find("Alessio/Cuerpo/AnteBrazoI/BrazoI");
+        MusloD = GameObject.Find("Alessio/Cuerpo/cuerpoB/MusloD");
+        PiernaD = GameObject.Find("Alessio/Cuerpo/cuerpoB/MusloD/PiernaD");
+        PieD = GameObject.Find("Alessio/Cuerpo/cuerpoB/MusloD/PiernaD/PieD");
+        MusloI = GameObject.Find("Alessio/Cuerpo/cuerpoB/MusloI");
+        PiernaI = GameObject.Find("Alessio/Cuerpo/cuerpoB/MusloI/PiernaI");
+        PieI = GameObject.Find("Alessio/Cuerpo/cuerpoB/MusloI/PiernaI/PieI");
         #endregion
     }
 
@@ -672,7 +671,6 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     public void ColissionParedes()
     {
-        Debug.Log("Colision");
         caja_colision = transform.localScale*0.99f;                             //Variable en forma de una caja para detectar las colisiones del personaje
         colision_izquierda =                                                    //Le asignamos un valor
             Physics.BoxCast(
@@ -710,7 +708,6 @@ public class Jugador : MonoBehaviour, IPersonaje
                                                                                 //BrazoD = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD");
         arma_jugador= GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
         tiene_arma = true;
-        Debug.Log("Cogi " + tipo_arma);
                                                            //Activamos la variable "tiene_arma" para decirle a la animación que muestre las animaciones con arma
         if (tipo_arma == "Pistola")                                             //Verificamos que el objeto detectado sea una pistola
         {

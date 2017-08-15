@@ -10,7 +10,6 @@ public class BarraVida : MonoBehaviour {
     // Use this for initialization
     void Start () {
         jugador_salud=GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-        Debug.Log("Nivel de barra actual de jugador=" + nivelActualBarra);
         barraVida = GetComponent<Image>();
 
     }

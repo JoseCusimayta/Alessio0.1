@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4240043201939922}
   - component: {fileID: 212822845853114332}
   m_Layer: 0
-  m_Name: CuerpoB
+  m_Name: cuerpoB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,6 +91,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1513970199874204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4591297737388716}
+  - component: {fileID: 136378355206605322}
+  - component: {fileID: 114565169123663950}
+  m_Layer: 0
+  m_Name: RangoDeteccion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1527080428151158
 GameObject:
   m_ObjectHideFlags: 1
@@ -115,9 +132,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4554483471720684}
+  - component: {fileID: 95218822087100280}
+  - component: {fileID: 114993535237091662}
+  - component: {fileID: 114585066506362118}
+  - component: {fileID: 114123993665868454}
+  - component: {fileID: 65941704638137452}
   m_Layer: 0
   m_Name: Rufian_Pistola
-  m_TagString: Untagged
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,7 +185,7 @@ GameObject:
   - component: {fileID: 4427340942264774}
   - component: {fileID: 212903451728681728}
   m_Layer: 0
-  m_Name: BrazoDArma
+  m_Name: BrazoD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +394,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1598946047904996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.68, y: 0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4427340942264774}
@@ -398,13 +420,27 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1583504887955978}
   m_LocalRotation: {x: -0, y: -0, z: 0.0000000037252903, w: 1}
-  m_LocalPosition: {x: -14.42, y: -20.52, z: 0}
+  m_LocalPosition: {x: -10.44, y: -21.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4985228810041588}
+  - {fileID: 4591297737388716}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4591297737388716
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1513970199874204}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: -0.68, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4554483471720684}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4600214442254298
 Transform:
   m_ObjectHideFlags: 1
@@ -518,6 +554,125 @@ Transform:
   m_Father: {fileID: 4554483471720684}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65941704638137452
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583504887955978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3890076, y: 3.4537354, z: 1}
+  m_Center: {x: -0.014962435, y: 0.20946515, z: 0}
+--- !u!95 &95218822087100280
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583504887955978}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 828874ec9140051408095a56bb4a5681, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114123993665868454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583504887955978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905c93ca5427fe34d9a31211a5890548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cantidad_puntaje: 100
+  game_object_puntaje: {fileID: 0}
+--- !u!114 &114565169123663950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1513970199874204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1ec8dbc7a212e48b43c506b1e9b77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  personaje_detectado: 0
+  velocidad_asignada: 6
+--- !u!114 &114585066506362118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583504887955978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba23266bc6f0ede4aa05a7a4c851407b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vidaActual: 100
+  _vidaMaxima: 100
+  _ultimoAtacante: {fileID: 0}
+--- !u!114 &114993535237091662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583504887955978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a423b6d3a0c1e9498fcb207a145748b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  salud: {fileID: 0}
+  vida_actual: 0
+  vida_maxima: 0
+  vida_anterior: 0
+  lista_coordenadas: []
+  coordenada_objetivo: {fileID: 0}
+  indice_coordenada: 0
+  velocidad_normal: 5
+  punto_disparo: {fileID: 1598946047904996}
+  radio_Alcance: 0
+  persecucion: 0
+  persiguiendo: 0
+  patronMovimiento: {fileID: 0}
+  intervalo_ataque: 0
+  reactivacion_ataque: 2
+  jugador_detectado: 0
+  rango_vision: {fileID: 0}
+  esta_atacando: 0
+  player: {fileID: 0}
+  Prefab_Bala: {fileID: 1111418017893140, guid: 2d176773549cd6841af071f124813d5b,
+    type: 2}
+  Prefab_Rufian: {fileID: 0}
+  Prefab_Explosion: {fileID: 0}
+  Tipo_Guardia: Reposo
+  itemsDesprendibles:
+  - {fileID: 1365389616150508, guid: 295ec684f260df34796226a4b3c3f1aa, type: 2}
+--- !u!136 &136378355206605322
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1513970199874204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 20
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212096749718060586
 SpriteRenderer:
   m_ObjectHideFlags: 1

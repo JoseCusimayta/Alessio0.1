@@ -162,8 +162,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1264228535582790}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 89.3, y: -14.8, z: 0}
-  m_LocalScale: {x: 0.7337713, y: 7, z: 7}
+  m_LocalPosition: {x: -9.503, y: -17.156, z: 0}
+  m_LocalScale: {x: 0.73453236, y: 4.5720005, z: 7}
   m_Children:
   - {fileID: 4364250578242360}
   - {fileID: 4416932087599742}
@@ -394,7 +394,7 @@ MonoBehaviour:
   esta_atacando: 0
   mirando_derecha: 0
   patrullaje: 1
-  velocidad_normal: 10
+  velocidad_normal: 0
   posicion_original: {x: 0, y: 0, z: 0}
   rufian: {fileID: 1264228535582790}
   lista_coordenadas:
@@ -412,6 +412,8 @@ MonoBehaviour:
   - {fileID: 1509399252134980, guid: 25ac473ee77d14e4289452095fc861ca, type: 2}
   - {fileID: 1743562143922198, guid: 1b253129ea3a5b2459f1c6e474eb16d0, type: 2}
   - {fileID: 1329090216292754, guid: ade229ba60a043a4a909e037d3274952, type: 2}
+  - {fileID: 1245064573036532, guid: 3e072db3851a70f4ca0f13c1e78ca8d6, type: 2}
+  - {fileID: 1957271360265176, guid: 31dcf3d0ac0c37d47902765674b79b36, type: 2}
 --- !u!114 &114746578779960006
 MonoBehaviour:
   m_ObjectHideFlags: 1

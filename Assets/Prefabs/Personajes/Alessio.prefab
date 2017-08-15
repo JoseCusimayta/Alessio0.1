@@ -294,14 +294,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811025229832834}
-  m_LocalRotation: {x: -0, y: -0, z: -0.5415352, w: 0.8406781}
-  m_LocalPosition: {x: 0.287, y: 0.182, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.33380687, w: 0.94264156}
+  m_LocalPosition: {x: 0.33, y: 0.182, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_Children:
   - {fileID: 4403450530483236}
   m_Father: {fileID: 4233321483524694}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -65.576004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -39}
 --- !u!4 &4125403919574084
 Transform:
   m_ObjectHideFlags: 1
@@ -365,13 +365,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1493437310375674}
-  m_LocalRotation: {x: 0, y: 0, z: 0.3420201, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0, z: 0.2840153, w: 0.95881975}
   m_LocalPosition: {x: 0.504, y: -0.03403282, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4052556696220726}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 40}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 33}
 --- !u!4 &4435853897711626
 Transform:
   m_ObjectHideFlags: 1
@@ -632,16 +632,16 @@ MonoBehaviour:
   danio_golpe: 0
   sprite_pistola: {fileID: 21300010, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
   mano_pistola: {fileID: 21300010, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
-  prefab_bala_pistola: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+  prefab_bala_pistola: {fileID: 1876361328065704, guid: 13e700b0f4271c84bac0cda885d2c7f8,
     type: 2}
   sprite_metralleta: {fileID: 21300040, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
   mano_metralleta: {fileID: 21300040, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
-  prefab_bala_metralleta: {fileID: 1393586962157790, guid: 6afee2212e086f1428213c6cf7126f22,
+  prefab_bala_metralleta: {fileID: 1876361328065704, guid: 13e700b0f4271c84bac0cda885d2c7f8,
     type: 2}
-  velocidad_normal: 1
-  veloidad_correr: 4
-  velocidad_con_arma: 2
-  velocidad_retrocediendo: 1
+  velocidad_normal: 5
+  veloidad_correr: 8
+  velocidad_con_arma: 5
+  velocidad_retrocediendo: 5
   distancia_colision: 0.6
   caja_colision: {x: 0, y: 0, z: 0}
   mascara_objeto:
@@ -768,7 +768,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300020, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -894,7 +894,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300022, guid: a4259ec419a48fd46a8abb0265132652, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -26,17 +26,13 @@ public class GestionInventario : MonoBehaviour {
     #region Funciones para guardar items
     private void asignarItems(GameObject ItemPresentacion, Sprite ItemAccion)       //Función para guardar los items
     {
-        Debug.Log("Asignando imagenes de presentacion y accion a los items");
         //se hace una busqueda entre los items
         for (int i = 0; i < items.Length; i++)
         {
-            Debug.Log("items["+i+"]=" + items[i]);
             if (items[i] == null)
             {
-                Debug.Log("ItemPresentacion=" + ItemPresentacion);
                 items[i] = new Item();
                 items[i].cargarImagenes(ItemPresentacion, ItemAccion);
-                Debug.Log("items[" + i + "]=" + items[i].presentacion);
                 break;
             }
         }
@@ -192,15 +188,10 @@ public class GestionInventario : MonoBehaviour {
 
     public int asignarItemACasilla(GameObject ItemPresentacion, Sprite ItemAccion)
     {
-        Debug.Log("Gestion Inventario accedi ");
         int lugarAsignado = -1;
-        Debug.Log("ItemPresentacion="+ ItemPresentacion.name);
-
         //buscaremos si el item que sera asignado ya existe en nuestro inventario
         //buscarItem devuelve el lugar del item si es que ya existe, de lo contrario, envia -1
         lugarAsignado = buscarItem(ItemPresentacion.name);
-        
-        Debug.Log("itemEncontrado en lugar nro=" + lugarAsignado);
         //si no se encontro el item, entonces se procede a agregar al inventario
         if (lugarAsignado==-1)
         {
@@ -246,8 +237,6 @@ public class GestionInventario : MonoBehaviour {
                             break;
 
                     }
-
-                    Debug.Log("El nombre del nuevo elemento es=" + itemRapido[i].GetComponent<Image>().sprite.name);
                     break;
                 }
                 //else

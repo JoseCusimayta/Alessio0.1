@@ -16,8 +16,6 @@ public class Item {
     {
         objeto = new GameObject();
         //si es sanacion se recrea el objeto 
-        Debug.Log("ItemPresentacion.name=" + ItemPresentacion.name);
-        Debug.Log("ItemPresentacion.accion=" + ItemAccion.name);
         switch (ItemPresentacion.name)
         {
             case "Curacion":
@@ -48,7 +46,6 @@ public class Item {
                 break;
         }
         
-        Debug.Log("objecto=" + objeto);
         presentacion =ItemPresentacion.GetComponentInChildren<SpriteRenderer>().sprite;
         accion=ItemAccion;
         

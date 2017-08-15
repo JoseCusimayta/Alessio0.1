@@ -275,7 +275,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
         }
     }
 
-    public GameObject desprenderItem()
+    public GameObject DesprenderItem()
     {
         //GetComponent<MeshRenderer>().enabled = false;
         Debug.Log("Desprendera un item al morir");
