@@ -27,6 +27,8 @@ TagManager:
   - BrazoArma
   - PuntoDisparo
   - Municion
+  - Objeto
+  - Golpe
   layers:
   - Default
   - TransparentFX

@@ -28,6 +28,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     private bool atacando_golpes;                     //Variable para saber si el personaje está atacando con puños
     public float danio_golpe;                       //Variable para determinar la cantidad de daño que tendrán los golpes del personaje
     private GameObject prefab_golpe;                 //Variable para guardar el prefab del efecto del golpe
+    
     #endregion
     #region Pistola
     public Sprite sprite_pistola;                      //Variable para guardar el sprite de la pistola
@@ -111,7 +112,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     #region Funciones de Unity
     void Start()
     {
-        retroceso = 0;                                  //Iniciamos la variable "retroceso con 0", porque al inicio tiene un número positivo y eso genera errores en la animación del inicio        
+        retroceso = 0;                                  //Iniciamos la variable "retroceso con 0", porque al inicio tiene un número positivo y eso genera errores en la animación del inicio
+        danio_golpe = 5;                                //le instanciamos un valor de golpe
         #region Declarando Variables
         _animator = GameObject.Find("Alessio").GetComponent<Animator>();
         salud = GameObject.Find("Alessio").GetComponent<Health>();
@@ -146,6 +148,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         GestorRetroceso();                                      //Función para gestionar el retroceso del jugador
         GestorParpadeo();                                       //Función para gestionar el parpadeo del personaje
         seleccionarItem();                                      //Función que permite el intercambio los items que se encuentran en el inventario rapido
+       
     }
 
     void FixedUpdate()
@@ -230,8 +233,12 @@ public class Jugador : MonoBehaviour, IPersonaje
                 fijar_camara = true;
             else
                 fijar_camara = false;
+
+           
         }
     }
+
+   
 
     public void GestorMouse()
     {        
@@ -275,9 +282,12 @@ public class Jugador : MonoBehaviour, IPersonaje
             if (!tiene_arma)                                    //Verificamos si el personaje no tiene armas
             {
                 atacando_golpes = true;                          //Activamos la variable "atacando_golpes" para decirle a la animación que debe ejecutar 
-                Instantiate(prefab_golpe,
-                    punto_disparo.transform.position,
-                    punto_disparo.transform.rotation);          //Creamos el efecto del golpe con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+                //Debug.Log("Se activa golpe");
+                _animator.SetTrigger("golpear");
+               
+                //Instantiate(prefab_golpe,
+                //    punto_disparo.transform.position,
+                //    punto_disparo.transform.rotation);          //Creamos el efecto del golpe con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
             }
             Debug.Log("Tipo de arma ahora: " + tipo_arma+ " y tiene_pistola=" + tiene_pistola);
             if (tiene_pistola && tipo_arma=="Pistola")                                  //Verificamos si el personaje tiene pistola
@@ -753,6 +763,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     public void DetectarObjetoCura(Collider objeto_cura)
     {
         Debug.Log("objeto_cura.name:"+objeto_cura.name);
+        objeto_cura.name = objeto_cura.name.Replace("(Clone)",string.Empty);
+
         if (objeto_cura.name== "Curacion")                              //Verificamos que el objeto detectado sea primerosAuxilios
         {
             Debug.Log("accedi a curacion");
