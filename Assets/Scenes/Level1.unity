@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1212,7 +1212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.0143509265, g: 0.2547287, b: 0.9758621, a: 0.392}
+  m_Color: {r: 0.0143509265, g: 0.2547287, b: 0.9758621, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1646,7 +1646,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1003667388045870, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
@@ -1771,7 +1771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2206,7 +2206,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1003667388045870, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
@@ -2304,7 +2304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4627,11 +4627,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4614659943539220, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: 12.08
       objectReference: {fileID: 0}
     - target: {fileID: 4614659943539220, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -8
+      value: -6.12
       objectReference: {fileID: 0}
     - target: {fileID: 4614659943539220, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4663,7 +4663,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1003667388045870, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4614659943539220, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 12.354699
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e221de1e74e70ab48abeb2147fc9205a, type: 2}
