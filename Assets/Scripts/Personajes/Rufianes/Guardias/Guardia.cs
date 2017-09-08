@@ -41,10 +41,43 @@ public class Guardia : MonoBehaviour {
     #endregion
 
     #endregion
+	private float transparencia_objetivo;
+	private GameObject sombrero;  
+	private GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
+	private GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
+	private GameObject AnteBrazoD;                   //Variable para guardar el GameObject del Ante Brazo Derecho del jugador
+	private GameObject BrazoD;                       //Variable para guardar el GameObject del Brazo Derecho del jugador
+	public GameObject BrazoDerechoGirable;          //Variable para guardar el GameObject del Brazo Derecho Variable del jugador
+	private GameObject AnteBrazoI;                   //Variable para guardar el GameObject del Ante Brazo Izquierdo del jugador
+	private GameObject BrazoI;                       //Variable para guardar el GameObject del Brazo Izquierdo del jugador
+	private GameObject MusloD;                       //Variable para guardar el GameObject del Muslo Derecho del jugador
+	private GameObject PiernaD;                      //Variable para guardar el GameObject de la Pierna Derecha del jugador
+	private GameObject PieD;                         //Variable para guardar el GameObject del Pie Derecho del jugador
+	private GameObject MusloI;                       //Variable para guardar el GameObject del Muslo Izquierdo del jugador
+	private GameObject PiernaI;                      //Variable para guardar el GameObject de la Pierna Izquierdo del jugador
+	private GameObject PieI;
+
 
     #region Funciones de Unity
     // Use this for initialization
     void Start () {
+
+		#region Asignando el cuerpo del Personaje
+		sombrero = GameObject.Find("Rufian_Pistola/Cuerpo/Cabeza/Sombrero");
+		cuerpo = GameObject.Find("Rufian_Pistola/Cuerpo");
+		cabeza = GameObject.Find("Rufian_Pistola/Cuerpo/Cabeza");        
+		AnteBrazoD = GameObject.Find("Rufian_Pistola/Cuerpo/AnteBrazoD");        
+		BrazoD = GameObject.Find("Rufian_Pistola/Cuerpo/AnteBrazoD/BrazoD");
+		AnteBrazoI = GameObject.Find("Rufian_Pistola/Cuerpo/AnteBrazoI");
+		BrazoI = GameObject.Find("Rufian_Pistola/Cuerpo/AnteBrazoI/BrazoI");
+		MusloD = GameObject.Find("Rufian_Pistola/Cuerpo/cuerpoB/MusloD");
+		PiernaD = GameObject.Find("Rufian_Pistola/Cuerpo/cuerpoB/MusloD/PiernaD");
+		PieD = GameObject.Find("Rufian_Pistola/Cuerpo/cuerpoB/MusloD/PiernaD/PieD");
+		MusloI = GameObject.Find("Rufian_Pistola/Cuerpo/cuerpoB/MusloI");
+		PiernaI = GameObject.Find("Rufian_Pistola/Cuerpo/cuerpoB/MusloI/PiernaI");
+		PieI = GameObject.Find("Rufian_Pistola/Cuerpo/cuerpoB/MusloI/PiernaI/PieI");
+		#endregion
+
         if (Tipo_Guardia == "Patrullaje")                                   //Verificamos el tipo de guardia, en este caso, patrullaje
         {
             coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
@@ -64,7 +97,9 @@ public class Guardia : MonoBehaviour {
             GestorGiros();                                                      //Establecemos la orientación hacía el jugador
             GestorAtaques();                                                    //Establecemos el ataque del Guardia
         }
-        GestorVida();                                                           //Actualizamos la vida
+		GestorVida();//Actualizamos la vida
+		GestorParpadeo();
+		JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
     }
     void OnTriggerEnter(Collider other)
     {
@@ -183,4 +218,84 @@ public class Guardia : MonoBehaviour {
         return itemsDesprendibles[itemElegido];
     }
     #endregion
+	void JugadorHerido()
+	{
+		Debug.Log ("Ella no te ama :'v 2 ");
+		if (vida_actual < vida_anterior)                                    //Verificamos que haya un cambio en la vida
+		{
+			Debug.Log ("Ella no te ama :'v 3 ");
+			gameObject.layer = 12;                                          //Activamos la capa de invulnerabilidad
+//			puede_controlar = false;                                        //Desactivmos el control del jugador
+//			retrocediendo = true;                                           //Activamos la variable "retrocediendo" para la animación
+//			retroceso = 2;                                                  //Le damos una velocidad al retroceso
+//			if (salud._ultimoAtacante != null)                              //Verificamos que haya un atacante
+//			{
+//				if (transform.position.x <
+//					salud._ultimoAtacante.transform.position.x)             //Verificamos la posición del atacante y del personaje
+//				{
+////					retroceder_derecha = false;                             //Le decimos de dónde nos está atacando para saber de donde retroceder
+//				}
+////				else retroceder_derecha = true;                             //Le decimos de dónde nos está atacando para saber de donde retroceder
+//			}
+			Invoke("RestaurarCapa", 0.5f);                                  //Reactivamos la capa del jugador en 0.5 segundos
+		}
+		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
+	}
+
+	void RestaurarCapa()
+	{
+		gameObject.layer = 8;                                               //Activamos la capa "Jugador" al personaje
+	}
+	void GestorParpadeo()
+	{
+		Debug.Log ("Ella no te ama :'v");
+		if (gameObject.layer == 12)                                         //Verificamos en que capa está (Layer 12: Capa de invulnerabilidad)
+		{
+			Color newColor = cabeza.GetComponent<SpriteRenderer>().color;   //Creamos una variable newColor para manejar la transparencia (alpha)
+			newColor.a = Mathf.Lerp(newColor.a,
+				transparencia_objetivo, Time.deltaTime * 20);               //Cambiamos el valor de la transparencia con el tiempo
+			sombrero.GetComponent<SpriteRenderer>().color = newColor;
+			cabeza.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			cuerpo.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+			BrazoD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+			BrazoI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			MusloD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			PiernaD.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+			PieD.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+			MusloI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			PiernaI.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+			PieI.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+
+			if (newColor.a > 0.9f)                                          //Revisamos el valor de la transparencia
+			{
+				transparencia_objetivo = 0;                                 //Le decimos que se haga invisible
+			}
+			else if (newColor.a < 0.1f)                                     //Revisamos el valor de la transparencia
+			{
+				transparencia_objetivo = 1;                                 //Le decimos que se haga visible
+			}
+
+		}
+		if (gameObject.layer != 12)                                         //Verificamos en que capa está (Si no está  invulnerable)
+		{
+			Color newColor = cabeza.GetComponent<SpriteRenderer>().color;   //Creamos una variable newColor para manejar la transparencia (alpha)
+			newColor.a = 1;//Le decimos que se haga visible
+			sombrero.GetComponent<SpriteRenderer>().color = newColor;
+			cabeza.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			cuerpo.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			AnteBrazoD.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+			BrazoD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			AnteBrazoI.GetComponent<SpriteRenderer>().color = newColor;     //Asignamos la nueva transparencia al objeto
+			BrazoI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			MusloD.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			PiernaD.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+			PieD.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+			MusloI.GetComponent<SpriteRenderer>().color = newColor;         //Asignamos la nueva transparencia al objeto
+			PiernaI.GetComponent<SpriteRenderer>().color = newColor;        //Asignamos la nueva transparencia al objeto
+			PieI.GetComponent<SpriteRenderer>().color = newColor;           //Asignamos la nueva transparencia al objeto
+		}
+	}
+
 }
