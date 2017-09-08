@@ -4,20 +4,11 @@ using UnityEngine;
 using UnityEditor.SceneManagement;
 
 public class Menu : MonoBehaviour {
-	public string nivel;
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-	public void CambioDeEscena(){
+	public void CambioDeEscena(string nombre){
 	
-		Application.LoadLevel ("Level1");
+		EditorSceneManager.LoadScene (nombre);
 
 	}
 
