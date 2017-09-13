@@ -365,7 +365,8 @@ public class Jugador : MonoBehaviour, IPersonaje
         float start = _animator.GetFloat("Velocidad");                  //Obtenemos el valor de velocidad para modificarlo
         float result = Mathf.Lerp(start, end, Time.deltaTime * 5);      //Modificamos el valor inicial gradualmente hasta llegar al valor final
         _animator.SetFloat("Velocidad", result);                        //Asignamos el valor de "Velocidad" para definir si está corriendo o caminando o espera
-        _animator.SetBool("Pistola", tiene_pistola);               //Asignamos el valor de "tiene_pistola" a la animación
+		_animator.SetBool("Pistola", tiene_pistola);           				    //Asignamos el valor de "tiene_pistola" a la animación
+		Debug.Log(tiene_pistola);
         _animator.SetBool("Metralleta", tiene_metralleta);               //Asignamos el valor de "tiene_pistola" a la animación
     }
 
@@ -490,6 +491,9 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 tipo_arma = "Pistola";
                                 tiene_pistola = true;
+							Debug.Log ("Tiene pistola = " + tiene_pistola);
+							Debug.Log ("Tiene metralleta = " + tiene_metralleta);
+								tiene_metralleta = false;
                                 armaActualEnMano = 0;
                                 Debug.Log("Arma en Mano: Pistola");
                             }
@@ -501,6 +505,9 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
+							Debug.Log ("Tiene metralleta = " + tiene_metralleta);
+							Debug.Log ("Tiene pistola = " + tiene_pistola);
+								tiene_pistola = false;
                                 armaActualEnMano = 0;
                             }
 
@@ -535,6 +542,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
                                 tipo_arma = "Pistola";
                                 tiene_pistola = true;
+								tiene_metralleta = false;
                                 armaActualEnMano = 1;
                             }
                             if (GetComponent<GestionInventario>().items[1].objeto.name == "Ametralladora")
@@ -545,6 +553,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
+								tiene_pistola = false;
                                 armaActualEnMano = 1;
                             }
                             if (GetComponent<GestionInventario>().items[1].objeto.name == "MunicionAmetralladora")
