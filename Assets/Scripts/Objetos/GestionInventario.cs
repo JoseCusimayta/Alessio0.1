@@ -41,7 +41,18 @@ public class GestionInventario : MonoBehaviour {
     public void desasignarItemACasilla(int i)
     {
         itemRapido[i].GetComponent<Image>().sprite = porDefecto;
+		itemRapido [i].GetComponentInChildren<Text> ().text = "";
+		items [i] = null;
+
     }
+
+	public bool estaVaciaCasilla(int i) {
+		if (items [i] == null) {
+			return true;
+		} else
+			return false;
+
+	}
 
     //carga al sprite por defecto, para cuando necesitemos mostrar una casilla vacia
     private void cargarSpritePorDefecto(Sprite s)

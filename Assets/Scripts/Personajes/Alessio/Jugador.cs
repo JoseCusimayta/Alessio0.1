@@ -301,7 +301,9 @@ public class Jugador : MonoBehaviour, IPersonaje
                     if (balasRestantes > 0)//mientras la municion sea mayor que cero, se puede disparar
                     {
                         Debug.Log("Disparando con la pistola");
-                        atacando_pistola = true;                        //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+                        atacando_pistola = true; //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+						atacando_metralleta = false;
+						Debug.Log ("Tiene la puta pistola =" + atacando_pistola);
                         Debug.Log(punto_disparo.name);
                         Instantiate(prefab_bala_pistola,
                         punto_disparo.transform.position,
@@ -323,7 +325,9 @@ public class Jugador : MonoBehaviour, IPersonaje
                     if (balasRestantes > 0) //mientras la municion sea mayor que cero, se puede disparar
                     {
                         Debug.Log("Disparando con la metraca");
-                        atacando_metralleta = true;                     //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+                        atacando_metralleta = true;   			//Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
+						atacando_pistola = false;
+						Debug.Log ("Tiene la puta metralleta =" + atacando_metralleta);
                         Instantiate(prefab_bala_metralleta,
                         punto_disparo.transform.position,
                         punto_disparo.transform.rotation);          //Creamos la bala de la metralleta con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
@@ -476,14 +480,17 @@ public class Jugador : MonoBehaviour, IPersonaje
                         if (GetComponent<GestionInventario>().items[0] != null)
                         {
                             Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[0].objeto.name);
-                            if (GetComponent<GestionInventario>().items[0].objeto.name == "Curacion")
+						//verificamos que la casilla no este vacia y luego evaluamos que elemento tiene
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(0) && GetComponent<GestionInventario>().items[0].objeto.name == "Curacion")
                             {
                                 Sanacion sanaAux = GetComponent<GestionInventario>().items[0].objeto.GetComponent<Sanacion>();
+							    Debug.Log ("sanaAux="+sanaAux);
                                 salud.ModificarVida(sanaAux.vidaExtra, GetComponent<GestionInventario>().items[0].objeto);
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(0);
+							    sanaAux = null;
                             }
-                            if (GetComponent<GestionInventario>().items[0].objeto.name == "Pistola")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(0) && GetComponent<GestionInventario>().items[0].objeto.name == "Pistola")
                             {
                                 //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
@@ -497,7 +504,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 armaActualEnMano = 0;
                                 Debug.Log("Arma en Mano: Pistola");
                             }
-                            if (GetComponent<GestionInventario>().items[0].objeto.name == "Ametralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(0) && GetComponent<GestionInventario>().items[0].objeto.name == "Ametralladora")
                             {
                                 //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
@@ -511,7 +518,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                                 armaActualEnMano = 0;
                             }
 
-                            if (GetComponent<GestionInventario>().items[0].objeto.name == "MunicionAmetralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(0) && GetComponent<GestionInventario>().items[0].objeto.name == "MunicionAmetralladora")
                             {
                                 //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
@@ -527,14 +534,14 @@ public class Jugador : MonoBehaviour, IPersonaje
                         if (GetComponent<GestionInventario>().items[1] != null)
                         {
                             Debug.Log("Nombre:" + GetComponent<GestionInventario>().items[1].objeto.name);
-                            if (GetComponent<GestionInventario>().items[1].objeto.name == "Curacion")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(1) && GetComponent<GestionInventario>().items[1].objeto.name == "Curacion")
                             {
                                 Sanacion sanaAux = GetComponent<GestionInventario>().items[1].objeto.GetComponent<Sanacion>();
                                 salud.ModificarVida(sanaAux.vidaExtra, GetComponent<GestionInventario>().items[1].objeto);
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(1);
                             }
-                            if (GetComponent<GestionInventario>().items[1].objeto.name == "Pistola")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(1) && GetComponent<GestionInventario>().items[1].objeto.name == "Pistola")
                             {
                                 //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
@@ -545,9 +552,9 @@ public class Jugador : MonoBehaviour, IPersonaje
 								tiene_metralleta = false;
                                 armaActualEnMano = 1;
                             }
-                            if (GetComponent<GestionInventario>().items[1].objeto.name == "Ametralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(1) && GetComponent<GestionInventario>().items[1].objeto.name == "Ametralladora")
                             {
-                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
+                                //BrazoDere choGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
                                 Debug.Log("Nombre del sprite: " + GetComponent<GestionInventario>().items[1].accion.name);
                                 arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[1].accion;
@@ -556,7 +563,7 @@ public class Jugador : MonoBehaviour, IPersonaje
 								tiene_pistola = false;
                                 armaActualEnMano = 1;
                             }
-                            if (GetComponent<GestionInventario>().items[1].objeto.name == "MunicionAmetralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(1) && GetComponent<GestionInventario>().items[1].objeto.name == "MunicionAmetralladora")
                             {
                                 //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
@@ -569,29 +576,33 @@ public class Jugador : MonoBehaviour, IPersonaje
                         Debug.Log("Seleccione item 3:");
                         if (GetComponent<GestionInventario>().items[2] != null)
                         {
-                            if (GetComponent<GestionInventario>().items[2].objeto.name == "Curacion")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(2) && GetComponent<GestionInventario>().items[2].objeto.name == "Curacion")
                             {
                                 Sanacion sanaAux = GetComponent<GestionInventario>().items[2].objeto.GetComponent<Sanacion>();
                                 salud.ModificarVida(sanaAux.vidaExtra, GetComponent<GestionInventario>().items[2].objeto);
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(2);
                             }
-                            if (GetComponent<GestionInventario>().items[2].objeto.name == "Pistola")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(2) && GetComponent<GestionInventario>().items[2].objeto.name == "Pistola")
                             {
-                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[2].accion;
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[2].accion;
+								arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[2].accion;
+
                                 tipo_arma = "Pistola";
                                 tiene_pistola = true;
+								tiene_metralleta = false;
                                 armaActualEnMano = 2;
                             }
-                            if (GetComponent<GestionInventario>().items[2].objeto.name == "Ametralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(2) && GetComponent<GestionInventario>().items[2].objeto.name == "Ametralladora")
                             {
                                 BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[2].accion;
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
+								tiene_pistola = false;
                                 armaActualEnMano = 2;
                             }
 
-                            if (GetComponent<GestionInventario>().items[2].objeto.name == "MunicionAmetralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(2) && GetComponent<GestionInventario>().items[2].objeto.name == "MunicionAmetralladora")
                             {
                                 //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
@@ -605,28 +616,32 @@ public class Jugador : MonoBehaviour, IPersonaje
                         Debug.Log("Seleccione item 4:");
                         if (GetComponent<GestionInventario>().items[3] != null)
                         {
-                            if (GetComponent<GestionInventario>().items[3].objeto.name == "Curacion")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(3) && GetComponent<GestionInventario>().items[3].objeto.name == "Curacion")
                             {
                                 Sanacion sanaAux = GetComponent<GestionInventario>().items[3].objeto.GetComponent<Sanacion>();
                                 salud.ModificarVida(sanaAux.vidaExtra, GetComponent<GestionInventario>().items[3].objeto);
                                 Debug.Log("Ha sido curado");
                                 GetComponent<GestionInventario>().desasignarItemACasilla(3);
                             }
-                            if (GetComponent<GestionInventario>().items[3].objeto.name == "Pistola")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(3) && GetComponent<GestionInventario>().items[3].objeto.name == "Pistola")
                             {
-                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
+								arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
                                 tipo_arma = "Pistola";
                                 tiene_pistola = true;
+								tiene_metralleta = false;
                                 armaActualEnMano = 3;
                             }
-                            if (GetComponent<GestionInventario>().items[3].objeto.name == "Ametralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(3) && GetComponent<GestionInventario>().items[3].objeto.name == "Ametralladora")
                             {
-                                BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
+                                //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
+								arma_jugador.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[3].accion;
                                 tipo_arma = "Ametralladora";
                                 tiene_metralleta = true;
+								tiene_pistola = false;
                                 armaActualEnMano = 3;
                             }
-                            if (GetComponent<GestionInventario>().items[3].objeto.name == "MunicionAmetralladora")
+						if (!GetComponent<GestionInventario>().estaVaciaCasilla(3) && GetComponent<GestionInventario>().items[3].objeto.name == "MunicionAmetralladora")
                             {
                                 //BrazoDerechoGirable.GetComponent<SpriteRenderer>().sprite = GetComponent<GestionInventario>().items[0].accion;
                                 //arma_jugador = GameObject.Find("Alessio/Cuerpo/AnteBrazoD/BrazoD_Arma/Arma");
