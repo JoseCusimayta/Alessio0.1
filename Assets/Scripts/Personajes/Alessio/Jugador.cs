@@ -343,6 +343,12 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
     }
 
+	public void	cadenciaDisparo() { 
+		Instantiate(prefab_bala_metralleta,
+			punto_disparo.transform.position,
+			punto_disparo.transform.rotation);          //Creamos la bala de la metralleta con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+	}
+
     public void GestorAnimaciones(float axis_vertical, float axis_horizontal)
     {
         /*_animator.SetBool("Caminar", caminar);                          //Asignamos el valor del estado "caminar" a la animación

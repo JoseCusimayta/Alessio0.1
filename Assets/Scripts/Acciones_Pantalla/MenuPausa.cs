@@ -10,8 +10,10 @@ public class MenuPausa : MonoBehaviour {
     void Start () {
         //ajuste inicial que permite que el panel de pausa solo aparesca cuando se le llame por evento
 		panelPausa.localPosition = Vector3.one * 999;
+		//panelPausa.localPosition = Vector3.zero;
     }
-	
+
+
 	// Update is called once per frame
 	void Update () {
         //al pulsar la tecla escape se activa el menu pausa
