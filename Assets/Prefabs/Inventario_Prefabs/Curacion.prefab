@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4119109936116774}
   - component: {fileID: 212575022400749266}
+  - component: {fileID: 65606738804509874}
   m_Layer: 14
   m_Name: botiquin
   m_TagString: Cura
@@ -66,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329090216292754}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 24.617, y: -14.543, z: 0}
+  m_LocalPosition: {x: 27.42, y: -15.35, z: 0}
   m_LocalScale: {x: 0.27220535, y: 0.27649257, z: 2}
   m_Children:
   - {fileID: 4119109936116774}
@@ -112,6 +113,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329090216292754}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65606738804509874
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1037016436228314}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.020004, y: 21.290007, z: 0.19999999}
+  m_Center: {x: 0.000015258789, y: -0.000015258789, z: 0}
 --- !u!65 &65666892227611226
 BoxCollider:
   m_ObjectHideFlags: 1
