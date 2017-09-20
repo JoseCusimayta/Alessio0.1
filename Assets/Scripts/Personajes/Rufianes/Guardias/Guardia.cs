@@ -59,6 +59,8 @@ public class Guardia : MonoBehaviour {
 	private GameObject PieI;
 	private GameObject Arma;
 
+
+
     #region Funciones de Unity
     // Use this for initialization
     void Start () {
@@ -96,7 +98,7 @@ public class Guardia : MonoBehaviour {
         {
             GestorPatrullaje();                                                 //Patrullamos
         }
-        if (rango_vision.personaje_detectado)                                   //Verificamos si se ha tectado al enemigo en el rango de visión del ataque
+       if (rango_vision.personaje_detectado)                                   //Verificamos si se ha tectado al enemigo en el rango de visión del ataque
         {
             GestorGiros();                                                      //Establecemos la orientación hacía el jugador
             GestorAtaques();                                                    //Establecemos el ataque del Guardia
@@ -104,13 +106,15 @@ public class Guardia : MonoBehaviour {
 		GestorVida();//Actualizamos la vida
 		GestorParpadeo();
 		JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
-    }
+
+	}   
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("BalaPlayer"))                                     //Verificamos si la bala del jugador le ha dado
         {
             salud.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);   //Modificamos la vida, en este caso, la disminuimos
         }
+
     }
     #endregion
 
