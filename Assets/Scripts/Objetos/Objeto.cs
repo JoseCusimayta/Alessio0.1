@@ -59,7 +59,7 @@ public class Objeto : MonoBehaviour {
         DesprenderItem();
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log("Se cruzo");
         if (other.CompareTag("Golpe") && gameObject.layer!=12)                   //Verificamos que el objeto colisionado sea un arma (Tag: Arma)            

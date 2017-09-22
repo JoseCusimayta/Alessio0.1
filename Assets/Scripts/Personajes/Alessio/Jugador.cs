@@ -85,7 +85,7 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     #region Variables de Personaje
     private Recurso[] inventario;	                //Variable de tipo "Arreglo" para almacenar los recursos del personaje
-    private Rigidbody rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
+    private Rigidbody2D rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
     private GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
     public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje
     private int armaActualEnMano=-1;                   //variable que representa el arma actual que posee alessio en su marno, sacada del inventario rapido   
@@ -117,7 +117,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         #region Declarando Variables
         _animator = GameObject.Find("Alessio").GetComponent<Animator>();
         salud = GameObject.Find("Alessio").GetComponent<Health>();
-        rigidbody_Jugador = GameObject.Find("Alessio").GetComponent<Rigidbody>();
+        rigidbody_Jugador = GameObject.Find("Alessio").GetComponent<Rigidbody2D>();
         #endregion
         #region Asignando el cuerpo del Personaje
         cuerpo = GameObject.Find("Alessio/Cuerpo");
@@ -156,7 +156,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         GestorMovimiento();                             //Función para manejar el movimiendo con fisica
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Arma"))                   //Verificamos que el objeto colisionado sea un arma (Tag: Arma)            
         {                                               
@@ -738,7 +738,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     {
         return GetComponent<GestionInventario>().asignarItemACasilla(ga,accion);       //Asignamos un item a la última casilla disponible
     }
-    public void DetectarObjetoArma(Collider arma)
+    public void DetectarObjetoArma(Collider2D arma)
     {
         tiene_metralleta = false;                                               //Desactivamos la variable "tiene_metralleta"
         tiene_pistola = false;                                                  //Desactivamos la variable "tiene_pistola"
@@ -775,13 +775,13 @@ public class Jugador : MonoBehaviour, IPersonaje
         Destroy(arma.gameObject);                                               //Destruimos el arma que está en el suelo
     }
 
-    public void DetectarMuniciones(Collider objeto_municion)
+    public void DetectarMuniciones(Collider2D objeto_municion)
     {
         
         GetComponent<GestionInventario>().recargarMunicion(objeto_municion.gameObject, objeto_municion.GetComponentInChildren<SpriteRenderer>().sprite);
         Destroy(objeto_municion.gameObject);
     }
-    public void DetectarObjetoHiriente(Collider objeto_hiriente)
+    public void DetectarObjetoHiriente(Collider2D objeto_hiriente)
     {
         if (objeto_hiriente.name == "Bala_Rufianes(Clone)")                     //Verificamos que el objeto detectado sea una Bala del enemigo
         {                                                                       
@@ -790,7 +790,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                 objeto_hiriente.gameObject);
         }
     }
-    public void DetectarObjetoCura(Collider objeto_cura)
+    public void DetectarObjetoCura(Collider2D objeto_cura)
     {
         Debug.Log("objeto_cura.name:"+objeto_cura.name);
         objeto_cura.name = objeto_cura.name.Replace("(Clone)",string.Empty);

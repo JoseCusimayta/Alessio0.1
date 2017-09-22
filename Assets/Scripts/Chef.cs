@@ -60,6 +60,7 @@ public class Chef : MonoBehaviour {
 	private GameObject Arma;
 
 	public GameObject _cuchillo;
+	public GameObject copiaCuchillo;
 	private Animator _animacion;
 	#region Funciones de Unity
 	// Use this for initialization
@@ -90,6 +91,7 @@ public class Chef : MonoBehaviour {
 		}
 		salud = GetComponent<Health>();                                     //Guardamos el script de vida en una variable
 		rango_vision = GetComponentInChildren<CampoEnemigo>();              //Guardamos el script del campo de visión, como CampoEnemigo
+		copiaCuchillo=null;
 	}
 
 	// Update is called once per frame
@@ -106,9 +108,9 @@ public class Chef : MonoBehaviour {
 		GestorVida();//Actualizamos la vida
 //		GestorParpadeo();
 		JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
-		LanzaCuchillosElbrayan();
+		//LanzaCuchillosElbrayan();
 	}   
-	void OnTriggerEnter(Collider other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.CompareTag("BalaPlayer"))                                     //Verificamos si la bala del jugador le ha dado
 		{
@@ -117,15 +119,18 @@ public class Chef : MonoBehaviour {
 		if (other.CompareTag("Player")) {
 			Debug.Log("Alession entro al area");
 			_animacion.SetTrigger ("Cuchillo");
+			Invoke ("LanzaCuchillosElbrayan",2);
 		}
 
 	}
 
-	void OnTriggerStay(Collider other)
+	void OnTriggerStay2D(Collider2D other)
 	{
 		if (other.CompareTag("Player")) {
 			Debug.Log("Alession entro al area");
 			_animacion.SetTrigger ("Cuchillo");
+			Invoke ("LanzaCuchillosElbrayan",2);
+
 		}
 
 	}
@@ -325,13 +330,27 @@ public class Chef : MonoBehaviour {
 	void LanzaCuchillosElbrayan(){
 
 
-		//GetComponent<Collider>().isTrigger;
+		//GetComponent<Collider2D>().isTrigger;
 		if (_animacion.GetBool("Cuchillo")) {
 			Debug.Log ("Lanzar");
-			GameObject copiaCuchillo =  (GameObject) Instantiate (_cuchillo,transform.position, transform.rotation);
-			copiaCuchillo.GetComponent<Rigidbody> ().velocity = Vector3.left * 8;
-			copiaCuchillo.transform.Rotate (0, -180, 0);
+			if (copiaCuchillo==null) {
+				copiaCuchillo=(GameObject) Instantiate (_cuchillo,transform.position, transform.rotation);
+				copiaCuchillo.GetComponent<Rigidbody2D> ().velocity = Vector3.left * 8;
+				copiaCuchillo.transform.Rotate (0, -180, 0);
+			}
+			Invoke ("DestruirCuchillos", 3);
+//			GameObject copiaCuchillo =  (GameObject) Instantiate (_cuchillo,transform.position, transform.rotation);
+//			copiaCuchillo.GetComponent<Rigidbody2D> ().velocity = Vector3.left * 8;
+//			copiaCuchillo.transform.Rotate (0, -180, 0);
+
+
 		}
 
 	}
+
+	void DestruirCuchillos(){
+		copiaCuchillo = null;
+     }
+
+
 }

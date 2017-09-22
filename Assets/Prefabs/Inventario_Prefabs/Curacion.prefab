@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4119109936116774}
   - component: {fileID: 212575022400749266}
-  - component: {fileID: 65606738804509874}
+  - component: {fileID: 61127534734169090}
   m_Layer: 14
   m_Name: botiquin
   m_TagString: Cura
@@ -37,9 +37,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4456705216476232}
   - component: {fileID: 33262104194466454}
-  - component: {fileID: 65666892227611226}
   - component: {fileID: 23801065933043740}
   - component: {fileID: 114119628284785184}
+  - component: {fileID: 61695865403176002}
   m_Layer: 14
   m_Name: Curacion
   m_TagString: Cura
@@ -113,30 +113,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329090216292754}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65606738804509874
-BoxCollider:
+--- !u!61 &61127534734169090
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1037016436228314}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 18.02, y: 21.289999}
+    newSize: {x: 18.02, y: 21.289999}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 18.020004, y: 21.290007, z: 0.19999999}
-  m_Center: {x: 0.000015258789, y: -0.000015258789, z: 0}
---- !u!65 &65666892227611226
-BoxCollider:
+  m_Size: {x: 18.02, y: 21.289999}
+  m_EdgeRadius: 0
+--- !u!61 &61695865403176002
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329090216292754}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.0000002, y: 1.0000004}
+  m_EdgeRadius: 0
 --- !u!114 &114119628284785184
 MonoBehaviour:
   m_ObjectHideFlags: 1

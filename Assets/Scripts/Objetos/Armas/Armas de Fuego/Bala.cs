@@ -9,14 +9,14 @@ public class Bala : MonoBehaviour
     public float velocidad_bala = 15f;        //La velocidad con la que se moverá la bala
     public string Target_Tag = "Enemigo";    // Se encarga de marcar a que tipo de elemento le causara daño la bala
     public GameObject Prefab_Explosion;     //Permite generar una explosion al colisionar
-    private Rigidbody _rigidBody;           //Variable que permite todas las funciones fisicas para esta clase
+    private Rigidbody2D _rigidBody;           //Variable que permite todas las funciones fisicas para esta clase
 	public string tipoArma;					//variable para determinar que tipo de arna se usa.
     #endregion
 
     #region Funciones de Unity
     void Start()
     {
-        _rigidBody = GetComponent<Rigidbody>();
+        _rigidBody = GetComponent<Rigidbody2D>();
 		switch( tipoArma){
 		case "Pistola":
 			velocidad_bala = 15f;
@@ -32,7 +32,7 @@ public class Bala : MonoBehaviour
     void Update()
     {
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag(Target_Tag))
         {

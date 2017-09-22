@@ -51,12 +51,12 @@ public class GestionarAnimacionGolpe : MonoBehaviour {
         if (_spriteRenderer.flipX)
         {
             Debug.Log("Se activa el hitbox1");
-            leftHitbox.GetComponent<BoxCollider>().enabled = true;
+            leftHitbox.GetComponent<BoxCollider2D>().enabled = true;
         }
         else
         {
             //Debug.Log("Se activa el hitbox2");
-            rightHitbox.GetComponent<BoxCollider>().enabled = true;
+            rightHitbox.GetComponent<BoxCollider2D>().enabled = true;
             //rightHitbox.GetComponent<BoxCollider>().enabled = false;
         }
     }
@@ -67,12 +67,12 @@ public class GestionarAnimacionGolpe : MonoBehaviour {
         if (_spriteRenderer.flipX)
         {
             //Debug.Log("Se desaactiva el hitbox1");
-            leftHitbox.GetComponent<BoxCollider>().enabled = false;
+            leftHitbox.GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {
             //Debug.Log("Se desaactiva el hitbox2");
-            rightHitbox.GetComponent<BoxCollider>().enabled = false;
+            rightHitbox.GetComponent<BoxCollider2D>().enabled = false;
         }
 
     }
@@ -94,13 +94,13 @@ public class GestionarAnimacionGolpe : MonoBehaviour {
         //Debug.Log("Se amplia rango ataque");
         if (_spriteRenderer.flipX == false)
         {
-            rightHitbox.GetComponent<BoxCollider>().size = new Vector2(1.641296f, 1);
-            rightHitbox.GetComponent<BoxCollider>().center = new Vector2(0.3206476f, 0);
+            rightHitbox.GetComponent<BoxCollider2D>().size = new Vector2(1.641296f, 1);
+            rightHitbox.GetComponent<BoxCollider2D>().offset = new Vector2(0.3206476f, 0);
         }
         else
         {
-            leftHitbox.GetComponent<BoxCollider>().size = new Vector2(1.536815f, 0f);
-            leftHitbox.GetComponent<BoxCollider>().center = new Vector2(-0.2684076f, 1f);
+            leftHitbox.GetComponent<BoxCollider2D>().size = new Vector2(1.536815f, 0f);
+            leftHitbox.GetComponent<BoxCollider2D>().offset = new Vector2(-0.2684076f, 1f);
         }
 
     }

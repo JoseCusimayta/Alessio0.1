@@ -108,7 +108,7 @@ public class Guardia : MonoBehaviour {
 		JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
 
 	}   
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("BalaPlayer"))                                     //Verificamos si la bala del jugador le ha dado
         {
@@ -232,7 +232,7 @@ public class Guardia : MonoBehaviour {
 		//Debug.Log ("Ella no te ama :'v 2 ");
 		if (vida_actual < vida_anterior)                                    //Verificamos que haya un cambio en la vida
 		{
-			Debug.Log ("Ella no te ama :'v 3 ");
+			//Debug.Log ("Ella no te ama :'v 3 ");
 			gameObject.layer = 12;                                          //Activamos la capa de invulnerabilidad
 //			puede_controlar = false;                                        //Desactivmos el control del jugador
 //			retrocediendo = true;                                           //Activamos la variable "retrocediendo" para la animación

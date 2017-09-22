@@ -25,7 +25,7 @@ public class CampoEnemigo : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))                                 //Verificamos si el personaje se acerca
         {
@@ -41,7 +41,7 @@ public class CampoEnemigo : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
+	void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))                                 //Verificamos si el personaje se aleja
         {
