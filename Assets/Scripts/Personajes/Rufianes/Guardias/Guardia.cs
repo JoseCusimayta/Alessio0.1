@@ -152,7 +152,7 @@ public class Guardia : MonoBehaviour {
     public void GestorGiros()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Transform>() ;   //Guardamos la posición actual del jugador
-		Debug.Log("Posicion actual del jugador: "+player);
+		//Debug.Log("Posicion actual del jugador: "+player);
         if (player)
         {
             if (player.position.x > transform.position.x)                   //Verificamos en donde esta el jugador

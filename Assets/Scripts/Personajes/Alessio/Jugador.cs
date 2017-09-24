@@ -376,7 +376,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         float result = Mathf.Lerp(start, end, Time.deltaTime * 5);      //Modificamos el valor inicial gradualmente hasta llegar al valor final
         _animator.SetFloat("Velocidad", result);                        //Asignamos el valor de "Velocidad" para definir si está corriendo o caminando o espera
 		_animator.SetBool("Pistola", tiene_pistola);           				    //Asignamos el valor de "tiene_pistola" a la animación
-		Debug.Log(tiene_pistola);
+		//Debug.Log(tiene_pistola);
         _animator.SetBool("Metralleta", tiene_metralleta);               //Asignamos el valor de "tiene_pistola" a la animación
     }
 
