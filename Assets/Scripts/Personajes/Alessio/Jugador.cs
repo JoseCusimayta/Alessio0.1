@@ -783,10 +783,18 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     public void DetectarObjetoHiriente(Collider2D objeto_hiriente)
     {
-        if (objeto_hiriente.name == "Bala_Rufianes(Clone)")                     //Verificamos que el objeto detectado sea una Bala del enemigo
+        objeto_hiriente.name= objeto_hiriente.name.Replace("(Clone)", string.Empty);
+        if (objeto_hiriente.name == "Bala_Rufianes")                     //Verificamos que el objeto detectado sea una Bala del enemigo
         {                                                                       
             salud.ModificarVida(                                                //Activamos la acción de modificar la vida del personaje
                 objeto_hiriente.GetComponent<Bala>().danio_bala, 
+                objeto_hiriente.gameObject);
+        }
+        if (objeto_hiriente.name == "cuchillo")                     //Verificamos que el objeto detectado sea una Bala del enemigo
+        {
+            Debug.Log("Me metieron cuchillo");
+            salud.ModificarVida(                                                //Activamos la acción de modificar la vida del personaje
+                objeto_hiriente.GetComponent<Cuchillo>().danio_cuchillo,
                 objeto_hiriente.gameObject);
         }
     }

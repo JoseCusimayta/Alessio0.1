@@ -181,7 +181,7 @@ public class Guardia : MonoBehaviour {
         {
             if (rango_vision.personaje_detectado && !persiguiendo)               //Verificamos si el personaje está cerca
             {
-                Debug.Log("sds");
+                //Debug.Log("sds");
                 Instantiate(Prefab_Bala,
                     punto_disparo.transform.position,
                     punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio

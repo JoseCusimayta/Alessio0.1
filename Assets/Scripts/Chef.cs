@@ -64,9 +64,11 @@ public class Chef : MonoBehaviour {
 	private Animator _animacion;
 
     private bool activarCuchillo;
-	#region Funciones de Unity
-	// Use this for initialization
-	void Start () {
+    private bool activarAnimacionCuchillo;
+
+    #region Funciones de Unity
+    // Use this for initialization
+    void Start () {
 
 		#region Asignando el cuerpo del Personaje
 		Debug.Log("Nombre del rufian:"+this.gameObject.name);
@@ -94,7 +96,7 @@ public class Chef : MonoBehaviour {
 		salud = GetComponent<Health>();                                     //Guardamos el script de vida en una variable
 		rango_vision = GetComponentInChildren<CampoEnemigo>();              //Guardamos el script del campo de visión, como CampoEnemigo
 		copiaCuchillo=null;
-        activarCuchillo = true;
+        activarCuchillo = false;
     }
 
 	// Update is called once per frame
@@ -111,6 +113,7 @@ public class Chef : MonoBehaviour {
 		GestorVida();//Actualizamos la vida
 //		GestorParpadeo();
 		JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
+        //si no esta activado no lanzara cuchilo
         if (activarCuchillo)
         {
            LanzaCuchillosElbrayan();
@@ -123,20 +126,22 @@ public class Chef : MonoBehaviour {
 		{
 			salud.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);   //Modificamos la vida, en este caso, la disminuimos
 		}
-		if (other.CompareTag("Player")) {
-			//Debug.Log("Alession entro al area");
-			_animacion.SetTrigger ("Cuchillo");
-			Invoke ("LanzaCuchillosElbrayan",2);
+		if (other.CompareTag("Player") && !activarCuchillo) {
+            Debug.Log("Alession entro al area");
+            activarCuchillo = true;
+            //_animacion.SetTrigger ("Cuchillo");
+			Invoke ("LanzaCuchillosElbrayan",3);
 		}
 
 	}
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.CompareTag("Player")) {
-			//Debug.Log("Alession entro al area");
-			_animacion.SetTrigger ("Cuchillo");
-			Invoke ("LanzaCuchillosElbrayan",2);
+		if (other.CompareTag("Player") && !activarCuchillo) {
+            Debug.Log("Alession entro al area");
+            activarCuchillo = true;
+            //_animacion.SetTrigger ("Cuchillo");
+			Invoke ("LanzaCuchillosElbrayan",3);
 
 		}
 
@@ -338,33 +343,45 @@ public class Chef : MonoBehaviour {
 
 
 		//GetComponent<Collider2D>().isTrigger;
-		if (_animacion.GetBool("Cuchillo")) {
-            activarCuchillo = false;
-			Debug.Log ("Lanzar");
-			if (copiaCuchillo==null) {
-				copiaCuchillo=(GameObject) Instantiate (_cuchillo,transform.position, transform.rotation);
-				copiaCuchillo.GetComponent<Rigidbody2D> ().velocity = Vector3.left * 8;
-				copiaCuchillo.transform.Rotate (0, -180, 0);
+		if (activarCuchillo) {
+
+            Debug.Log("copiaCuchillo=" + copiaCuchillo);
+            if (copiaCuchillo == null)
+            {
+                activarAnimacionCuchillo = true;
+                _animacion.SetBool("activaCuchillo", activarAnimacionCuchillo);
+                _animacion.SetTrigger("Cuchillo");
+                Debug.Log("Se activa trigger de animacion");
+                copiaCuchillo = (GameObject)Instantiate(_cuchillo, transform.position, transform.rotation);
+                copiaCuchillo.GetComponent<Rigidbody2D>().velocity = Vector3.left * 10;
+                copiaCuchillo.transform.Rotate(0, -180, 0);
 
                 Debug.Log("Se creo cuchillo");
+                activarCuchillo = false;
                 Invoke("DestruirCuchillos", 3);
+
             }
-            
-            //			Invoke ("DestruirCuchillos", 3);
-            //			GameObject copiaCuchillo =  (GameObject) Instantiate (_cuchillo,transform.position, transform.rotation);
-            //			copiaCuchillo.GetComponent<Rigidbody2D> ().velocity = Vector3.left * 8;
-            //			copiaCuchillo.transform.Rotate (0, -180, 0);
+            else
+            {
+                Debug.Log("CUchillo creado, no entre");
+                
+                activarAnimacionCuchillo = false;
+                _animacion.SetBool("activaCuchillo", activarAnimacionCuchillo);
 
-
+            }
+           
         }
 
 	}
 
 	void DestruirCuchillos(){
         Debug.Log("Cuchillo destruido");
-        activarCuchillo = true;
-		copiaCuchillo = null;
-     }
+        //activarCuchillo = false;
+        //cuchilloActivo = false;
+        copiaCuchillo = null;
+        activarAnimacionCuchillo = false;
+        _animacion.SetBool("activaCuchillo", activarAnimacionCuchillo);
+    }
 
 
 }
