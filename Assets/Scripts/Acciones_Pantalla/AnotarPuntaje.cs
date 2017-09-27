@@ -38,6 +38,10 @@ public class AnotarPuntaje : MonoBehaviour
 			{
 				GetComponent<Chef>().Morir();
 			}
+			if (GetComponent<Chef>())
+			{
+				GetComponent<Luissini>().Morir();
+			}
             //////////////////////
             //this.enabled = false;
 
