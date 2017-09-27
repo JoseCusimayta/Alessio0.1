@@ -34,6 +34,10 @@ public class AnotarPuntaje : MonoBehaviour
             {
                 GetComponent<Guardia>().Morir();
             }
+			if (GetComponent<Chef>())
+			{
+				GetComponent<Chef>().Morir();
+			}
             //////////////////////
             //this.enabled = false;
 

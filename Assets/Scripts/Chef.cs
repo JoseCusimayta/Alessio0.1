@@ -63,7 +63,7 @@ public class Chef : MonoBehaviour {
 	public GameObject copiaCuchillo;
 	private Animator _animacion;
 
-    private bool activarCuchillo;
+    public bool activarCuchillo;
     private bool activarAnimacionCuchillo;
 
     #region Funciones de Unity
@@ -118,6 +118,7 @@ public class Chef : MonoBehaviour {
         {
            LanzaCuchillosElbrayan();
         }
+
 
     }   
 	void OnTriggerEnter2D(Collider2D other)
@@ -339,7 +340,7 @@ public class Chef : MonoBehaviour {
 			Arma.GetComponent<SpriteRenderer>().color = newColor;
 		}
 	}
-	void LanzaCuchillosElbrayan(){
+	public void LanzaCuchillosElbrayan(){
 
 
 		//GetComponent<Collider2D>().isTrigger;
