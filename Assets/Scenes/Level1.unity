@@ -391,7 +391,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1472687826772290, guid: e678125a5beb9c34493b8d28d763327b, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e678125a5beb9c34493b8d28d763327b, type: 2}
@@ -6670,7 +6670,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1783151241880432, guid: b3aef6a2d98d971468bd1f68a3f422d9, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1783151241880432, guid: b3aef6a2d98d971468bd1f68a3f422d9, type: 2}
       propertyPath: m_Name
@@ -7488,11 +7488,13 @@ MonoBehaviour:
   vida_maxima: 0
   vida_anterior: 0
   nombreRufian: 
-  lista_coordenadas: []
+  lista_coordenadas:
+  - {fileID: 1026704254}
+  - {fileID: 2095712802}
   coordenada_objetivo: {fileID: 0}
   indice_coordenada: 0
   velocidad_normal: 5
-  punto_disparo: {fileID: 0}
+  punto_disparo: {fileID: 814808370}
   radio_Alcance: 0
   persecucion: 0
   persiguiendo: 0

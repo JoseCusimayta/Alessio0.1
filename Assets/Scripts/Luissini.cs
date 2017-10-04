@@ -30,7 +30,7 @@ public class Luissini : MonoBehaviour {
 	public float intervalo_ataque;                  //Variable para determinar la cantidad de tiempo de retroceso antes de poder volver a atacar
 	public float reactivacion_ataque = 2;           //Variable para manejar la velocidad de ataque
 	public bool jugador_detectado;                  //Variable para determinar si se ha detectado un jugador
-	public CampoEnemigo rango_vision;               //Variable para guardar los datos que tenga el Campo de Visión
+	public CampoEnemigoJefe rango_vision;               //Variable para guardar los datos que tenga el Campo de Visión
 	public bool esta_atacando;                      //Variable para saber si el personaje está atacando
 	public Transform player;                        //Variable para guardar la posición de jugador, para saber hacia donde disparar
 	#endregion
@@ -96,7 +96,7 @@ public class Luissini : MonoBehaviour {
 			coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
 		}
 		salud = GetComponent<Health>();                                     //Guardamos el script de vida en una variable
-		rango_vision = GetComponentInChildren<CampoEnemigo>();              //Guardamos el script del campo de visión, como CampoEnemigo
+		rango_vision = GetComponentInChildren<CampoEnemigoJefe>();              //Guardamos el script del campo de visión, como CampoEnemigo
 	}
 
 	// Update is called once per frame
