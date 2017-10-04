@@ -26,7 +26,10 @@ public class CampoEnemigoJefe : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		LlamarCuchillosElbrayan ();
+		if (Script_luissini.SegundaFuncion) {
+			LanzaCuchilloJefe ();
+		}
+
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -44,12 +47,15 @@ public class CampoEnemigoJefe : MonoBehaviour
 			}
 		}
 
-		if (other.CompareTag("Player") && !Script_luissini.activarCuchillo) {
-			Debug.Log("Alession entro al area");
-			Script_luissini.activarCuchillo = true;
-			//_animacion.SetTrigger ("Cuchillo");
-			Invoke ("LanzaCuchillosElbrayan",3);
+		if (Script_luissini.SegundaFuncion) {
+			if (other.CompareTag("Player") && !Script_luissini.activarCuchillo) {
+				Debug.Log("Alession entro al area");
+				Script_luissini.activarCuchillo = true;
+				//_animacion.SetTrigger ("Cuchillo");
+				Invoke ("LanzaCuchilloJefe",3);
+			}
 		}
+
 	}
 
 	void OnTriggerExit2D(Collider2D other)
@@ -71,19 +77,22 @@ public class CampoEnemigoJefe : MonoBehaviour
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.CompareTag("Player") && !Script_luissini.activarCuchillo) {
-			Debug.Log("Alession entro al area");
-			Script_luissini.activarCuchillo = true;
-			//_animacion.SetTrigger ("Cuchillo");
-			Invoke ("LlamarCuchillosElbrayan",3);
+		if (Script_luissini.SegundaFuncion) {
+			if (other.CompareTag("Player") && !Script_luissini.activarCuchillo) {
+				Debug.Log("Alession entro al area");
+				Script_luissini.activarCuchillo = true;
+				//_animacion.SetTrigger ("Cuchillo");
+				Invoke ("LanzaCuchilloJefe",3);
+
+			}
 
 		}
 
 	}
 
-	void LlamarCuchillosElbrayan(){
+	void LanzaCuchilloJefe(){
 
-		Script_luissini.LanzaCuchillosElbrayan ();
+		Script_luissini.LanzaCuchilloJefe ();
 
 	}
 }

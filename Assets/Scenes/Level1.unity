@@ -7451,7 +7451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba23266bc6f0ede4aa05a7a4c851407b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vidaActual: 100
+  _vidaActual: 60
   _vidaMaxima: 100
   _ultimoAtacante: {fileID: 0}
 --- !u!95 &1477830132

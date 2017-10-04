@@ -60,7 +60,7 @@ public class Luissini : MonoBehaviour {
 	private GameObject Arma;
 	public bool activarCuchillo; 
 	public GameObject _cuchillo;
-	private bool SegundaFuncion;
+	public bool SegundaFuncion;
 	public GameObject copiaCuchillo;
 
 	private Animator _animacion;
@@ -108,7 +108,17 @@ public class Luissini : MonoBehaviour {
 		if (rango_vision.personaje_detectado)                                   //Verificamos si se ha tectado al enemigo en el rango de visión del ataque
 		{
 			GestorGiros();                                                      //Establecemos la orientación hacía el jugador
-			GestorAtaques();                                                    //Establecemos el ataque del Guardia
+			if(SegundaFuncion){
+				//Debug.Log ("Segunda funcion activada en update");
+				//si no esta activado no lanzara cuchilo
+				if (activarCuchillo)
+				{
+					LanzaCuchilloJefe();
+				}
+			}
+			if (SegundaFuncion == false) {
+				GestorAtaques ();
+			}                                                   //Establecemos el ataque del Guardia
 		}
 		GestorVida();//Actualizamos la vida
 		GestorParpadeo();
@@ -123,13 +133,29 @@ public class Luissini : MonoBehaviour {
 		}
 
 		if (SegundaFuncion == true) {
+			Debug.Log ("Segunda funcion activada en OnTriggerEnter2D");
 			if (other.CompareTag("Player") && !activarCuchillo) {
 				Debug.Log("Alession entro al area");
 				activarCuchillo = true;
 				//_animacion.SetTrigger ("Cuchillo");
-				Invoke ("LanzaCuchillosElbrayan",3);
+				Invoke ("LanzaCuchilloJefe",3);
 			}
 		}
+
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (SegundaFuncion == true) {
+			if (other.CompareTag("Player") && !activarCuchillo) {
+				Debug.Log("Alession entro al area");
+				activarCuchillo = true;
+				//_animacion.SetTrigger ("Cuchillo");
+				Invoke ("LanzaCuchilloJefe",3);
+
+			}
+		}
+
 
 	}
 	#endregion
@@ -248,7 +274,7 @@ public class Luissini : MonoBehaviour {
 		//Debug.Log ("Ella no te ama :'v 2 ");
 		if (vida_actual < vida_anterior)                                    //Verificamos que haya un cambio en la vida
 		{
-			//Debug.Log ("Ella no te ama :'v 3 ");
+			Debug.Log ("Me hizo daño, ahora tengo "+vida_actual);
 			gameObject.layer = 12;                                          //Activamos la capa de invulnerabilidad
 			//			puede_controlar = false;                                        //Desactivmos el control del jugador
 			//			retrocediendo = true;                                           //Activamos la variable "retrocediendo" para la animación
@@ -266,6 +292,7 @@ public class Luissini : MonoBehaviour {
 
 			if (vida_actual <= salud._vidaMaxima/2) {
 				SegundaFuncion = true;
+				Debug.Log ("Segunda funcion activada!!");
 			}
 		}
 		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
@@ -328,31 +355,31 @@ public class Luissini : MonoBehaviour {
 		}
 	}
 
-	public void LanzaCuchillosElbrayan(){
+	public void LanzaCuchilloJefe(){
 
 
 		//GetComponent<Collider2D>().isTrigger;
 		if (activarCuchillo) {
 
-			Debug.Log("copiaCuchillo=" + copiaCuchillo);
+			//Debug.Log("copiaCuchillo=" + copiaCuchillo);
 			if (copiaCuchillo == null)
 			{
 				activarAnimacionCuchillo = true;
 				_animacion.SetBool("activaCuchillo", activarAnimacionCuchillo);
 				_animacion.SetTrigger("Cuchillo");
-				Debug.Log("Se activa trigger de animacion");
+				//Debug.Log("Se activa trigger de animacion");
 				copiaCuchillo = (GameObject)Instantiate(_cuchillo, transform.position, transform.rotation);
 				copiaCuchillo.GetComponent<Rigidbody2D>().velocity = Vector3.left * 10;
 				copiaCuchillo.transform.Rotate(0, -180, 0);
 
-				Debug.Log("Se creo cuchillo");
+				//Debug.Log("Se creo cuchillo");
 				activarCuchillo = false;
 				Invoke("DestruirCuchillos", 3);
 
 			}
 			else
 			{
-				Debug.Log("CUchillo creado, no entre");
+				//Debug.Log("CUchillo creado, no entre");
 
 				activarAnimacionCuchillo = false;
 				_animacion.SetBool("activaCuchillo", activarAnimacionCuchillo);
@@ -361,5 +388,14 @@ public class Luissini : MonoBehaviour {
 
 		}
 
+	}
+
+	public void DestruirCuchillos(){
+		Debug.Log("Cuchillo destruido");
+		//activarCuchillo = false;
+		//cuchilloActivo = false;
+		copiaCuchillo = null;
+		activarAnimacionCuchillo = false;
+		_animacion.SetBool("activaCuchillo", activarAnimacionCuchillo);
 	}
 }
