@@ -25,6 +25,8 @@ public class GestionPuntuacion : MonoBehaviour {
         textoPuntuacion.text = "Puntaje: " + numeroPuntuacion;
            if(numeroPuntuacion> numeroPuntuacionAux)
             {
+			Debug.Log ("numeroPuntuacion="+numeroPuntuacion);
+			Debug.Log ("numeroPuntuacionAux="+numeroPuntuacionAux);
                 if (numeroPuntuacion % 100 == 0 && numeroPuntuacion > 0)
                 {
                     contadorBarraCombo = numeroPuntuacion;

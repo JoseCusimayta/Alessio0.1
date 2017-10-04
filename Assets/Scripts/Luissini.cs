@@ -294,6 +294,12 @@ public class Luissini : MonoBehaviour {
 				SegundaFuncion = true;
 				Debug.Log ("Segunda funcion activada!!");
 			}
+
+			if (vida_actual <=0) {
+				//SegundaFuncion = true;
+				Debug.Log ("Muere lusini!!");
+				Destroy (gameObject);
+			}
 		}
 		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
 	}

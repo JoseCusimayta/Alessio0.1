@@ -280,6 +280,11 @@ public class Chef : MonoBehaviour {
 			////				else retroceder_derecha = true;                             //Le decimos de dónde nos está atacando para saber de donde retroceder
 			//			}
 			Invoke("RestaurarCapa", 0.5f);                                  //Reactivamos la capa del jugador en 0.5 segundos
+			if (vida_actual <=0) {
+				//SegundaFuncion = true;
+				Debug.Log ("Muere lusini!!");
+				Destroy (gameObject);
+			}
 		}
 		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
 	}

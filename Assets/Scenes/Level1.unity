@@ -7235,7 +7235,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.3359857
+  orthographic size: 8.372364
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7515,6 +7515,7 @@ MonoBehaviour:
   BrazoDerechoGirable: {fileID: 0}
   activarCuchillo: 0
   _cuchillo: {fileID: 1795674983335862, guid: d1df0c774d94a834095b02812f62e3da, type: 2}
+  SegundaFuncion: 0
   copiaCuchillo: {fileID: 0}
 --- !u!1 &1493388290
 GameObject:
