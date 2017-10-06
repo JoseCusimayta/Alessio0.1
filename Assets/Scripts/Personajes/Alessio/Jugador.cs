@@ -148,7 +148,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         GestorRetroceso();                                      //Función para gestionar el retroceso del jugador
         GestorParpadeo();                                       //Función para gestionar el parpadeo del personaje
         seleccionarItem();                                      //Función que permite el intercambio los items que se encuentran en el inventario rapido
-       
+		Recargar();
     }
 
     void FixedUpdate()
@@ -878,4 +878,13 @@ public class Jugador : MonoBehaviour, IPersonaje
     {
     }
     #endregion
+
+	void Recargar(){
+
+		if (Input.GetKeyDown(KeyCode.R)) {
+			Debug.Log ("Recargando");
+		}
+	
+	}
+
 }
