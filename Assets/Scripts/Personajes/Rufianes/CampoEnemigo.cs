@@ -24,7 +24,10 @@ public class CampoEnemigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		LlamarCuchillosElbrayan ();
+		if (Script_Chef != null) {
+			LlamarCuchillosElbrayan ();
+		}
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -41,13 +44,15 @@ public class CampoEnemigo : MonoBehaviour
                 Script_Guardia.velocidad_normal = velocidad_asignada;       //Asignamos la velocidad cambiada al objeto Enemigo
             }
         }
-
-		if (other.CompareTag("Player") && !Script_Chef.activarCuchillo) {
-			Debug.Log("Alession entro al area");
-			Script_Chef.activarCuchillo = true;
-			//_animacion.SetTrigger ("Cuchillo");
-			Invoke ("LanzaCuchillosElbrayan",3);
+		if (Script_Chef != null ) {
+			if (other.CompareTag("Player") && !Script_Chef.activarCuchillo ) {
+				Debug.Log("Alession entro al area");
+				Script_Chef.activarCuchillo = true;
+				//_animacion.SetTrigger ("Cuchillo");
+				Invoke ("LanzaCuchillosElbrayan",3);
+			}
 		}
+
     }
 
 	void OnTriggerExit2D(Collider2D other)
@@ -69,12 +74,14 @@ public class CampoEnemigo : MonoBehaviour
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.CompareTag("Player") && !Script_Chef.activarCuchillo) {
-			Debug.Log("Alession entro al area");
-			Script_Chef.activarCuchillo = true;
-			//_animacion.SetTrigger ("Cuchillo");
-			Invoke ("LlamarCuchillosElbrayan",3);
-
+		if (Script_Chef != null) {
+			if (other.CompareTag("Player") && !Script_Chef.activarCuchillo) {
+				Debug.Log("Alession entro al area");
+				Script_Chef.activarCuchillo = true;
+				//_animacion.SetTrigger ("Cuchillo");
+				Invoke ("LlamarCuchillosElbrayan",3);
+				Debug.Log (Script_Chef);
+			}
 		}
 
 	}
