@@ -121,7 +121,11 @@ public class Luissini : MonoBehaviour {
 			}                                                   //Establecemos el ataque del Guardia
 		}
 		GestorVida();//Actualizamos la vida
-		GestorParpadeo();
+		if (gameObject!=null) {
+			
+			GestorParpadeo();
+		}
+
 		JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
 
 	}   
@@ -311,7 +315,7 @@ public class Luissini : MonoBehaviour {
 	void GestorParpadeo()
 	{
 		//Debug.Log ("Ella no te ama :'v");
-		if (gameObject.layer == 12)                                         //Verificamos en que capa está (Layer 12: Capa de invulnerabilidad)
+		if (gameObject.layer == 12 &&cabeza!=null)                                         //Verificamos en que capa está (Layer 12: Capa de invulnerabilidad)
 		{
 			Color newColor = cabeza.GetComponent<SpriteRenderer>().color;   //Creamos una variable newColor para manejar la transparencia (alpha)
 			newColor.a = Mathf.Lerp(newColor.a,
@@ -340,7 +344,7 @@ public class Luissini : MonoBehaviour {
 			}
 
 		}
-		if (gameObject.layer != 12)                                         //Verificamos en que capa está (Si no está  invulnerable)
+		if (gameObject.layer != 12 && cabeza!=null)                                         //Verificamos en que capa está (Si no está  invulnerable)
 		{
 			Color newColor = cabeza.GetComponent<SpriteRenderer>().color;   //Creamos una variable newColor para manejar la transparencia (alpha)
 			newColor.a = 1;//Le decimos que se haga visible
