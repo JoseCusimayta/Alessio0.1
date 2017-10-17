@@ -88,7 +88,11 @@ public class Jugador : MonoBehaviour, IPersonaje
     private Rigidbody2D rigidbody_Jugador;             //Variable para guardar el RigidBody del personaje
     private GameObject Prefab_Explosion;             //Variable para guardar el prefab de la explosión
     public bool puede_controlar = true;             //Variable para determinar si el jugador puede controlar al personaje
-    private int armaActualEnMano=-1;                   //variable que representa el arma actual que posee alessio en su marno, sacada del inventario rapido   
+    private int armaActualEnMano=-1;                   //variable que representa el arma actual que posee alessio en su marno, sacada del inventario rapido  
+    private bool recargaPistola;
+    private bool recargaMetra;
+    private int contaDisparoPistola;
+    private int contaDisparoMetraca; 
     #region Partes del Cuerpo
     private GameObject cabeza;                       //Variable para guardar el GameObject de la cabeza del jugador
     private GameObject cuerpo;                       //Variable para guardar el GameObject del cuerpo del jugador
@@ -148,7 +152,7 @@ public class Jugador : MonoBehaviour, IPersonaje
         GestorRetroceso();                                      //Función para gestionar el retroceso del jugador
         GestorParpadeo();                                       //Función para gestionar el parpadeo del personaje
         seleccionarItem();                                      //Función que permite el intercambio los items que se encuentran en el inventario rapido
-		Recargar();
+        RecargarArma();
     }
 
     void FixedUpdate()
@@ -275,6 +279,38 @@ public class Jugador : MonoBehaviour, IPersonaje
         }
     }
 
+    public void RecargarArma()
+    {
+        if (tiene_pistola && tipo_arma == "Pistola")                                  //Verificamos si el personaje tiene pistola
+        {
+            if (recargaPistola)
+            {
+
+                if (Input.GetKeyUp(KeyCode.R))
+                {
+                    recargaPistola = false;
+                    contaDisparoPistola = 0;
+                    Debug.Log("Recarga de pistola lista!!");
+                }
+            }
+        }
+
+        if (tiene_metralleta && tipo_arma == "Ametralladora")
+        {
+            if (recargaMetra)
+            {
+                if (Input.GetKeyUp(KeyCode.R))
+                {
+                    recargaPistola = false;
+                    Debug.Log("Recarga de metraca lista!!");
+                }
+            }
+        }
+
+
+           
+    }
+
     public void GestorAtaques()
     {
         if (esta_atacando)                                      //Verificamos si el personaje está atacando
@@ -292,28 +328,51 @@ public class Jugador : MonoBehaviour, IPersonaje
             Debug.Log("Tipo de arma ahora: " + tipo_arma+ " y tiene_pistola=" + tiene_pistola);
             if (tiene_pistola && tipo_arma=="Pistola")                                  //Verificamos si el personaje tiene pistola
             {
-
+               
                 if (armaActualEnMano > -1)
                 {
                     Debug.Log("Disparando con Tipo de arma ahora: " + tipo_arma + " y tiene_pistola=" + tiene_pistola);
                     //verificar cuantas balas quedan
                     int balasRestantes = GetComponent<GestionInventario>().items[armaActualEnMano].objeto.GetComponent<Pistola>().cantidadBalas;
-                    if (balasRestantes > 0)//mientras la municion sea mayor que cero, se puede disparar
+
+
+                    if (balasRestantes > 0 && !recargaPistola)//mientras la municion sea mayor que cero, se puede disparar
                     {
+
+
                         Debug.Log("Disparando con la pistola");
                         atacando_pistola = true; //Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
-						atacando_metralleta = false;
-						Debug.Log ("Tiene la puta pistola =" + atacando_pistola);
+                        atacando_metralleta = false;
+                        Debug.Log("Tiene la puta pistola =" + atacando_pistola);
                         Debug.Log(punto_disparo.name);
                         Instantiate(prefab_bala_pistola,
                         punto_disparo.transform.position,
                         punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
-
-
                         Debug.Log("Se reduce municion: " + balasRestantes);
                         GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
+                        //}
+                        //else
+                        //{
+                        //    Debug.Log("Se requiere recarga");
+                        //    if(Input.GetKeyUp(KeyCode.R)){
+                        //        Debug.Log("Hora de recargar");
+                        //    }
+                        //}
+                        contaDisparoPistola++;
+                        Debug.Log("ya voy :" + contaDisparoPistola + " balas disparadas");
+                        if (contaDisparoPistola == 6)
+                        {
+                            recargaPistola = true;
+                        }
                     }
-                    
+
+                    else
+                    {
+                        recargaPistola = true;
+                        Debug.Log("Necesita recarga");
+                    }
+                  
+
                 }
                 
             }
@@ -335,6 +394,11 @@ public class Jugador : MonoBehaviour, IPersonaje
 
                         Debug.Log("Se reduce municion: " + balasRestantes);
                         GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
+                    }
+                    else
+                    {
+                        Debug.Log("Se requiere recargar!!");
+
                     }
                        
                 }
@@ -879,12 +943,6 @@ public class Jugador : MonoBehaviour, IPersonaje
     }
     #endregion
 
-	void Recargar(){
-
-		if (Input.GetKeyDown(KeyCode.R)) {
-			Debug.Log ("Recargando");
-		}
 	
-	}
 
 }

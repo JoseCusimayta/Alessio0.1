@@ -2011,7 +2011,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4907979275277468, guid: 9bba6a8387192b3449fd8071dfe720ab, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 83.7
+      value: 15.9
       objectReference: {fileID: 0}
     - target: {fileID: 4907979275277468, guid: 9bba6a8387192b3449fd8071dfe720ab, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2285,7 +2285,7 @@ MonoBehaviour:
   Prefab_Explosion: {fileID: 0}
   Tipo_Guardia: Patrullaje
   itemsDesprendibles:
-  - {fileID: 0}
+  - {fileID: 1245064573036532, guid: 3e072db3851a70f4ca0f13c1e78ca8d6, type: 2}
   BrazoDerechoGirable: {fileID: 0}
 --- !u!61 &351492722
 BoxCollider2D:
@@ -6712,6 +6712,12 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 0.43
       objectReference: {fileID: 0}
+    - target: {fileID: 114501561408803336, guid: b3aef6a2d98d971468bd1f68a3f422d9,
+        type: 2}
+      propertyPath: itemsDesprendibles.Array.data[0]
+      value: 
+      objectReference: {fileID: 1329090216292754, guid: ade229ba60a043a4a909e037d3274952,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3aef6a2d98d971468bd1f68a3f422d9, type: 2}
   m_IsPrefabParent: 0
@@ -11318,5 +11324,5 @@ MonoBehaviour:
   Prefab_Explosion: {fileID: 0}
   Tipo_Guardia: Patrullaje
   itemsDesprendibles:
-  - {fileID: 0}
+  - {fileID: 1245064573036532, guid: 3e072db3851a70f4ca0f13c1e78ca8d6, type: 2}
   BrazoDerechoGirable: {fileID: 0}

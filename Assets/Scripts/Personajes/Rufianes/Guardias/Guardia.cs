@@ -247,7 +247,13 @@ public class Guardia : MonoBehaviour {
 ////				else retroceder_derecha = true;                             //Le decimos de dónde nos está atacando para saber de donde retroceder
 //			}
 			Invoke("RestaurarCapa", 0.5f);                                  //Reactivamos la capa del jugador en 0.5 segundos
-		}
+            if (vida_actual <= 0) //Verificamos si el personaje está sin vida
+            {
+                Debug.Log("Muriendo");
+                Morir();
+                // Nuevo_Rufian();                                     //Creamos un nuevo Rufian
+            }
+        }
 		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
 	}
 

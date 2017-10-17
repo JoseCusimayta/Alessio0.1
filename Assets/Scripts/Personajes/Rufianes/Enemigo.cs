@@ -97,7 +97,7 @@ public class Enemigo : MonoBehaviour, IPersonaje
         if (vida_actual <= 0) //Verificamos si el personaje está sin vida
         {
             
-            //Morir();
+            Morir();
             // Nuevo_Rufian();                                     //Creamos un nuevo Rufian
         }
     }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GestionInventario : MonoBehaviour {
+public class GestionInventario : MonoBehaviour
+{
 
     #region Variables
     public GameObject[] itemRapido;                              //arreglo que almacena las imagenes de presentacion de los items de acceso rapido, se almacenan en casillas
@@ -13,14 +14,16 @@ public class GestionInventario : MonoBehaviour {
     #endregion
 
     #region Funciones de Unity
-    void Start () {
+    void Start()
+    {
         items = new Item[itemRapido.Length];
     }
-	
 
-	void Update () {
-		
-	}
+
+    void Update()
+    {
+
+    }
     #endregion
 
     #region Funciones para guardar items
@@ -41,18 +44,21 @@ public class GestionInventario : MonoBehaviour {
     public void desasignarItemACasilla(int i)
     {
         itemRapido[i].GetComponent<Image>().sprite = porDefecto;
-		itemRapido [i].GetComponentInChildren<Text> ().text = "";
-		items [i] = null;
+        itemRapido[i].GetComponentInChildren<Text>().text = "";
+        items[i] = null;
 
     }
 
-	public bool estaVaciaCasilla(int i) {
-		if (items [i] == null) {
-			return true;
-		} else
-			return false;
+    public bool estaVaciaCasilla(int i)
+    {
+        if (items[i] == null)
+        {
+            return true;
+        }
+        else
+            return false;
 
-	}
+    }
 
     //carga al sprite por defecto, para cuando necesitemos mostrar una casilla vacia
     private void cargarSpritePorDefecto(Sprite s)
@@ -62,17 +68,17 @@ public class GestionInventario : MonoBehaviour {
             porDefecto = s;
             soloUnaVez = true;
         }
-        
+
     }
 
-    public void recargarMunicion(GameObject municion,Sprite aux)
+    public void recargarMunicion(GameObject municion, Sprite aux)
     {
         bool encontrado = false;
         Debug.Log("La municion se llama: " + municion.name);
         switch (municion.name)
         {
             case "MunicionPistola":
-               
+
                 //se hace una busqueda entre los casilleros, para encontrar alguno vacio
                 for (int i = 0; i < itemRapido.Length; i++)
                 {
@@ -80,17 +86,17 @@ public class GestionInventario : MonoBehaviour {
                     //Debug.Log("nombre=" + itemRapido[i+1].GetComponent<Image>().sprite.name);            
                     if (itemRapido[i].GetComponent<Image>().sprite.name != "UIMask")
                     {
-                        
+
                         switch (items[i].objeto.name)
                         {
-                           
+
                             case "Pistola":
                                 //agregamos un texto que indique el numero de balas a usar
                                 items[i].objeto.GetComponent<Pistola>().cantidadBalas += 6;
-                                itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas+"";
+                                itemRapido[i].GetComponentInChildren<Text>().text = "0 / "+ items[i].objeto.GetComponent<Pistola>().cantidadBalas;
                                 encontrado = true;
                                 break;
-                           
+
                         }
 
                     }
@@ -98,11 +104,11 @@ public class GestionInventario : MonoBehaviour {
                     {
                         break;
                     }
-                    
+
                 }
                 if (!encontrado)
                 {
-                    asignarItemACasilla(municion,aux);
+                    asignarItemACasilla(municion, aux);
                 }
                 break;
             case "MunicionAmetralladora":
@@ -110,7 +116,7 @@ public class GestionInventario : MonoBehaviour {
                 for (int i = 0; i < itemRapido.Length; i++)
                 {
                     ////el casillero vacio es aquel que tenga el sprite por defecto "UIMask"
-                            
+
                     if (itemRapido[i].GetComponent<Image>().sprite.name != "UIMask")
                     {
                         Debug.Log("nombre del arma encontrado=" + items[i].objeto.name);
@@ -121,7 +127,7 @@ public class GestionInventario : MonoBehaviour {
                                 //agregamos un texto que indique el numero de balas a usar
                                 items[i].objeto.GetComponent<Pistola>().cantidadBalas += 30;
                                 Debug.Log("Balas agregadas=" + items[i].objeto.GetComponent<Pistola>().cantidadBalas);
-                                itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas+ "";
+                                itemRapido[i].GetComponentInChildren<Text>().text = "0 / " + items[i].objeto.GetComponent<Pistola>().cantidadBalas;
                                 encontrado = true;
                                 break;
 
@@ -145,9 +151,9 @@ public class GestionInventario : MonoBehaviour {
     //metodo que nos ayuda a verificar si ya tenemos un item y no sea necesario ponerlo en el invetario, sino solo aumentar su numero
     private int buscarItem(string nombre)
     {
-       
+
         int lugarItem = -1;
-       
+
         //se hace una busqueda entre los casilleros, para encontrar al item
         for (int i = 0; i < itemRapido.Length; i++)
         {
@@ -157,14 +163,14 @@ public class GestionInventario : MonoBehaviour {
                 {
                     case "Curacion":
                         //verificamos si ya tenemos este item, si ya existe se guarda el lugar del item actualmente
-                        if(nombre== "Curacion")
+                        if (nombre == "Curacion")
                         {
-                           Debug.Log("Se encontro otra curacion");
-                           int nroCuras = int.Parse(itemRapido[i].GetComponentInChildren<Text>().text) ;
-                           nroCuras++;
-                           itemRapido[i].GetComponentInChildren<Text>().text = nroCuras+"";
-                           lugarItem = i;
-                            
+                            Debug.Log("Se encontro otra curacion");
+                            int nroCuras = int.Parse(itemRapido[i].GetComponentInChildren<Text>().text);
+                            nroCuras++;
+                            itemRapido[i].GetComponentInChildren<Text>().text = nroCuras + "";
+                            lugarItem = i;
+
                         }
                         break;
                     case "Pistola":
@@ -173,9 +179,9 @@ public class GestionInventario : MonoBehaviour {
                         {
                             Debug.Log("Se encontro otra Pistola");
                             items[i].objeto.GetComponent<Pistola>().cantidadBalas += 6;
-                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / "+ items[i].objeto.GetComponent<Pistola>().TotalBalas;
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / " + items[i].objeto.GetComponent<Pistola>().TotalBalas;
                             lugarItem = i;
-                           
+
                         }
                         break;
                     case "Ametralladora":
@@ -192,8 +198,8 @@ public class GestionInventario : MonoBehaviour {
                 }
             }
         }
-        
-        
+
+
         return lugarItem;
     }
 
@@ -204,7 +210,7 @@ public class GestionInventario : MonoBehaviour {
         //buscarItem devuelve el lugar del item si es que ya existe, de lo contrario, envia -1
         lugarAsignado = buscarItem(ItemPresentacion.name);
         //si no se encontro el item, entonces se procede a agregar al inventario
-        if (lugarAsignado==-1)
+        if (lugarAsignado == -1)
         {
             asignarItems(ItemPresentacion, ItemAccion);
             //se hace una busqueda entre los casilleros, para encontrar alguno vacio
@@ -228,12 +234,12 @@ public class GestionInventario : MonoBehaviour {
                             break;
                         case "Pistola":
                             //agregamos un texto que indique el numero de balas a usar
-                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / " + items[i].objeto.GetComponent<Pistola>().TotalBalas;
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / 0"; //+ items[i].objeto.GetComponent<Pistola>().TotalBalas;
                             lugarAsignado = i;
                             break;
                         case "Ametralladora":
                             //agregamos un texto que indique el numero de balas a usar
-                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / " + items[i].objeto.GetComponent<Pistola>().TotalBalas;
+                            itemRapido[i].GetComponentInChildren<Text>().text = items[i].objeto.GetComponent<Pistola>().cantidadBalas + " / 0"; //+ items[i].objeto.GetComponent<Pistola>().TotalBalas;
                             lugarAsignado = i;
                             break;
                         case "MunicionPistola":
@@ -275,43 +281,50 @@ public class GestionInventario : MonoBehaviour {
             }//fin de for
 
         }
-        
+
         return lugarAsignado;
     }
 
     public void restarMunicion(int posicionItem, int municionActual)
     {
+       
         switch (items[posicionItem].objeto.name)
         {
-            
+
             case "Pistola":
                 if (municionActual <= 0)
                 {
-                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0 / "+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0 / 0"; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
+                    //recargaNecesaria = true;
                 }
                 //agregamos un texto que indique el numero de balas que quedan
                 else
                 {
-                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / "+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / 0 "; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
+                    //recargaNecesaria = false;
                 }
                 break;
             case "Ametralladora":
                 //en caso que se acaben las balas se retira objeto
                 if (municionActual <= 0)
                 {
-                    itemRapido[posicionItem].GetComponentInChildren<Text>().text ="0";
+                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0";
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
+                   // recargaNecesaria = true;
                 }
                 //agregamos un texto que indique el numero de balas que quedan
                 else
                 {
                     itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / " + items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
+                   // recargaNecesaria = false;
                 }
                 break;
         }
+
+       // return recargaNecesaria;
     }
     #endregion
 }
