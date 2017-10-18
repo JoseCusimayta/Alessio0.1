@@ -104,7 +104,10 @@ public class Guardia : MonoBehaviour {
             GestorAtaques();                                                    //Establecemos el ataque del Guardia
         }
 		GestorVida();//Actualizamos la vida
-		GestorParpadeo();
+//		if (gameObject!=null) {
+//			GestorParpadeo();
+//		}
+
 		JugadorHerido();                                        //Función para gestionar todos los cambios que se implementan en las caracteristicas del jugador cuando es herido por un elemento del juego
 
 	}   
@@ -265,6 +268,7 @@ public class Guardia : MonoBehaviour {
 	}
 	void GestorParpadeo()
 	{
+		
 		//Debug.Log ("Ella no te ama :'v");
 		if (gameObject.layer == 12)                                         //Verificamos en que capa está (Layer 12: Capa de invulnerabilidad)
 		{

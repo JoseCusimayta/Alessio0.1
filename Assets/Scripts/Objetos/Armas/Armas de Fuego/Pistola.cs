@@ -40,5 +40,9 @@ public class Pistola : MonoBehaviour {
         return tipoArma;
     }
 
+	public void setBala(int bala)
+	{
+		cantidadBalas -= bala;
+	}
     
 }

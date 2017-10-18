@@ -291,7 +291,8 @@ public class GestionInventario : MonoBehaviour
         switch (items[posicionItem].objeto.name)
         {
 
-            case "Pistola":
+		  case "Pistola":
+			
                 if (municionActual <= 0)
                 {
                     itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0 / 0"; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
@@ -301,8 +302,9 @@ public class GestionInventario : MonoBehaviour
                 //agregamos un texto que indique el numero de balas que quedan
                 else
                 {
-                    itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / 0 "; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+				itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / 0 "; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
                     items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
+
                     //recargaNecesaria = false;
                 }
                 break;
@@ -323,8 +325,48 @@ public class GestionInventario : MonoBehaviour
                 }
                 break;
         }
-
-       // return recargaNecesaria;
-    }
+	}
     #endregion
+
+	public void restarMunicion_v2(int posicionItem, int municionActual, int balas)
+	{
+
+		switch (items[posicionItem].objeto.name)
+		{
+
+		case "Pistola":
+
+			if (municionActual <= 0)
+			{
+				itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0 / 0"; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+				items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
+				//recargaNecesaria = true;
+			}
+			//agregamos un texto que indique el numero de balas que quedan
+			else
+			{
+				itemRapido[posicionItem].GetComponentInChildren<Text>().text = balas + " /"+municionActual; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+				items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
+
+				//recargaNecesaria = false;
+			}
+			break;
+		case "Ametralladora":
+			//en caso que se acaben las balas se retira objeto
+			if (municionActual <= 0)
+			{
+				itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0";
+				items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
+				// recargaNecesaria = true;
+			}
+			//agregamos un texto que indique el numero de balas que quedan
+			else
+			{
+				itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / " + items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+				items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
+				// recargaNecesaria = false;
+			}
+			break;
+		}
+	}
 }

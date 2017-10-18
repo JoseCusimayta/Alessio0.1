@@ -37,6 +37,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     private Pistola pistola;                         //Variable para guardar la clase Pistola
     public Sprite mano_pistola;                     //Variable para guardar el sprite de la mano con la pistola
     public GameObject prefab_bala_pistola;          //Variable para guardar el prefab de la Bala de la pistola
+	public bool unaVezPistola;
     #endregion
     #region Metralleta
     public Sprite sprite_metralleta;                      //Variable para guardar el sprite de la metralleta
@@ -334,7 +335,13 @@ public class Jugador : MonoBehaviour, IPersonaje
                     Debug.Log("Disparando con Tipo de arma ahora: " + tipo_arma + " y tiene_pistola=" + tiene_pistola);
                     //verificar cuantas balas quedan
                     int balasRestantes = GetComponent<GestionInventario>().items[armaActualEnMano].objeto.GetComponent<Pistola>().cantidadBalas;
-
+//					if (contaDisparoPistola == 6)
+//					{
+//
+//						balasRestantes -= 6;
+//						Debug.Log("Bala reducida: "+balasRestantes);
+//						GetComponent<GestionInventario>().restarMunicion_v2(armaActualEnMano, balasRestantes,0);
+//					}
 
                     if (balasRestantes > 0 && !recargaPistola)//mientras la municion sea mayor que cero, se puede disparar
                     {
@@ -349,23 +356,30 @@ public class Jugador : MonoBehaviour, IPersonaje
                         punto_disparo.transform.position,
                         punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
                         Debug.Log("Se reduce municion: " + balasRestantes);
-                        GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
-                        //}
-                        //else
-                        //{
-                        //    Debug.Log("Se requiere recarga");
-                        //    if(Input.GetKeyUp(KeyCode.R)){
-                        //        Debug.Log("Hora de recargar");
-                        //    }
-                        //}
+						GetComponent<GestionInventario>().restarMunicion_v2(armaActualEnMano, balasRestantes,6-(contaDisparoPistola+1));
+
                         contaDisparoPistola++;
-                        Debug.Log("ya voy :" + contaDisparoPistola + " balas disparadas");
+						Debug.Log ("contaDisparoPistola:"+contaDisparoPistola);
+
+
                         if (contaDisparoPistola == 6)
                         {
+							Debug.Log ("balasRestantes="+balasRestantes);
+
+							GetComponent<GestionInventario> ().items [armaActualEnMano].objeto.GetComponent<Pistola> ().setBala (6);
+							//balasRestantes -= 6;
+							//Debug.Log("Bala reducida: "+balasRestantes);
                             recargaPistola = true;
                         }
                     }
-
+//					else if(balasRestantes<=0){
+//						Debug.Log ("balasRestantes="+balasRestantes);
+//
+//						GetComponent<GestionInventario> ().items [armaActualEnMano].objeto.GetComponent<Pistola> ().setBala (6);
+//						//balasRestantes -= 6;
+//						//Debug.Log("Bala reducida: "+balasRestantes);
+//						//recargaPistola = true;
+//					}
                     else
                     {
                         recargaPistola = true;
