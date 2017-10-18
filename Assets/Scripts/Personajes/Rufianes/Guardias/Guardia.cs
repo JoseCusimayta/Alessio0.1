@@ -167,6 +167,7 @@ public class Guardia : MonoBehaviour {
     }
     public void GestorAtaques()
     {
+		Debug.Log("GestorAtaques() ");
         if (esta_atacando)                                      //Verificamos si el personaje está atacando
         {
             intervalo_ataque = reactivacion_ataque;             //Reiniciamos el tiempo de reactivación para atacar
@@ -181,7 +182,7 @@ public class Guardia : MonoBehaviour {
         {
             if (rango_vision.personaje_detectado && !persiguiendo)               //Verificamos si el personaje está cerca
             {
-                //Debug.Log("sds");
+                Debug.Log("Disparando a player!!");
                 Instantiate(Prefab_Bala,
                     punto_disparo.transform.position,
                     punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
@@ -189,6 +190,7 @@ public class Guardia : MonoBehaviour {
             }
             else if (persiguiendo)
             {
+				Debug.Log("Disparando a player!!");
                 Instantiate(Prefab_Bala,
                     punto_disparo.transform.position,
                     punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
