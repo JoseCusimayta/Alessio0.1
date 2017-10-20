@@ -355,16 +355,14 @@ public class GestionInventario : MonoBehaviour
 			//en caso que se acaben las balas se retira objeto
 			if (municionActual <= 0)
 			{
-				itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0 / 0"; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+				itemRapido[posicionItem].GetComponentInChildren<Text>().text = "0";
 				items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = 0;
 				// recargaNecesaria = true;
 			}
 			//agregamos un texto que indique el numero de balas que quedan
 			else
 			{
-//				itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / " + items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
-//				items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
-				itemRapido[posicionItem].GetComponentInChildren<Text>().text = balas + " /"+municionActual; //+ items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
+				itemRapido[posicionItem].GetComponentInChildren<Text>().text = municionActual + " / " + items[posicionItem].objeto.GetComponent<Pistola>().TotalBalas;
 				items[posicionItem].objeto.GetComponent<Pistola>().cantidadBalas = municionActual;
 				// recargaNecesaria = false;
 			}
