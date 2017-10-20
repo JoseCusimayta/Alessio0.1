@@ -3098,7 +3098,7 @@ MonoBehaviour:
   Prefab_Explosion: {fileID: 0}
   Tipo_Guardia: Patrullaje
   itemsDesprendibles:
-  - {fileID: 1245064573036532, guid: 3e072db3851a70f4ca0f13c1e78ca8d6, type: 2}
+  - {fileID: 1222279700927844, guid: ade229ba60a043a4a909e037d3274952, type: 2}
   BrazoDerechoGirable: {fileID: 0}
 --- !u!1 &421878721
 GameObject:
@@ -8202,7 +8202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsDesprendibles:
-  - {fileID: 1329090216292754, guid: ade229ba60a043a4a909e037d3274952, type: 2}
+  - {fileID: 1222279700927844, guid: ade229ba60a043a4a909e037d3274952, type: 2}
   salud: {fileID: 0}
   vida_actual: 0
   mascara_objeto:
@@ -8716,7 +8716,7 @@ MonoBehaviour:
   Prefab_Explosion: {fileID: 0}
   Tipo_Guardia: Patrullaje
   itemsDesprendibles:
-  - {fileID: 1037016436228314, guid: ade229ba60a043a4a909e037d3274952, type: 2}
+  - {fileID: 0}
   BrazoDerechoGirable: {fileID: 0}
   activarCuchillo: 0
   _cuchillo: {fileID: 1795674983335862, guid: d1df0c774d94a834095b02812f62e3da, type: 2}
@@ -12699,5 +12699,5 @@ MonoBehaviour:
   Prefab_Explosion: {fileID: 0}
   Tipo_Guardia: Patrullaje
   itemsDesprendibles:
-  - {fileID: 1245064573036532, guid: 3e072db3851a70f4ca0f13c1e78ca8d6, type: 2}
+  - {fileID: 1957271360265176, guid: 31dcf3d0ac0c37d47902765674b79b36, type: 2}
   BrazoDerechoGirable: {fileID: 0}
