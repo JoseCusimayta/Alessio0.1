@@ -302,7 +302,8 @@ public class Jugador : MonoBehaviour, IPersonaje
             {
                 if (Input.GetKeyUp(KeyCode.R))
                 {
-                    recargaPistola = false;
+					recargaMetra = false;
+					contaDisparoMetraca = 0;
                     Debug.Log("Recarga de metraca lista!!");
                 }
             }
@@ -395,7 +396,7 @@ public class Jugador : MonoBehaviour, IPersonaje
                 if (armaActualEnMano > -1)
                 {
                     int balasRestantes = GetComponent<GestionInventario>().items[armaActualEnMano].objeto.GetComponent<Pistola>().cantidadBalas;
-                    if (balasRestantes > 0) //mientras la municion sea mayor que cero, se puede disparar
+					if (balasRestantes > 0 && !recargaMetra) //mientras la municion sea mayor que cero, se puede disparar
                     {
                         Debug.Log("Disparando con la metraca");
                         atacando_metralleta = true;   			//Activamos la variable "atacando_pistola" para decirle a la animación que debe ejecutar
@@ -407,11 +408,24 @@ public class Jugador : MonoBehaviour, IPersonaje
 
 
                         Debug.Log("Se reduce municion: " + balasRestantes);
-                        GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
+                       // GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
+						GetComponent<GestionInventario>().restarMunicion_v2(armaActualEnMano, balasRestantes,30-(contaDisparoMetraca+1));
+
+						contaDisparoMetraca++;
+						if (contaDisparoMetraca == 30)
+						{
+							Debug.Log ("balasRestantes de metralleta="+balasRestantes);
+
+							GetComponent<GestionInventario> ().items [armaActualEnMano].objeto.GetComponent<Pistola> ().setBala (30);
+							//balasRestantes -= 6;
+							//Debug.Log("Bala reducida: "+balasRestantes);
+							recargaMetra = true;
+						}
                     }
                     else
                     {
-                        Debug.Log("Se requiere recargar!!");
+						recargaMetra = true;
+                        Debug.Log("Se requiere recargar la metraca!!");
 
                     }
                        
