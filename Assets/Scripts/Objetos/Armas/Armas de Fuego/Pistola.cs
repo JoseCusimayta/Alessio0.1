@@ -6,6 +6,7 @@ public class Pistola : MonoBehaviour {
     public static int Daño_Pistola = 3;
     private string tipoArma = "Pistola";
     public int cantidadBalas = 6;
+    public int balasExtra = 0;
     public int TotalBalas = 6;
 
     // Use this for tipoArma
@@ -40,7 +41,37 @@ public class Pistola : MonoBehaviour {
         return tipoArma;
     }
 
-	public void setBala(int bala)
+    //permite reducir la cantidad de balas disponibles cuando disparamos
+    public void dispararBalaArma()
+    {
+        if (cantidadBalas > 0)
+        {
+            cantidadBalas -= 1;
+        }
+        
+    }
+
+    //añadimos mas municion al arma
+    public void abastecerArma()
+    {
+        balasExtra += TotalBalas;
+
+    }
+
+    //recargaremos el arma con las municiones de las balas extra
+    public void recargarArma()
+    {
+        if (balasExtra > 0)
+        {
+            cantidadBalas += TotalBalas;
+            balasExtra -= TotalBalas;
+        }
+        
+
+    }
+
+
+    public void setBala(int bala)
 	{
 		cantidadBalas -= bala;
 	}
