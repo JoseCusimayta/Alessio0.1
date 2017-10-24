@@ -24,6 +24,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     public float reactivacion_ataque;               //Variable para manejar la velocidad de ataque
     private GameObject arma_jugador;                  //Variable para guardar la posición y rotación del arma
     public Transform punto_disparo;                 //Variable para guardar la posición y rotación de punto del disparo
+    public GameObject balaLaser;                   //bala laser que dispara el jugador
     #region Puños
     private bool atacando_golpes;                     //Variable para saber si el personaje está atacando con puños
     public float danio_golpe;                       //Variable para determinar la cantidad de daño que tendrán los golpes del personaje
@@ -351,9 +352,9 @@ public class Jugador : MonoBehaviour, IPersonaje
                         atacando_metralleta = false;
                         Debug.Log("Tiene la puta pistola =" + atacando_pistola);
                         Debug.Log(punto_disparo.name);
-                        Instantiate(prefab_bala_pistola,
-                        punto_disparo.transform.position,
-                        punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+                        //Instantiate(prefab_bala_pistola,punto_disparo.transform.position,punto_disparo.transform.rotation);          //Creamos la bala de la pistola con las mismas caracteristicas del GameObject vacío "Arma_Player" del personaje
+                        GameObject go = GameObject.Instantiate(balaLaser, punto_disparo.transform.position, punto_disparo.transform.rotation); //bala laser
+                        go.transform.Rotate(0, 90, 0);
                         Debug.Log("Se reduce municion: " + balasRestantes);
                         GetComponent<GestionInventario>().restarMunicion(armaActualEnMano, balasRestantes - 1);
 
