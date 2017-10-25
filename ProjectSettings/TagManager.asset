@@ -29,6 +29,7 @@ TagManager:
   - Municion
   - Objeto
   - Golpe
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -68,4 +69,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2225548537
+    locked: 0
+  - name: Chef
+    uniqueID: 4086849241
+    locked: 0
+  - name: Luissini
+    uniqueID: 1201156403
     locked: 0
