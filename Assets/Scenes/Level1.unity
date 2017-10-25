@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 94985504}
   m_Layer: 0
   m_Name: Guardia
-  m_TagString: Untagged
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1961,6 +1961,16 @@ Prefab:
       value: 
       objectReference: {fileID: 1109985059950962, guid: a60b6bd6dfac54a49aa766cdceb5280f,
         type: 2}
+    - target: {fileID: 212785053406196672, guid: 5e0994772f28b0d49af6987ee0c45d8b,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: -2069418759
+      objectReference: {fileID: 0}
+    - target: {fileID: 212785053406196672, guid: 5e0994772f28b0d49af6987ee0c45d8b,
+        type: 2}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e0994772f28b0d49af6987ee0c45d8b, type: 2}
   m_IsPrefabParent: 0
@@ -4839,6 +4849,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 1273167138657900, guid: f11130cc845835a43ba446ff209a66b3, type: 2}
+      propertyPath: m_TagString
+      value: Enemigo
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f11130cc845835a43ba446ff209a66b3, type: 2}
   m_IsPrefabParent: 0
@@ -5196,7 +5210,7 @@ GameObject:
   - component: {fileID: 1029702701}
   m_Layer: 0
   m_Name: Guardia_2
-  m_TagString: Untagged
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

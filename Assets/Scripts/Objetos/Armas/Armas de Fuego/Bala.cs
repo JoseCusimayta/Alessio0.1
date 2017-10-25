@@ -34,6 +34,7 @@ public class Bala : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+		Debug.Log ("Hice colision");
         if (other.CompareTag(Target_Tag))
         {
             morir();

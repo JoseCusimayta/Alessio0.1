@@ -25,9 +25,9 @@ GameObject:
   - component: {fileID: 114095730394573796}
   - component: {fileID: 108018694422073194}
   - component: {fileID: 114562227928795726}
-  - component: {fileID: 70658178525242004}
   - component: {fileID: 50840207510367486}
   - component: {fileID: 82332316092784628}
+  - component: {fileID: 58771598549479784}
   m_Layer: 0
   m_Name: balaLaser
   m_TagString: BalaPlayer
@@ -42,8 +42,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1109985059950962}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 16.018469, y: -23.743849, z: 0}
-  m_LocalScale: {x: -0.00009828319, y: 0.00034499523, z: 0.12676153}
+  m_LocalPosition: {x: 29.555079, y: -26.723007, z: 0}
+  m_LocalScale: {x: -0.00004007796, y: 0.00009816981, z: 0.026491506}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -107,8 +107,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &70658178525242004
-CapsuleCollider2D:
+--- !u!58 &58771598549479784
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -116,12 +116,12 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.25, y: 0.15}
-  m_Direction: 0
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!82 &82332316092784628
 AudioSource:
   m_ObjectHideFlags: 1
@@ -211,9 +211,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 2
-  m_Range: 284.9214
+  m_Color: {r: 0.697, g: 0.6847253, b: 0.25204018, a: 1}
+  m_Intensity: 1
+  m_Range: 1.0915737
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_doNotOverwriteTemplateMaterialProperties: 1
   m_startPos: {x: 0, y: 0, z: 0}
   m_endPos: {x: 0, y: 50, z: 0}
-  m_lineColor: {r: 0.034482718, g: 1, b: 0, a: 0}
+  m_lineColor: {r: 0.4686643, g: 0.5147059, b: 0.03784603, a: 0}
   m_lineWidth: 20
   m_lightSaberFactor: 0.639
 --- !u!114 &114562227928795726
