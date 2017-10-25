@@ -1955,6 +1955,12 @@ Prefab:
       propertyPath: itemRapido.Array.data[3]
       value: 
       objectReference: {fileID: 1547060607}
+    - target: {fileID: 114745343337369940, guid: 5e0994772f28b0d49af6987ee0c45d8b,
+        type: 2}
+      propertyPath: balaLaser
+      value: 
+      objectReference: {fileID: 1109985059950962, guid: a60b6bd6dfac54a49aa766cdceb5280f,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e0994772f28b0d49af6987ee0c45d8b, type: 2}
   m_IsPrefabParent: 0

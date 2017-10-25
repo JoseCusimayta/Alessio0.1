@@ -50,6 +50,7 @@ public class Bala : MonoBehaviour
     #region Funciones
     public void morir()
     {
+		Instantiate (Prefab_Explosion,this.transform.position,this.transform.rotation);
         Destroy(gameObject);
     }
     #endregion
