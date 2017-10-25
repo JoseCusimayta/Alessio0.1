@@ -12,10 +12,11 @@ public class Luissini : MonoBehaviour {
 	public float vida_maxima;                       //Variable para determinar la cantidad de vida máxima posible que puede tener el Objeto
 	public float vida_anterior;                     //Variable para guardar la cantidad de vida que tenía antes de ser golpeado  
 	public string nombreRufian;						//nombre del rufian y de su tipo
+	//public SpriteRenderer 
 	#endregion
 
 	#region Patron de Movimiento    
-	public Transform[] lista_coordenadas; 		    //Variable para guardar la Cantidad de Coordenadas que se guardará
+	//public Transform[] lista_coordenadas; 		    //Variable para guardar la Cantidad de Coordenadas que se guardará
 	public Transform coordenada_objetivo; 		    //Variable para guardar las Coordenadas del punto al cual se dirigirá
 	public int indice_coordenada;                   //Variable para guardar el indice de la lista_coordenadas para conseguir las Coordenadas a la cual dirigirse
 	public float velocidad_normal = 5;              //Variable para determinar la velocidad con la que se moverá el objeto
@@ -66,6 +67,8 @@ public class Luissini : MonoBehaviour {
 	private Animator _animacion;
 	private bool activarAnimacionCuchillo;
 
+	private GameObject pantallaFinal;
+
 
 
 	#region Funciones de Unity
@@ -91,19 +94,20 @@ public class Luissini : MonoBehaviour {
 		PieI = GameObject.Find(this.gameObject.name+"/Cuerpo/cuerpoB/MusloI/PiernaI/PieI");
 		#endregion
 		_animacion = GetComponent<Animator> ();
-		if (Tipo_Guardia == "Patrullaje")                                   //Verificamos el tipo de guardia, en este caso, patrullaje
-		{
-			coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
-		}
+//		if (Tipo_Guardia == "Patrullaje")                                   //Verificamos el tipo de guardia, en este caso, patrullaje
+//		{
+//			coordenada_objetivo = lista_coordenadas[indice_coordenada];     //Definimos cual será el primer punto a dirigirse para patrullar
+//		}
 		salud = GetComponent<Health>();                                     //Guardamos el script de vida en una variable
 		rango_vision = GetComponentInChildren<CampoEnemigoJefe>();              //Guardamos el script del campo de visión, como CampoEnemigo
+		pantallaFinal=GameObject.Find("PantallaFinal");
 	}
 
 	// Update is called once per frame
 	void Update() {
 		if (Tipo_Guardia == "Patrullaje" && !rango_vision.personaje_detectado)  //Verificamos si esta en tipo patrullaje y no ha detectado al jugador para hacerlo patrullar
 		{
-			GestorPatrullaje();                                                 //Patrullamos
+//			GestorPatrullaje();                                                 //Patrullamos
 		}
 		if (rango_vision.personaje_detectado)                                   //Verificamos si se ha tectado al enemigo en el rango de visión del ataque
 		{
@@ -165,31 +169,31 @@ public class Luissini : MonoBehaviour {
 	#endregion
 
 	#region Funciones para Update
-	void GestorPatrullaje()                                                 //Función de patrullaje
-	{
-		transform.position = Vector3.MoveTowards(                        //Funcion para mover al objeto
-			transform.position,	                                        //Definimos la posición del objeto
-			coordenada_objetivo.position,			                            //Definimos la posición a la cual se dirigirá (punto destino)
-			Time.deltaTime * velocidad_normal			                        //Definimos la velocidad de movimiento (caminar) para patrullar
-		);
-		if (transform.position == coordenada_objetivo.position)          //Verificamos si el objeto llego al punto destino
-		{
-			indice_coordenada += 1;                                             //Indicamos que ahora debe ir al siguiente punto
-			if (indice_coordenada == lista_coordenadas.Length)                  //Verificamos si llego al último punto
-			{
-				indice_coordenada = 0;                                          //Regresamos al punto inicial
-			}
-			coordenada_objetivo = lista_coordenadas[indice_coordenada];         //Definimos las coordenadas del punto al cual se moverá el objeto
-		}
-		if (coordenada_objetivo.position.x > transform.position.x)          //Verificamos hacia donde se esta movimiendo
-		{
-			transform.rotation = Quaternion.identity;                   //Giramos el cuerpo del personaje hacia la derecha
-		}
-		else
-		{
-			transform.rotation = new Quaternion(0, 180, 0, 0);          //Giramos el cuerpo del personaje hacia la izquierda
-		}
-	}
+//	void GestorPatrullaje()                                                 //Función de patrullaje
+//	{
+//		transform.position = Vector3.MoveTowards(                        //Funcion para mover al objeto
+//			transform.position,	                                        //Definimos la posición del objeto
+//			coordenada_objetivo.position,			                            //Definimos la posición a la cual se dirigirá (punto destino)
+//			Time.deltaTime * velocidad_normal			                        //Definimos la velocidad de movimiento (caminar) para patrullar
+//		);
+//		if (transform.position == coordenada_objetivo.position)          //Verificamos si el objeto llego al punto destino
+//		{
+//			indice_coordenada += 1;                                             //Indicamos que ahora debe ir al siguiente punto
+//			if (indice_coordenada == lista_coordenadas.Length)                  //Verificamos si llego al último punto
+//			{
+//				indice_coordenada = 0;                                          //Regresamos al punto inicial
+//			}
+//			coordenada_objetivo = lista_coordenadas[indice_coordenada];         //Definimos las coordenadas del punto al cual se moverá el objeto
+//		}
+//		if (coordenada_objetivo.position.x > transform.position.x)          //Verificamos hacia donde se esta movimiendo
+//		{
+//			transform.rotation = Quaternion.identity;                   //Giramos el cuerpo del personaje hacia la derecha
+//		}
+//		else
+//		{
+//			transform.rotation = new Quaternion(0, 180, 0, 0);          //Giramos el cuerpo del personaje hacia la izquierda
+//		}
+//	}
 
 	public void GestorVida()
 	{
@@ -258,6 +262,7 @@ public class Luissini : MonoBehaviour {
 		GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
 		//se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
 		g.name = nombreAux;
+		pantallaFinal.SetActive(true) ;
 		Destroy(gameObject);
 	}
 	public GameObject DesprenderItem()
@@ -301,8 +306,9 @@ public class Luissini : MonoBehaviour {
 
 			if (vida_actual <=0) {
 				//SegundaFuncion = true;
-				Debug.Log ("Muere lusini!!");
-				Destroy (gameObject);
+//				Debug.Log ("Muere lusini!!");
+//				Destroy (gameObject);
+				Morir();
 			}
 		}
 		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
