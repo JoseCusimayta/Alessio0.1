@@ -170,7 +170,7 @@ public class Guardia : MonoBehaviour {
     }
     public void GestorAtaques()
     {
-		Debug.Log("GestorAtaques() ");
+		//Debug.Log("GestorAtaques() ");
         if (esta_atacando)                                      //Verificamos si el personaje está atacando
         {
             intervalo_ataque = reactivacion_ataque;             //Reiniciamos el tiempo de reactivación para atacar
@@ -185,18 +185,20 @@ public class Guardia : MonoBehaviour {
         {
             if (rango_vision.personaje_detectado && !persiguiendo)               //Verificamos si el personaje está cerca
             {
-                Debug.Log("Disparando a player!!");
-                Instantiate(Prefab_Bala,
+                //Debug.Log("Disparando a player!!");
+                GameObject go = GameObject.Instantiate(Prefab_Bala,
                     punto_disparo.transform.position,
                     punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
+                go.transform.Rotate(0, 90, 0);
                 esta_atacando = true;                           //Activamos esta variable para decirle a la animación que hacer
             }
             else if (persiguiendo)
             {
-				Debug.Log("Disparando a player!!");
-                Instantiate(Prefab_Bala,
+				//Debug.Log("Disparando a player!!");
+                GameObject go = GameObject.Instantiate(Prefab_Bala,
                     punto_disparo.transform.position,
                     punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
+                go.transform.Rotate(0, 90, 0);
                 esta_atacando = true;                           //Activamos esta variable para decirle a la animación que hacer
             }
         }

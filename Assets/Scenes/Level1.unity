@@ -2178,6 +2178,16 @@ Prefab:
       value: 
       objectReference: {fileID: 1778818606588118, guid: ddd4f1365bd7b634fa253c0d1873b1dd,
         type: 2}
+    - target: {fileID: 61738079248304842, guid: 5e0994772f28b0d49af6987ee0c45d8b,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 0.042729437
+      objectReference: {fileID: 0}
+    - target: {fileID: 61738079248304842, guid: 5e0994772f28b0d49af6987ee0c45d8b,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 2.6664286
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e0994772f28b0d49af6987ee0c45d8b, type: 2}
   m_IsPrefabParent: 0
@@ -2559,7 +2569,7 @@ MonoBehaviour:
   rango_vision: {fileID: 0}
   esta_atacando: 0
   player: {fileID: 0}
-  Prefab_Bala: {fileID: 1111418017893140, guid: 2d176773549cd6841af071f124813d5b,
+  Prefab_Bala: {fileID: 1252829261994282, guid: dba6a3ec10a813d4393f7583c5f92f5e,
     type: 2}
   Prefab_Rufian: {fileID: 0}
   Prefab_Explosion: {fileID: 100006, guid: 4575df893a6e3f64a8283dee38413a34, type: 2}
@@ -5720,6 +5730,12 @@ Prefab:
       propertyPath: Prefab_Explosion
       value: 
       objectReference: {fileID: 100006, guid: 4575df893a6e3f64a8283dee38413a34, type: 2}
+    - target: {fileID: 114343645712689050, guid: f11130cc845835a43ba446ff209a66b3,
+        type: 2}
+      propertyPath: Prefab_Bala
+      value: 
+      objectReference: {fileID: 1252829261994282, guid: dba6a3ec10a813d4393f7583c5f92f5e,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f11130cc845835a43ba446ff209a66b3, type: 2}
   m_IsPrefabParent: 0
