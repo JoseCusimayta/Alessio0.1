@@ -217,6 +217,8 @@ public class Guardia : MonoBehaviour {
         GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
         //se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
         g.name = nombreAux;
+
+        Instantiate(Prefab_Explosion,transform.position,transform.rotation);
         Destroy(gameObject);
     }
     public GameObject DesprenderItem()
