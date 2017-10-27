@@ -112,6 +112,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     #endregion
     #endregion
 
+	public GameObject HasMuerto;
 
     #endregion
 
@@ -199,6 +200,7 @@ public class Jugador : MonoBehaviour, IPersonaje
             else
             {
                 Debug.Log("Dead End");                          //Disparamos la animación de la muerte del personaje
+				HasMuerto.SetActive(true);
                 Destroy(gameObject);
             }
         }
@@ -935,6 +937,7 @@ public class Jugador : MonoBehaviour, IPersonaje
 
     public void Morir()
     {
+		HasMuerto.SetActive(true);
         Destroy(gameObject);
     }
     public void Mover()

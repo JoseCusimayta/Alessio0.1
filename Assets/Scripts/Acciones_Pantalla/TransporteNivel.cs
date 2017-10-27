@@ -8,6 +8,11 @@ public class TransporteNivel : MonoBehaviour {
 	private GestionPuntuacion _score;
 	private GameObject player;
 	public string objetivo="Player";
+	public float coorX;
+	public float coorY;
+	public float coorCamaraX;
+	public float coorCamaraY;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -29,11 +34,11 @@ public class TransporteNivel : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		Debug.Log ("Colisiono con algo");
 		if (other.gameObject.CompareTag(objetivo)) {
-			float x = 670.3538f;
-			float y = -77.34947f;
-			player.transform.position = new Vector2 (x, y);
+//			float x = 670.3538f;
+//			float y = -77.34947f;
+			player.transform.position = new Vector2 (coorX, coorY);
 			Camera.main.GetComponent<CamaraJugador> ().enabled = false;
-			Camera.main.transform.position=new Vector3 (689.3f, -75f,-10f);
+			Camera.main.transform.position=new Vector3 (coorCamaraX,coorCamaraY,-10f); 
 			Debug.Log ("Colisiono con player");
 
 

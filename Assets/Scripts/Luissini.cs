@@ -67,7 +67,7 @@ public class Luissini : MonoBehaviour {
 	private Animator _animacion;
 	private bool activarAnimacionCuchillo;
 
-	private GameObject pantallaFinal;
+	public GameObject pantallaFinal;
 
 
 
@@ -100,7 +100,7 @@ public class Luissini : MonoBehaviour {
 //		}
 		salud = GetComponent<Health>();                                     //Guardamos el script de vida en una variable
 		rango_vision = GetComponentInChildren<CampoEnemigoJefe>();              //Guardamos el script del campo de visión, como CampoEnemigo
-		pantallaFinal=GameObject.Find("PantallaFinal");
+		//pantallaFinal=GameObject.Find("PantallaFinal");
 	}
 
 	// Update is called once per frame
@@ -232,16 +232,18 @@ public class Luissini : MonoBehaviour {
 			if (rango_vision.personaje_detectado && !persiguiendo)               //Verificamos si el personaje está cerca
 			{
 				//Debug.Log("sds");
-				Instantiate(Prefab_Bala,
+				GameObject go = GameObject.Instantiate(Prefab_Bala,
 					punto_disparo.transform.position,
 					punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
+				go.transform.Rotate(0, 90, 0);
 				esta_atacando = true;                           //Activamos esta variable para decirle a la animación que hacer
 			}
 			else if (persiguiendo)
 			{
-				Instantiate(Prefab_Bala,
+				GameObject go = GameObject.Instantiate(Prefab_Bala,
 					punto_disparo.transform.position,
 					punto_disparo.transform.rotation);          //Comienza a disparar desde el objeto vacio
+				go.transform.Rotate(0, 90, 0);
 				esta_atacando = true;                           //Activamos esta variable para decirle a la animación que hacer
 			}
 		}
@@ -262,7 +264,7 @@ public class Luissini : MonoBehaviour {
 		GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
 		//se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
 		g.name = nombreAux;
-		pantallaFinal.SetActive(true) ;
+		pantallaFinal.SetActive(true);
 		Destroy(gameObject);
 	}
 	public GameObject DesprenderItem()
@@ -306,9 +308,12 @@ public class Luissini : MonoBehaviour {
 
 			if (vida_actual <=0) {
 				//SegundaFuncion = true;
-//				Debug.Log ("Muere lusini!!");
+				Debug.Log ("Muere lusini!!");
 //				Destroy (gameObject);
-				Morir();
+				pantallaFinal.SetActive(true);
+				Instantiate(Prefab_Explosion,transform.position,transform.rotation);
+				Destroy(gameObject);
+
 			}
 		}
 		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior

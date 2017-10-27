@@ -236,15 +236,16 @@ public class Chef : MonoBehaviour {
 	public void Morir()
 	{
 		//el item se elige aleatoriamente
-		int itemElegido = Random.Range(0, itemsDesprendibles.Length);//Random.Range(0, itemsDesprendibles.Length);
-		itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
-		itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
-
-		//Al morir el enemigo desprende un item al azar;
-		string nombreAux = itemsDesprendibles[itemElegido].name;
-		GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
+//		int itemElegido = Random.Range(0, itemsDesprendibles.Length);//Random.Range(0, itemsDesprendibles.Length);
+//		itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
+//		itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
+//
+//		//Al morir el enemigo desprende un item al azar;
+//		string nombreAux = itemsDesprendibles[itemElegido].name;
+//		GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
 		//se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
-		g.name = nombreAux;
+		//g.name = nombreAux;
+		Instantiate(Prefab_Explosion,transform.position,transform.rotation);
 		Destroy(gameObject);
 	}
 	public GameObject DesprenderItem()
@@ -265,7 +266,7 @@ public class Chef : MonoBehaviour {
 		//Debug.Log ("Ella no te ama :'v 2 ");
 		if (vida_actual < vida_anterior)                                    //Verificamos que haya un cambio en la vida
 		{
-			Debug.Log ("Ella no te ama :'v 3 ");
+			//Debug.Log ("Ella no te ama :'v 3 ");
 			gameObject.layer = 12;                                          //Activamos la capa de invulnerabilidad
 			//			puede_controlar = false;                                        //Desactivmos el control del jugador
 			//			retrocediendo = true;                                           //Activamos la variable "retrocediendo" para la animación
@@ -282,8 +283,8 @@ public class Chef : MonoBehaviour {
 			Invoke("RestaurarCapa", 0.5f);                                  //Reactivamos la capa del jugador en 0.5 segundos
 			if (vida_actual <=0) {
 				//SegundaFuncion = true;
-				Debug.Log ("Muere lusini!!");
-				Destroy (gameObject);
+				Debug.Log ("Muere chef!!");
+				Morir ();
 			}
 		}
 		vida_anterior = vida_actual;                                        //Actualizamos el dato de la vida anterior
