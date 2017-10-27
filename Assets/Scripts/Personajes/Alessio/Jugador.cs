@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Jugador : MonoBehaviour, IPersonaje
 {
@@ -109,6 +110,8 @@ public class Jugador : MonoBehaviour, IPersonaje
     private GameObject MusloI;                       //Variable para guardar el GameObject del Muslo Izquierdo del jugador
     private GameObject PiernaI;                      //Variable para guardar el GameObject de la Pierna Izquierdo del jugador
     private GameObject PieI;                         //Variable para guardar el GameObject del Pie Izquierdo del jugador
+
+	public GameObject Alessio;
     #endregion
     #endregion
 
@@ -201,10 +204,20 @@ public class Jugador : MonoBehaviour, IPersonaje
             {
                 Debug.Log("Dead End");                          //Disparamos la animación de la muerte del personaje
 				HasMuerto.SetActive(true);
-                Destroy(gameObject);
+				Alessio.SetActive (false);
+				//Destroy(gameObject);
+				Invoke("mensajeH",2.5f);
+				Invoke ("Recucitar", 3f);
             }
         }
     }
+	void mensajeH(){ 
+		HasMuerto.SetActive(false);
+	}
+	void Recucitar (){ 
+		Alessio.SetActive (true);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
 
     public void GestorTeclado()
     {
