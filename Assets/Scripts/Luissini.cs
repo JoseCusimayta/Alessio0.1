@@ -137,6 +137,7 @@ public class Luissini : MonoBehaviour {
 	{
 		if (other.CompareTag("BalaPlayer"))                                     //Verificamos si la bala del jugador le ha dado
 		{
+			Debug.Log ("Fue atacado por player");
 			salud.ModificarVida(other.GetComponent<Bala>().danio_bala, other.gameObject);   //Modificamos la vida, en este caso, la disminuimos
 		}
 
@@ -198,6 +199,7 @@ public class Luissini : MonoBehaviour {
 	public void GestorVida()
 	{
 		vida_actual = salud._vidaActual;
+		Debug.Log ("Ahora luisini tiene "+vida_actual);
 	}
 	public void GestorGiros()
 	{
@@ -255,16 +257,17 @@ public class Luissini : MonoBehaviour {
 	public void Morir()
 	{
 		//el item se elige aleatoriamente
-		int itemElegido = Random.Range(0, itemsDesprendibles.Length);//Random.Range(0, itemsDesprendibles.Length);
-		itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
-		itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
-
-		//Al morir el enemigo desprende un item al azar;
-		string nombreAux = itemsDesprendibles[itemElegido].name;
-		GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
-		//se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
-		g.name = nombreAux;
+//		int itemElegido = Random.Range(0, itemsDesprendibles.Length);//Random.Range(0, itemsDesprendibles.Length);
+//		itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
+//		itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
+//
+//		//Al morir el enemigo desprende un item al azar;
+//		string nombreAux = itemsDesprendibles[itemElegido].name;
+//		GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
+//		//se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
+//		g.name = nombreAux;
 		pantallaFinal.SetActive(true);
+		Instantiate(Prefab_Explosion,transform.position,transform.rotation);
 		Destroy(gameObject);
 	}
 	public GameObject DesprenderItem()
@@ -310,9 +313,10 @@ public class Luissini : MonoBehaviour {
 				//SegundaFuncion = true;
 				Debug.Log ("Muere lusini!!");
 //				Destroy (gameObject);
-				pantallaFinal.SetActive(true);
-				Instantiate(Prefab_Explosion,transform.position,transform.rotation);
-				Destroy(gameObject);
+//				pantallaFinal.SetActive(true);
+//
+//				Destroy(gameObject);
+				Morir();
 
 			}
 		}
