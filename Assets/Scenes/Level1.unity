@@ -2106,7 +2106,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4509400687282584, guid: 5e0994772f28b0d49af6987ee0c45d8b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 719
+      value: 673.6
       objectReference: {fileID: 0}
     - target: {fileID: 4509400687282584, guid: 5e0994772f28b0d49af6987ee0c45d8b, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4134,7 +4134,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4161068105740708, guid: 295ec684f260df34796226a4b3c3f1aa, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 722.6
+      value: 678.51
       objectReference: {fileID: 0}
     - target: {fileID: 4161068105740708, guid: 295ec684f260df34796226a4b3c3f1aa, type: 2}
       propertyPath: m_LocalPosition.y
@@ -5450,6 +5450,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &871439123 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1273167138657900, guid: f11130cc845835a43ba446ff209a66b3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1346347023}
 --- !u!1 &881706227
 GameObject:
   m_ObjectHideFlags: 0
@@ -7361,7 +7366,6 @@ GameObject:
   - component: {fileID: 1166380049}
   - component: {fileID: 1166380048}
   - component: {fileID: 1166380051}
-  - component: {fileID: 1166380052}
   m_Layer: 0
   m_Name: PortalCocina
   m_TagString: Untagged
@@ -7462,21 +7466,6 @@ MonoBehaviour:
   coorY: -78.18
   coorCamaraX: 734.91
   coorCamaraY: -74.91
---- !u!114 &1166380052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1166380046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94ef48185875fc542ad2e57a0b4bbb76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemigos:
-  - {fileID: 1408082591}
-  portal: {fileID: 0}
-  pantallaFinal: {fileID: 1166380046}
 --- !u!1 &1223534107
 GameObject:
   m_ObjectHideFlags: 0
@@ -10232,6 +10221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1899752311}
   - component: {fileID: 1899752310}
+  - component: {fileID: 1899752312}
   m_Layer: 0
   m_Name: salaTotal1
   m_TagString: Untagged
@@ -10294,6 +10284,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1899752312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1899752309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ef48185875fc542ad2e57a0b4bbb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemigos:
+  - {fileID: 1408082591}
+  - {fileID: 871439123}
+  pantallaFinal: {fileID: 1166380046}
 --- !u!1001 &1934100415
 Prefab:
   m_ObjectHideFlags: 0
