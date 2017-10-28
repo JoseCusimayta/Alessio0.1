@@ -20,8 +20,8 @@ public class AnotarPuntaje : MonoBehaviour
 
     void Update()
     {
-		Debug.Log ("Jefe tiene: "+GetComponent<Health>()._vidaActual);
-        if (GetComponent<Health>()._vidaActual <= 0)                        //Verificamos que el objeto no tenga vida
+		Debug.Log ("Jefe tiene: "+this.GetComponent<Health>()._vidaActual);
+        if (this.GetComponent<Health>()._vidaActual <= 0)                        //Verificamos que el objeto no tenga vida
         {
 			Debug.Log ("Jefe entro");
             game_object_puntaje.GetComponent<GestionPuntuacion>().          //Obtenemos el Script de "GestionPuntuacion"
