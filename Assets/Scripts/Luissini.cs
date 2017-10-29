@@ -268,6 +268,8 @@ public class Luissini : MonoBehaviour {
 //		g.name = nombreAux;
 		pantallaFinal.SetActive(true);
 		Instantiate(Prefab_Explosion,transform.position,transform.rotation);
+        this.GetComponentInParent<AudioSource>().Play();
+        Camera.main.GetComponent<AudioSource>().Stop();
 		Destroy(gameObject);
 	}
 	public GameObject DesprenderItem()
