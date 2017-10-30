@@ -220,7 +220,12 @@ public class Guardia : MonoBehaviour {
         //se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
         g.name = nombreAux;
 
+        //se instancia su explosion al morir
         Instantiate(Prefab_Explosion,transform.position,transform.rotation);
+        //se registra la puntuacion
+        this.GetComponent<AnotarPuntaje>().escribirPuntaje();
+        //se registra su puntuacion
+        this.GetComponent<AnotarPuntaje>().escribirPuntaje();
         Destroy(gameObject);
     }
     public GameObject DesprenderItem()

@@ -199,7 +199,7 @@ public class Luissini : MonoBehaviour {
 	public void GestorVida()
 	{
 		vida_actual = salud._vidaActual;
-		Debug.Log ("Ahora luisini tiene "+vida_actual);
+		//Debug.Log ("Ahora luisini tiene "+vida_actual);
 	}
 	public void GestorGiros()
 	{
@@ -267,10 +267,14 @@ public class Luissini : MonoBehaviour {
 //		//se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
 //		g.name = nombreAux;
 		pantallaFinal.SetActive(true);
+        //se instancia explosion
 		Instantiate(Prefab_Explosion,transform.position,transform.rotation);
+        //se instancia musica de victoria, y se apaga la musica de fondo por defecto
         this.GetComponentInParent<AudioSource>().Play();
         Camera.main.GetComponent<AudioSource>().Stop();
-		Destroy(gameObject);
+        //se registra su puntuacion
+        this.GetComponent<AnotarPuntaje>().escribirPuntaje();
+        Destroy(gameObject);
 	}
 	public GameObject DesprenderItem()
 	{

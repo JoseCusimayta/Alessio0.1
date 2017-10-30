@@ -235,18 +235,23 @@ public class Chef : MonoBehaviour {
 
 	public void Morir()
 	{
-		//el item se elige aleatoriamente
-//		int itemElegido = Random.Range(0, itemsDesprendibles.Length);//Random.Range(0, itemsDesprendibles.Length);
-//		itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
-//		itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
-//
-//		//Al morir el enemigo desprende un item al azar;
-//		string nombreAux = itemsDesprendibles[itemElegido].name;
-//		GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
-		//se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
-		//g.name = nombreAux;
-		Instantiate(Prefab_Explosion,transform.position,transform.rotation);
-		Destroy(gameObject);
+        //el item se elige aleatoriamente
+        int itemElegido = Random.Range(0, itemsDesprendibles.Length);//Random.Range(0, itemsDesprendibles.Length);
+        itemsDesprendibles[itemElegido].transform.position = gameObject.transform.position;
+        itemsDesprendibles[itemElegido].transform.rotation = gameObject.transform.rotation;
+
+        //Al morir el enemigo desprende un item al azar;
+        string nombreAux = itemsDesprendibles[itemElegido].name;
+        GameObject g = Instantiate(itemsDesprendibles[itemElegido], itemsDesprendibles[itemElegido].transform.position, itemsDesprendibles[itemElegido].transform.rotation);
+       // se guarda la variable nombreAux, ya que al instanciar un objeto aparece con el nombre seguido de un "(clone)" y eso no permite su busqueda para añadirlo a los items
+
+        g.name = nombreAux;
+        //se instancia su explosion al morir
+        Instantiate(Prefab_Explosion,transform.position,transform.rotation);
+
+        //se registra su puntuacion
+        this.GetComponent<AnotarPuntaje>().escribirPuntaje();
+        Destroy(gameObject);
 	}
 	public GameObject DesprenderItem()
 	{

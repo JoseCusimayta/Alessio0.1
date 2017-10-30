@@ -29,14 +29,14 @@ public class ArregloEnemigos : MonoBehaviour {
 			if (enemigos[i].GetComponentInChildren<Guardia>()==null) {
                 contadorMuertes++;
                
-                Debug.Log("muertes totales= "+ contadorMuertes);
+                //Debug.Log("muertes totales= "+ contadorMuertes);
 				
 			}
 		}
 
 		if (contadorMuertes== enemigos.Length)
 		{
-			Debug.Log("Se activa portal");
+			//Debug.Log("Se activa portal");
 			desactivarMuros = true;
 		}
 	}
