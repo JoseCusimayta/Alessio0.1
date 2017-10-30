@@ -8,6 +8,7 @@ public class ArregloEnemigos : MonoBehaviour {
 	bool desactivarMuros;
 	public GameObject pantallaFinal;
     private int contadorMuertes;
+	public GameObject Cubo;
 	// Use this for initialization
 	void Start () {
         contadorMuertes = 0;
@@ -32,16 +33,18 @@ public class ArregloEnemigos : MonoBehaviour {
 				
 			}
 		}
-        if (contadorMuertes== enemigos.Length)
-        {
-            Debug.Log("Se activa portal");
-            desactivarMuros = true;
-        }
+
+		if (contadorMuertes== enemigos.Length)
+		{
+			Debug.Log("Se activa portal");
+			desactivarMuros = true;
+		}
 	}
 
 	public void desactivar_Muros() {
 		if (desactivarMuros) {
 			pantallaFinal.SetActive (true);
+			Cubo.SetActive (false);
 
 		}
 	}
