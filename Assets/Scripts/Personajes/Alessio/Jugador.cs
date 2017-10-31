@@ -338,6 +338,7 @@ public class Jugador : MonoBehaviour, IPersonaje
     {
         if (esta_atacando)                                      //Verificamos si el personaje está atacando
         {
+
             if (!tiene_arma)                                    //Verificamos si el personaje no tiene armas
             {
                 atacando_golpes = true;                          //Activamos la variable "atacando_golpes" para decirle a la animación que debe ejecutar 

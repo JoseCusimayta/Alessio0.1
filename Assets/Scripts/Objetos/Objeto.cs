@@ -67,6 +67,11 @@ public class Objeto : MonoBehaviour {
             Debug.Log("Impacto de alessio");                  //Función para detectar el arma con el que ha colisionado
             salud.ModificarVida(other.GetComponentInParent<Jugador>().danio_golpe, other.gameObject);
         }
+        if(other.CompareTag("BalaPlayer") && gameObject.layer != 12)
+        {
+            VoltearTacho();
+        }
+
     }
 
     
