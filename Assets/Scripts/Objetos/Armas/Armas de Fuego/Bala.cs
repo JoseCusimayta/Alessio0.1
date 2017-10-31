@@ -40,6 +40,11 @@ public class Bala : MonoBehaviour
             morir();
         }
 
+        if (other.CompareTag("Objeto"))
+        {
+            morir();
+        }
+
     }
 
     private void OnBecameInvisible()

@@ -7,10 +7,12 @@ public class Objeto : MonoBehaviour {
     public Health salud;                            //Variable para obtener la clase Health y controlar la salud
     public float vida_actual;                       //Variable para guardar la cantidad de vida actual    
     public LayerMask mascara_objeto;                //Variable para guardar y modificar la máscara del objeto
+    private AudioSource sonido;                      //variable para el sonido de la lata al ser impactada
 
     // Use this for initialization
     void Start () {
         salud = GetComponent<Health>();
+        sonido = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -57,6 +59,7 @@ public class Objeto : MonoBehaviour {
         transform.Rotate(0, 0, 90);
         gameObject.layer = 12; //luego de que se voltee, el tacho es invulnerable
         DesprenderItem();
+        sonido.Play();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -67,7 +70,7 @@ public class Objeto : MonoBehaviour {
             Debug.Log("Impacto de alessio");                  //Función para detectar el arma con el que ha colisionado
             salud.ModificarVida(other.GetComponentInParent<Jugador>().danio_golpe, other.gameObject);
         }
-        if(other.CompareTag("BalaPlayer") && gameObject.layer != 12)
+        if((other.CompareTag("BalaPlayer") || other.CompareTag("ObjetoHiriente")) && gameObject.layer != 12)
         {
             VoltearTacho();
         }
