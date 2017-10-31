@@ -66,7 +66,7 @@ public class Guardia : MonoBehaviour {
     void Start () {
 
 		#region Asignando el cuerpo del Personaje
-		Debug.Log("Nombre del rufian:"+this.gameObject.name);
+		//Debug.Log("Nombre del rufian:"+this.gameObject.name);
 		//sombrero = GameObject.Find("Rufian_Pistola/Cuerpo/Cabeza/Sombrero");
 		sombrero = GameObject.Find(this.gameObject.name+"/Cuerpo/Cabeza/Sombrero");
 		cuerpo = GameObject.Find(this.gameObject.name+"/Cuerpo");

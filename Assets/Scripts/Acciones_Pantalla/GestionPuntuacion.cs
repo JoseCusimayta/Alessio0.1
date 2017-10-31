@@ -25,12 +25,12 @@ public class GestionPuntuacion : MonoBehaviour {
         textoPuntuacion.text = "Puntaje: " + numeroPuntuacion;
            if(numeroPuntuacion> numeroPuntuacionAux)
             {
-			Debug.Log ("numeroPuntuacion="+numeroPuntuacion);
-			Debug.Log ("numeroPuntuacionAux="+numeroPuntuacionAux);
+			//Debug.Log ("numeroPuntuacion="+numeroPuntuacion);
+			//Debug.Log ("numeroPuntuacionAux="+numeroPuntuacionAux);
                 if (numeroPuntuacion % 100 == 0 && numeroPuntuacion > 0)
                 {
                     contadorBarraCombo = numeroPuntuacion;
-                    Debug.Log("Ya cumpli 100 puntos, es hora de un extra");
+                   // Debug.Log("Ya cumpli 100 puntos, es hora de un extra");
                     botonCombo.localPosition = Vector3.zero;
                     comboActivado = true;
 
