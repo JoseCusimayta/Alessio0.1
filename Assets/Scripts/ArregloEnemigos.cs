@@ -12,7 +12,7 @@ public class ArregloEnemigos : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         contadorMuertes = 0;
-
+        desactivarMuros = false;
     }
 	
 	// Update is called once per frame
@@ -48,5 +48,5 @@ public class ArregloEnemigos : MonoBehaviour {
 
 		}
 	}
-
+    
 }
